@@ -12,7 +12,6 @@ import os
 import pkg_resources
 import json
 import numpy as np
-import pandas as pd
 from atlasvras.utils import exceptions
 
 
@@ -30,20 +29,26 @@ class JsonData(object):
                  filename: str = None
                  ):
         """
-        Base object to load and interact with a .json data file for an ATLAS transient event.
+        Utility object to load and interact with Json data from the ATLAS api (either as a dictionary or from a filename).
+
+        Parameters
+        ----------
+        response : dict
+            JSON response from the ATLAS API. If provided, the filename parameter should be None.
+        filename : str
+            Path to the .json file. If provided, the response parameter should be None.
         """
 
         if response is not None and filename is None:
             assert isinstance(response, dict), f"The response should be in JSON format. {self.DEBUG_ASSISTANT_JSON}"
             self.data = response
+
         elif filename is not None and response is None:
             assert os.path.exists(filename), "The filename does not exist"
             self.filename = filename
             self._open_json_file()
 
         self.atlas_id = self.data['object']['id']
-        self.fp_uJy = None
-        self.fp_duJy = None
 
     def _open_json_file(self):
         with open(self.filename) as input_file:
@@ -56,20 +61,35 @@ class JsonData(object):
 
     def get_values(self, keys: [str, str] = ['lc', 'mjd']) -> np.ndarray:
         """
-        Returns an array of values for series values that are located in individual sub-dictionaries of the JSON data.
+        Returns a 1D numpy array for a quantity recorded in multiple sub-dictionaries of the JSON data.
         For example light curve has one dictionary per data point and each dictionary has keys: mjd, mag, magerr, filter etc.
-        So to recover the mjd or the mag in a single numpy array we need to do list comprehension
+        So to recover the mjd or the mag in a single numpy array we need to do list comprehension.
 
-        :param keys: [str, str] - will return an array of values located at [key1][key2].
+
+        Parameters
+        ----------
+        keys : [str, str]
+            Two keys to access the desired values in the JSON data.
+
         """
-        # TODO: find a better way to explain what's going on above
-        # TODO: need to point to documentation for the format of the JSON data (which I need to write)
+
+        # TODO: use pydantic to have an easy way to check the keys and schema?
+
         try:
             return np.array([self.data[keys[0]][i][keys[1]] for i in range(len(self.data[keys[0]]))])
         except KeyError as e:
             raise exceptions.VRAKeyError(f"KeyError: {e} | One or both of the keys provided are invalid")
 
     def make_sherlock_features(self):
+        """
+        Creates a list of the boolean flags for the SN, NT, ORPHAN, CV and UNCLEAR sherlock classifications
+
+        Returns
+        -------
+        sherlock_features : list
+            List of boolean flags for the sherlock classifications
+        """
+
         self.sherlock_features = []
         self.sherlock_features = self.sherlock_features + [self.data['object']['sherlockClassification'] == 'SN']
         self.sherlock_features = self.sherlock_features + [self.data['object']['sherlockClassification'] == 'NT']
