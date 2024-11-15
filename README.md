@@ -1,7 +1,9 @@
 # ATLAS Virtual Research Assistants (VRAs)
----
+
 
 This repository contains data processing and models that are used by the ATLAS Virtual Research Assistants
+in the production pipeline. 
+For code specific to the downloading, cleaning of the training data, and training of the models, go to [TBD]
 
 ## st3ph3n
 st3ph3n is the eyeballing VRA.
