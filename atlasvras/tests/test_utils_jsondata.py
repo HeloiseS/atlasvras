@@ -3,7 +3,7 @@ import pytest
 import atlasapiclient as atlasapi
 import pkg_resources
 import os
-from atlasvras.utils.jsondata import JsonData
+from atlasvras.utils.jsondata import JsonData, JsonDataFromServer
 
 data_path = pkg_resources.resource_filename('atlasvras', 'data')
 API_CONFIG_FILE = os.path.join(data_path,'api_config_MINE.yaml')
@@ -13,6 +13,9 @@ class TestJsonData():
     test_file = '1000005291314656200_sn.json'
     filename_sn = os.path.join(data_path, test_file)
     json_data_sn = JsonData(filename=filename_sn)
+
+    def test_instanciation_from_filename(self):
+        JsonData(filename=self.filename_sn)
 
     def test_instanciation_from_response(self):
         request_source = atlasapi.client.RequestSingleSourceData(api_config_file=API_CONFIG_FILE,
@@ -38,3 +41,15 @@ class TestJsonData():
         bad_filename = 'blaaa'
         with pytest.raises(AssertionError):
             JsonData(filename=bad_filename)
+
+
+class TestJsonDataFromServer():
+    def test_instanciation(self):
+        data = JsonDataFromServer(atlas_id='1103337110432157700')
+
+    def test_instanciation_with_good_int(self):
+        data = JsonDataFromServer(atlas_id=1103337110432157700)
+
+    def test_instanciation_with_bad_id(self):
+        with pytest.raises(AssertionError):
+            data = JsonDataFromServer(atlas_id='blaa')

@@ -25,6 +25,7 @@ dependencies = [
     "matplotlib",
     "atlasapiclient",
     "pandas",
+    "dustmaps",
 
 
     'importlib-metadata; python_version>"3.9"',

@@ -13,6 +13,7 @@ import pkg_resources
 import json
 import numpy as np
 from atlasvras.utils import exceptions
+import atlasapiclient as atlasapi
 
 
 data_path = pkg_resources.resource_filename('atlasvras', 'data')
@@ -97,3 +98,38 @@ class JsonData(object):
         self.sherlock_features = self.sherlock_features + [self.data['object']['sherlockClassification'] == 'CV']
         self.sherlock_features = self.sherlock_features + [self.data['object']['sherlockClassification'] == 'UNCLEAR']
         return self.sherlock_features
+
+
+
+
+class JsonDataFromServer(JsonData):
+
+    def __init__(self,
+                 atlas_id: str = None ,
+                 mjd_threshold: float = None,
+                 api_config_file: str = API_CONFIG_FILE
+                 ):
+        """
+        Fetches the data from the ATLAS transient server.
+        """
+        if isinstance(atlas_id, str):
+            self.atlas_id = atlas_id
+        else:
+            try:
+                self.atlas_id = str(atlas_id)
+            except:
+                raise TypeError("The atlas_id must be a string of a 19 digit integer. Tried to convert to string and failed.")
+
+        self.mjd_threshold = mjd_threshold
+        self.api_config_file = api_config_file
+
+        # The request is handled by the atlasapiclient package
+        # the config file is usually "None" in the high level codes because there is a default set in the package
+        single_source_data = atlasapi.client.RequestSingleSourceData(api_config_file=self.api_config_file,
+                                                                     atlas_id=self.atlas_id,
+                                                                     mjdthreshold=self.mjd_threshold,
+                                                                     get_response=True
+                                                                     )
+
+        # now initialise the JsonData object with the response
+        super().__init__(response=single_source_data.response[0])

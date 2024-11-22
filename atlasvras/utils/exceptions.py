@@ -14,3 +14,7 @@ class VRAKeyError(Exception):
     Generic exception for when we can't find a key in a dictionary and it's a st3ph3n specific issue
     """
 
+class VRAWarning(Warning):
+    """
+    Generic VRAWarning
+    """
