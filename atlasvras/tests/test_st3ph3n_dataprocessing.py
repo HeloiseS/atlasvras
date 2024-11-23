@@ -1,16 +1,18 @@
-import pandas as pd
+from cmath import phase
 
+import pandas as pd
+import pkg_resources
+import os
+import pytest
 from atlasvras.utils.jsondata import JsonData
 from atlasvras.utils.exceptions import VRASaysNo, VRAWarning
 from atlasvras.st3ph3n.dataprocessing import (make_detection_table,
                                               make_non_detection_table,
                                               LightCurvePipes,
                                               make_day1_lcfeatures,
-                                              make_contextual_features
+                                              make_contextual_features,
+                                              make_update_lcfeatures
                                               )
-import pkg_resources
-import os
-import pytest
 
 data_path = pkg_resources.resource_filename('atlasvras', 'data')
 test_file = '1000005291314656200_sn.json'
@@ -62,6 +64,34 @@ class TestMakeContextualFeatures():
     def test_make_conextual_features(self):
         atlas_json = JsonData(filename=filename_sn)
         make_contextual_features(atlas_json_data=atlas_json)
+
+
+class TestMakeUpdateLCFeatures():
+    def test_make_update_features(self):
+        atlas_json = JsonData(filename=filename_sn)
+        lc_pipes = LightCurvePipes(atlas_json_data=atlas_json,
+                                   phase_bounds=(-5,15),
+                                   make_history=False
+                                   )
+        lc_pipes.add_dayN_column()
+        make_update_lcfeatures(lcpipes=lc_pipes)
+    def test_make_update_features_no_dayN(self):
+        atlas_json = JsonData(filename=filename_sn)
+        lc_pipes = LightCurvePipes(atlas_json_data=atlas_json,
+                                   phase_bounds=(-5,15),
+                                   make_history=False
+                                   )
+        with pytest.raises(AssertionError):
+            make_update_lcfeatures(lcpipes=lc_pipes)
+    def test_make_update_features_bad_phase_bounds(self):
+        atlas_json = JsonData(filename=filename_sn)
+        lc_pipes = LightCurvePipes(atlas_json_data=atlas_json,
+                                   phase_bounds=(-100,15),
+                                   make_history=False
+                                   )
+        lc_pipes.add_dayN_column()
+        with pytest.raises(AssertionError):
+            make_update_lcfeatures(lcpipes=lc_pipes)
 
 # ##################################################### #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #

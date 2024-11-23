@@ -14,6 +14,12 @@ from astropy.time import Time
 from astropy.coordinates import SkyCoord
 from dustmaps.sfd import SFDQuery
 
+# ##################################################### #
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+# ~~~~~~~~~~~~~~~~~~~~~ CONSTANTS ~~~~~~~~~~~~~~~~~~~~~ #
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+# ##################################################### #
+
 context_feature_columns = ['ra',
                            'dec',
                            'rb_pix',
@@ -43,9 +49,9 @@ update_lc_feature_columns = ['dayN',
                                'NON_mag_median',
                                'NON_N_today',
                                'NON_N_total',
-                                 'max_mag',
-                          'max_mag_day'
-                               ]
+                             'max_mag',
+                             'max_mag_day'
+                             ]
 
 # ##################################################### #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
@@ -229,9 +235,15 @@ def make_contextual_features(atlas_json_data: JsonData):
 
 def max_mag_features_in(lightcurve: pd.DataFrame, atlas_id: str = None) -> tuple:
     """
+    Calculates the maximum observed magnitude (and records the time) for a single source.
+    Note that it uses the median values and requires the following columns to have been added to the lightcurve dataframe:
+    'DET_mag_median', 'dayN'
 
+    That is done in the make_update_lcfeatures function before calling this function.
     """
     # ##### CHECKS #### #
+    assert 'DET_mag_median' in lightcurve.columns, 'The lightcurve dataframe must have a column called DET_mag_median'
+    assert 'dayN' in lightcurve.columns, 'The lightcurve dataframe must have a column called dayN'
 
     # #### SET UP #### #
     # Initialise lists to store the max magnitude and the day it was observed as well as which day N we are on
@@ -296,10 +308,23 @@ def max_mag_features_in(lightcurve: pd.DataFrame, atlas_id: str = None) -> tuple
 
 
 def make_update_lcfeatures(lcpipes):
-    # TODO: check the bounds of the lcpipes?
-    # TODO: chekc it's got dayN columns
+    """
+    Makes the update lightcurve features for a single source.
 
-    assert lcpipes.
+    Parameters
+    ----------
+    lcpipes: atlasvras.st3ph3n.dataprocessing.LightCurvePipes
+        The LightCurvePipes object containing the lightcurve data. Must have a history dataframe with a dayN column.
+        Also the phase bounds must be (-5, 15) (because I said so).
+
+    Returns
+    -------
+    list
+
+    """
+    assert lcpipes.phase_bounds[0] == -5, 'The lower phase bound must be -5 in these models'
+    assert lcpipes.phase_bounds[1] == 15, 'The upper phase bound must be 15 in these models'
+    assert 'dayN' in lcpipes.detections.columns, 'The detections dataframe must have a dayN column. Run .add_dayN_column()'
 
     ## Median mag dataframes
     det_wmed = lcpipes.detections.set_index(['dayN']).join(lcpipes.detections.groupby(['dayN'])['mag'].median(),
@@ -360,9 +385,6 @@ def make_update_lcfeatures(lcpipes):
 
     # Finally we record the last row of our data frame into our lc_features list
     return lightcurve_features.iloc[-1].to_list()
-
-
-
 
 
 # ##################################################### #
@@ -479,7 +501,8 @@ class LightCurvePipes(object):
 
 
 class FeaturesSingleSource(object):
-    #TODO: add a test
+    # TODO: add the tests
+    # TODO: try in dev env
     def __init__(self, atlas_id):
         #TODO: add docstring
         self.atlas_id = atlas_id
@@ -487,11 +510,13 @@ class FeaturesSingleSource(object):
 
     def make_day1_features(self):
         self.lightcurve_pipes_day1 = LightCurvePipes(self.json_data, phase_bounds=(-100,0))
+        self.lightcurve_pipes_day1.add_dayN_column()
         self.day1_lcfeatures = make_day1_lcfeatures(self.lightcurve_pipes)
         self.contextual_features = make_contextual_features(self.json_data)
 
     def make_update_features(self):
         self.make_day1_features()
         self.lightcurve_pipes_update = LightCurvePipes(self.json_data, phase_bounds=(-5,15))
-        self.update_features = None
+        self.lightcurve_pipes_update.add_dayN_column()
+        self.update_features = make_update_lcfeatures(self.lightcurve_pipes_update)
 
