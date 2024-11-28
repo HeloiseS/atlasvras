@@ -42,7 +42,7 @@ day1_lc_feature_columns = ['Nnondet_std',
                                              'log10_std_ra_min5d',
                                              'log10_std_dec_min5d']
 
-update_lc_feature_columns = ['dayN',
+dayN_lc_feature_columns = ['dayN',
                                'DET_mag_median',
                                'DET_N_today',
                                'DET_N_total',
@@ -51,7 +51,7 @@ update_lc_feature_columns = ['dayN',
                                'NON_N_total',
                              'max_mag',
                              'max_mag_day'
-                             ]
+                           ]
 
 # ##################################################### #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
@@ -239,7 +239,7 @@ def max_mag_features_in(lightcurve: pd.DataFrame, atlas_id: str = None) -> tuple
     Note that it uses the median values and requires the following columns to have been added to the lightcurve dataframe:
     'DET_mag_median', 'dayN'
 
-    That is done in the make_update_lcfeatures function before calling this function.
+    That is done in the make_dayN_lcfeatures function before calling this function.
     """
     # ##### CHECKS #### #
     assert 'DET_mag_median' in lightcurve.columns, 'The lightcurve dataframe must have a column called DET_mag_median'
@@ -270,7 +270,7 @@ def max_mag_features_in(lightcurve: pd.DataFrame, atlas_id: str = None) -> tuple
 
             # If it IS a detection and it is BRIGHTER than the max mag so far (so LOWER)
             elif lightcurve.DET_mag_median.iloc[i] < max_mag:
-                max_mag = lightcurve.iloc[i].DET_mag_median  # we update the max mag
+                max_mag = lightcurve.iloc[i].DET_mag_median  # we dayN the max mag
                 max_mag_day = lightcurve.iloc[i].dayN  # and the day it was observed
                 list_max_mag.append(max_mag)  # and append these values to our lists
                 list_max_mag_day.append(max_mag_day)
@@ -307,9 +307,9 @@ def max_mag_features_in(lightcurve: pd.DataFrame, atlas_id: str = None) -> tuple
     return list_max_mag, list_max_mag_day, list_dayN
 
 
-def make_update_lcfeatures(lcpipes):
+def make_dayN_lcfeatures(lcpipes):
     """
-    Makes the update lightcurve features for a single source.
+    Makes the dayN lightcurve features for a single source.
 
     Parameters
     ----------
@@ -364,7 +364,7 @@ def make_update_lcfeatures(lcpipes):
     # Crop our dataframe to only keep the columns we need
 
     lightcurve_features = lightcurve_features[
-        update_lc_feature_columns[:-2]]  # we don't need the max mag features here yet
+        dayN_lc_feature_columns[:-2]]  # we don't need the max mag features here yet
 
     # ### MAKE MAX MAG FEATURES ### #
     list_max_mag, list_max_mag_day, list_dayN = max_mag_features_in(lightcurve_features)
@@ -414,6 +414,31 @@ class LightCurvePipes(object):
 
         make_history : bool
             If True, the history dataframe will be created. If False, it will not be created.
+
+        Attributes
+        ----------
+        atlasjson : atlasvras.utils.JsonData
+            The JsonData object containing the data from the ATLAS API
+        phase_bounds : tuple
+            The lower and upper phase cutoffs for the lightcurve data
+        lo_phase_cutoff : float
+            The lower phase cutoff
+        hi_phase_cutoff : float
+            The upper phase cutoff
+        detections : pd.DataFrame
+            The dataframe containing the detections. Cropped to the phase_bounds.
+        non_detections : pd.DataFrame
+            The dataframe containing the non detections. Cropped to the phase_bounds.
+        lightcurve : pd.DataFrame
+            The dataframe containing both the detections and non detections. Ordered by phase_init (or MJD, same result).
+            Also cropped to the phase_bounds.
+        history : pd.DataFrame
+            The dataframe containing the "history" of the object. See docstring of make_history for more details.
+
+        Methods
+        -------
+        .make_history()
+        .add_dayN_column()
         """
 
         # ### CHECKS AND SET UP ### #
@@ -501,22 +526,26 @@ class LightCurvePipes(object):
 
 
 class FeaturesSingleSource(object):
-    # TODO: add the tests
     # TODO: try in dev env
-    def __init__(self, atlas_id):
-        #TODO: add docstring
+    feature_names_day1 = context_feature_columns + day1_lc_feature_columns
+    feature_names_dayN = dayN_lc_feature_columns + context_feature_columns + day1_lc_feature_columns
+
+    def __init__(self, atlas_id, api_config_file):
+        #TODO: add docstring (include showing how it's meant to be used
         self.atlas_id = atlas_id
-        self.json_data = JsonDataFromServer(atlas_id)
+        self.json_data = JsonDataFromServer(atlas_id, api_config_file=api_config_file)
 
     def make_day1_features(self):
         self.lightcurve_pipes_day1 = LightCurvePipes(self.json_data, phase_bounds=(-100,0))
         self.lightcurve_pipes_day1.add_dayN_column()
-        self.day1_lcfeatures = make_day1_lcfeatures(self.lightcurve_pipes)
+        self.day1_lcfeatures = make_day1_lcfeatures(self.lightcurve_pipes_day1)
         self.contextual_features = make_contextual_features(self.json_data)
+        self.day1_features = self.day1_lcfeatures + self.contextual_features
 
-    def make_update_features(self):
+    def make_dayN_features(self):
         self.make_day1_features()
-        self.lightcurve_pipes_update = LightCurvePipes(self.json_data, phase_bounds=(-5,15))
-        self.lightcurve_pipes_update.add_dayN_column()
-        self.update_features = make_update_lcfeatures(self.lightcurve_pipes_update)
+        self.lightcurve_pipes_dayN = LightCurvePipes(self.json_data, phase_bounds=(-5, 15))
+        self.lightcurve_pipes_dayN.add_dayN_column()
+        self.dayN_lcfeatures = make_dayN_lcfeatures(self.lightcurve_pipes_dayN)
+        self.dayN_features = self.dayN_lcfeatures + self.day1_features
 

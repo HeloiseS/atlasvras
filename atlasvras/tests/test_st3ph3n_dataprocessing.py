@@ -4,14 +4,16 @@ import pandas as pd
 import pkg_resources
 import os
 import pytest
-from atlasvras.utils.jsondata import JsonData
+
+from atlasvras.utils.jsondata import JsonData, API_CONFIG_FILE
 from atlasvras.utils.exceptions import VRASaysNo, VRAWarning
 from atlasvras.st3ph3n.dataprocessing import (make_detection_table,
                                               make_non_detection_table,
-                                              LightCurvePipes,
                                               make_day1_lcfeatures,
                                               make_contextual_features,
-                                              make_update_lcfeatures
+                                              make_dayN_lcfeatures,
+                                              LightCurvePipes,
+                                              FeaturesSingleSource
                                               )
 
 data_path = pkg_resources.resource_filename('atlasvras', 'data')
@@ -66,24 +68,24 @@ class TestMakeContextualFeatures():
         make_contextual_features(atlas_json_data=atlas_json)
 
 
-class TestMakeUpdateLCFeatures():
-    def test_make_update_features(self):
+class TestMakeDayNLCFeatures():
+    def test_make_dayN_features(self):
         atlas_json = JsonData(filename=filename_sn)
         lc_pipes = LightCurvePipes(atlas_json_data=atlas_json,
                                    phase_bounds=(-5,15),
                                    make_history=False
                                    )
         lc_pipes.add_dayN_column()
-        make_update_lcfeatures(lcpipes=lc_pipes)
-    def test_make_update_features_no_dayN(self):
+        make_dayN_lcfeatures(lcpipes=lc_pipes)
+    def test_make_dayN_features_no_dayN(self):
         atlas_json = JsonData(filename=filename_sn)
         lc_pipes = LightCurvePipes(atlas_json_data=atlas_json,
                                    phase_bounds=(-5,15),
                                    make_history=False
                                    )
         with pytest.raises(AssertionError):
-            make_update_lcfeatures(lcpipes=lc_pipes)
-    def test_make_update_features_bad_phase_bounds(self):
+            make_dayN_lcfeatures(lcpipes=lc_pipes)
+    def test_make_dayN_features_bad_phase_bounds(self):
         atlas_json = JsonData(filename=filename_sn)
         lc_pipes = LightCurvePipes(atlas_json_data=atlas_json,
                                    phase_bounds=(-100,15),
@@ -91,7 +93,7 @@ class TestMakeUpdateLCFeatures():
                                    )
         lc_pipes.add_dayN_column()
         with pytest.raises(AssertionError):
-            make_update_lcfeatures(lcpipes=lc_pipes)
+            make_dayN_lcfeatures(lcpipes=lc_pipes)
 
 # ##################################################### #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
@@ -124,3 +126,21 @@ class TestLightCurvePipes():
             lc_pipes = LightCurvePipes(atlas_json_data=json_data, phase_bounds=(1,3))
         with pytest.raises(VRASaysNo):
             lc_pipes = LightCurvePipes(atlas_json_data=json_data, phase_bounds=(-2,-10))
+
+
+class TestFeaturesSingleSource():
+    def test_day1_features(self):
+        feature_maker = FeaturesSingleSource(atlas_id='1000005291314656200',
+                                             api_config_file = API_CONFIG_FILE,
+                                             )
+
+        feature_maker.make_day1_features()
+        assert feature_maker.day1_features is not None, 'day1_features should exist in our feature maker'
+
+    def test_dayN_features(self):
+        feature_maker = FeaturesSingleSource(atlas_id='1000005291314656200',
+                                             api_config_file = API_CONFIG_FILE,
+                                             )
+
+        feature_maker.make_dayN_features()
+        assert feature_maker.dayN_features is not None, 'dayN_features should exist in our feature maker'
