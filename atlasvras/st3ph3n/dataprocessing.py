@@ -528,13 +528,26 @@ class LightCurvePipes(object):
 
 class FeaturesSingleSource(object):
     # TODO: try in dev env
-    feature_names_day1 = context_feature_columns + day1_lc_feature_columns
-    feature_names_dayN = dayN_lc_feature_columns + context_feature_columns + day1_lc_feature_columns
+    feature_names_day1 = day1_lc_feature_columns + context_feature_columns
+    feature_names_dayN = dayN_lc_feature_columns +  feature_names_day1
 
     def __init__(self, atlas_id, api_config_file):
         #TODO: add docstring (include showing how it's meant to be used
         self.atlas_id = atlas_id
         self.json_data = JsonDataFromServer(atlas_id, api_config_file=api_config_file)
+
+        ## Get the last visit MJD (only needed when doing updates but cheap to compute)
+        try:
+            last_lc_mjd = self.json_data.get_values(['lc', 'mjd'])[-1]
+        except IndexError:
+            last_lc_mjd = float('-inf')  # or any other default value
+
+        try:
+            last_lcnondets_mjd = self.json_data.get_values(['lcnondets', 'mjd'])[-1]
+        except IndexError:
+            last_lcnondets_mjd = float('-inf')  # or any other default value
+
+        self.last_visit_mjd = max(last_lc_mjd, last_lcnondets_mjd)
 
     def make_day1_features(self):
         self.lightcurve_pipes_day1 = LightCurvePipes(self.json_data, phase_bounds=(-100,0))
