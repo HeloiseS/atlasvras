@@ -202,6 +202,7 @@ def make_contextual_features(atlas_json_data: JsonData):
 
     Returns
     -------
+    list
 
     """
     # do extinction

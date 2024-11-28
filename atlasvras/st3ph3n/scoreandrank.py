@@ -2,32 +2,50 @@ import os
 from joblib import load
 from glob import glob
 import numpy as np
+import pkg_resources
+from atlasvras.st3ph3n.dataprocessing import day1_lc_feature_columns, context_feature_columns, dayN_lc_feature_columns
+from atlasvras.utils.exceptions import VRASaysNo
 
-# TODO: add test -> run for that SN i'm using the data processing stuff so can run locally
+MODELS_PATH = pkg_resources.resource_filename('atlasvras', 'st3ph3n/models')
+
 class ScoreAndRank(object):
-
 
     def __init__(self, features, model_type, model_name='crabby'):
         """
-        Pipes to score and rank objects based on their features
+        Pipes to calculate the scores and ranks (mostly used in production)
 
-        :param features: pd.DataFrame
-            DataFrame of features. These must be the right kind of features for the specific model,
-            you can't just put anything in there. Check the manual
-        :param model_type: str
-            model type, either 'day1' or 'dayN'
-        :param model_name: str
-            Family of models to use, e.g. Arin, BMO
+        Parameters
+        ----------
+        features : 2D np.array
+            Features to be scored and ranked. MUST BE 2D to go into the sklearn models. Must also be inthe right order.
+            For day1 models this is [day1_lc_features, context_features], for dayN models this is [dayN_lc_features, day1_lc_features, context_features]
+        model_type : str
+            Either 'day1' or 'dayN'.
+        model_name : str
+            Name of the model to use. Default is 'crabby' for this version of the code.
         """
         assert model_type in ['day1', 'dayN'], 'model_type must be "day1" or "dayN"'
         self.model_type = model_type
-        # TODO: check model name is valid
         self.model_name = model_name
-        self.model_path = os.path.join('models',  self.model_type, self.model_name)
-        self.features = features #TODO: check acceptable type and columsn and stugg that will depends on model nbame probably needs to be in a method
+        self.model_path = os.path.join(MODELS_PATH,  self.model_name, self.model_type)
+        gal_model = glob(os.path.join(self.model_path, 'gal*'))[0]
+        real_model = glob(os.path.join(self.model_path, 'real*'))[0]
+        assert os.path.isfile(gal_model), 'Galactic model not found'
+        assert os.path.isfile(real_model), 'Real model not found'
 
-        self.gal_model = load(glob(os.path.join(self.model_path, 'gal*')[0]))
-        self.real_model = load(glob(os.path.join(self.model_path, 'real*')[0]))
+        # check features is 2D array if nto make it 2D
+        if isinstance(features, list):
+            raise VRASaysNo('Features must be a 2D array where axis 0 is the samples and axis 1 is the features')
+
+        # probably want to check the number of columns too
+        if self.model_type == 'day1':
+            assert features.shape[1] == len(day1_lc_feature_columns+context_feature_columns), 'Features for day1 model has wrong length'
+        if self.model_type == 'dayN':
+            assert features.shape[1] == len(dayN_lc_feature_columns+ day1_lc_feature_columns+context_feature_columns), 'Features for dayN model has wrong length'
+
+        self.features = features
+        self.gal_model = load(gal_model)
+        self.real_model = load(real_model)
 
         self.make_predictions()
 
