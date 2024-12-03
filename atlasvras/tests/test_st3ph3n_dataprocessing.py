@@ -4,7 +4,8 @@ import pkg_resources
 import os
 import pytest
 
-from atlasvras.utils.jsondata import JsonData, API_CONFIG_FILE
+from atlasvras.utils.jsondata import JsonData
+from atlasvras.utils.misc import API_CONFIG_FILE
 from atlasvras.utils.exceptions import VRASaysNo, VRAWarning
 from atlasvras.st3ph3n.dataprocessing import (make_detection_table,
                                               make_non_detection_table,
