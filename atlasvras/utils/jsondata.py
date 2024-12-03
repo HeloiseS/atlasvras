@@ -17,8 +17,7 @@ import atlasapiclient as atlasapi
 
 
 data_path = pkg_resources.resource_filename('atlasvras', 'data')
-API_CONFIG_FILE = os.path.join(data_path,'api_config_MINE.yaml')
-
+API_CONFIG_FILE = atlasapi.utils.API_CONFIG_FILE
 
 class JsonData(object):
     DEBUG_ASSISTANT_JSON = ("DEBUG ASSISTANT: The ATLAS API returns a list of responses (json dictionaries) even if "
