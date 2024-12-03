@@ -2,6 +2,8 @@ import pandas as pd
 import atlasapiclient as atlasapi
 from atlasvras.utils.exceptions import VRASaysNo
 
+API_CONFIG_FILE = atlasapi.utils.API_CONFIG_FILE
+
 def fetch_vra_dataframe(datethreshold: str = None,
                         API_CONFIG_FILE: str = atlasapi.utils.API_CONFIG_FILE
                         ):
