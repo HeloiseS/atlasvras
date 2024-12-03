@@ -28,6 +28,7 @@ dependencies = [
     "dustmaps",
     "slack_sdk",
     "tqdm",
+    "scikit-learn",
     'importlib-metadata; python_version>"3.9"',
 ]
 dynamic = ["version"]
