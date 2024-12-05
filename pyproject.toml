@@ -26,6 +26,8 @@ dependencies = [
     "atlasapiclient",
     "pandas",
     "dustmaps",
+    "slack_sdk",
+    "docopt",
 
 
     'importlib-metadata; python_version>"3.9"',

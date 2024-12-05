@@ -16,6 +16,7 @@ from atlasvras.utils import exceptions
 import atlasapiclient as atlasapi
 
 
+# TODO REMOVE THIS AND GET IT FROM ATLASAPICLIENT
 data_path = pkg_resources.resource_filename('atlasvras', 'data')
 API_CONFIG_FILE = os.path.join(data_path,'api_config_MINE.yaml')
 
