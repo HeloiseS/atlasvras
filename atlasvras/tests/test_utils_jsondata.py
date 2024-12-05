@@ -4,9 +4,9 @@ import atlasapiclient as atlasapi
 import pkg_resources
 import os
 from atlasvras.utils.jsondata import JsonData, JsonDataFromServer
+from atlasvras.utils.misc import API_CONFIG_FILE
 
 data_path = pkg_resources.resource_filename('atlasvras', 'data')
-API_CONFIG_FILE = os.path.join(data_path,'api_config_MINE.yaml')
 
 
 class TestJsonData():

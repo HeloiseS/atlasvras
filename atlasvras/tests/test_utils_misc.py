@@ -1,7 +1,7 @@
 import pytest
 import pkg_resources
 import os
-from atlasvras.utils.misc import fetch_vra_dataframe
+from atlasvras.utils.misc import fetch_vra_dataframe, API_CONFIG_FILE
 from atlasvras.utils.exceptions import VRASaysNo
 import datetime
 
@@ -9,7 +9,6 @@ today = datetime.date.today()
 today = today.strftime('%Y-%m-%d')
 
 data_path = pkg_resources.resource_filename('atlasvras', 'data')
-API_CONFIG_FILE = os.path.join(data_path,'api_config_MINE.yaml')
 
 class TestFetchDataFrame():
     def test_runs_with_good_input(self):
