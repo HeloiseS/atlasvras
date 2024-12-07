@@ -1,19 +1,14 @@
 # Slack API
-from scipy import np_minversion
 from slack_sdk import WebClient
-from slack_sdk.errors import SlackApiError
-from atlasapiclient import client as atlasapiclient
 from atlasvras.utils.misc import fetch_vra_dataframe
 # generic things
-import requests
 import logging
 import sys
 from datetime import datetime
 import os
 # Analysis things
-import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
+import pandas as pd
 
 LOG_PATH = '/home/stevance/software/logs/'
 
