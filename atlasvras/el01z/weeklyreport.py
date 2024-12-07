@@ -138,16 +138,16 @@ file_path = f'{LOG_PATH}/figures/{TODAY}.png'
 url = 'https://slack.com/api/files.upload'
 
 file_response = client.files_upload_v2(
-    #channels=["C07HZGBKHQX"],
-    channels=["C0842K2QZS8"], # #vra-dev to test
+    channels=["C07HZGBKHQX"],
+    #channels=["C0842K2QZS8"], # #vra-dev to test
     initial_comment=f"Here are the label distributions for the week starting on {TODAY}",
     file=file_path,
 )
 file_url = file_response["file"]["permalink"]
 
 client.chat_postMessage(
-    #channels="C07HZGBKHQX", # #vra-forum for real thing
-    channel="C0842K2QZS8", # #vra-dev to test
+    channels="C07HZGBKHQX", # #vra-forum for real thing
+    #channel="C0842K2QZS8", # #vra-dev to test
     text=TEXT_REPORT,
 )
 
