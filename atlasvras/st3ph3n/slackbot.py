@@ -4,6 +4,7 @@ from atlasvras.utils.misc import fetch_vra_dataframe
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 import os
+import pandas as pd
 
 EYEBALL_THRESHOLD = 4
 URL_BASE = 'https://star.pst.qub.ac.uk/sne/atlas4/'
@@ -23,8 +24,11 @@ get_ids_from_fasttrack = atlasapiclient.GetATLASIDsFromWebServerList(api_config_
 set_fasttrack_ids = set(get_ids_from_fasttrack.atlas_id_list_int)
 
 # Get VRA scores table since DATETHRESHOLD to chose
-# TODO: when have bots that highlight objects in purgatory we can set this dynamicaly to e.g. last 2 months
-DATETHRESHOLD = '2024-07-09' # set to oldest object sin tcs_vra_todo table at time of writing
+# Using the oldest data in the To Do list to set the datethreshold
+todo_list = atlasapiclient.RequestVRAToDoList(api_config_file=API_CONFIG_FILE)
+todo_list.get_response()
+DATETHRESHOLD= pd.DataFrame(todo_list.response).sort_values('timestamp').timestamp.iloc[0]
+
 vra_df = fetch_vra_dataframe(datethreshold=DATETHRESHOLD)
 
 # set_hi_vra_rank : ATLAS IDS from vra scores tbale where rank >= EYEBALL_THRESHOLD
