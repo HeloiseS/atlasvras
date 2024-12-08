@@ -9,6 +9,7 @@ ATLAS Virtual Research Assistants
 .. toctree::
    :maxdepth: 2
    :caption: Contents
+
    Eyeballer Cheat Sheet <eyeball>
    Manual <manual>
 
