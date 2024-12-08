@@ -11,12 +11,13 @@ ATLAS Virtual Research Assistants
    :caption: TL;DR
 
    Cheat Sheet <eyeball>
-   How does it work? <about>
+
 
 .. toctree::
    :maxdepth: 2
    :caption: The Deets
 
+   How does it work? <about>
    Training st3ph3n <models>
    Reporting bots <el01z>
 
