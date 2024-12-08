@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install sphinx theme
-        run: pip install sphinx-rtd-theme
+        run: pip install sphinx sphinx_rtd_theme
       - name: Build HTML
         uses: ammaraskar/sphinx-action@7.4.7
         with:
