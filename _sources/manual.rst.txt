@@ -22,7 +22,7 @@ The utils subpackage
 .. automodule:: atlasavras.utils.exceptions
     :members:
 
-.. automodule:: atlasavras.utils.jsondata.py
+.. automodule:: atlasavras.utils.jsondata
     :members:
     :show-inheritance:
 

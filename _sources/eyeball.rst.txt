@@ -1,6 +1,9 @@
-
 Eyeballer Cheat Sheet
 ===================
+
+st3ph3n
+----------
+
 As an eyeballer the main bot you will encounter is `st3ph3n`, the eyeballer VRA.
 It will trigger as soon as an ATLAS ingest is complete and send a message to the `#vra` channel on the
 QUB slack.
