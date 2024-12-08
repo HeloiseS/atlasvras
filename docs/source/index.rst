@@ -7,25 +7,24 @@ ATLAS Virtual Research Assistants
 ============================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: TL;DR
 
    Cheat Sheet <eyeball>
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: The Deets
 
    How does it work? <about>
    Training st3ph3n <models>
-   Reporting bots <el01z>
-
+   Monitoring <el01z>
 
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: For Devs
 
    Manual <manual>
