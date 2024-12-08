@@ -1,8 +1,18 @@
 Eyeballer Cheat Sheet
 ===================
 
-.. warning::
-   We deployed a new version of the VRA on 2024-12-06. Because the ranking is done a little differently you may see a slight increase in the number of alerts to eyeball.
+.. import::
+   You should already be familiar with eyeballing either because you read Michael's`Eyeballing Handbook<https://www.overleaf.com/project/653678f3e33892fbb51fe7b8>`_ or because you were trained by one of the experienced eyeballers.
+
+Policies overview
+-------------------
+* **First eyeballer**:
+    - **Fast Track list**: eyeball all ranks
+    - **Standard list**: eyeball ranks >4
+    - If you're not sure: **snooze** by putting in **Possible list**.
+
+* **Second eyeballer**:
+   - Check the **good** list for anything interesting to put in **follow-up**
 
 st3ph3n-bot
 -----------------
@@ -11,7 +21,7 @@ It's role is to **rank the alerts from 0 to 10**, with higher ranks being more l
 It automatically garbages alerts with low scores (for more detail see [REF]) so you can focus on the most promising alerts.
 
 .. important::
-   **Make sure you are in the _#vra_ channel and receiving alerts**
+   **Make sure you are in the #vra channel and receiving alerts**
 
 The slackbot triggers at the end ATLAS ingest is complete and send a message to the ``#vra`` channel on the
 QUB slack. In each `st3ph3n` alert you will see two lines:
@@ -23,12 +33,8 @@ QUB slack. In each `st3ph3n` alert you will see two lines:
 .. warning::
    The number of alerts to be eyeballed is **usually over estimated**. It's a bug we have to fix.
 
-Strategy and tips
---------------------
-
-You should already be familiar with eyeballing either because you read Michael's`Eyeballing Handbook<https://www.overleaf.com/project/653678f3e33892fbb51fe7b8>`_
-or because you were trained by one of the experienced eyeballers.
-This section builds on existing eyeballing guidelines.
+TIps
+---------
 
 * 1) **Start with the Fast Track list**. Also note that you need to eyeball **all** ranks (even the lower ones) in the Fast Track list.
 
