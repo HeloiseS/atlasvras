@@ -7,12 +7,15 @@ Eyeballer Cheat Sheet
 
 Policies overview
 -------------------
-* **First eyeballer**:
+
+First Eyeballer
+~~~~~~~~~~~~
     - **Fast Track list**: eyeball all ranks
     - **Standard list**: eyeball ranks >4
     - If you're not sure: **snooze** by putting in **Possible list**.
 
-* **Second eyeballer**:
+Second Eyeballer
+~~~~~~~~~~~~~~~~
    - Check the **good** list for anything interesting to put in **follow-up**
 
 st3ph3n-bot
