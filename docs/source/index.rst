@@ -8,9 +8,25 @@ ATLAS Virtual Research Assistants
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents
+   :caption: TL;DR
 
-   Eyeballer Cheat Sheet <eyeball>
+   Cheat Sheet <eyeball>
+   How does it work? <about>
+
+.. toctree::
+   :maxdepth: 2
+   :caption: The Deets
+
+   Training st3ph3n <models>
+   Reporting bots <el01z>
+
+
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: For Devs
+
    Manual <manual>
 
 

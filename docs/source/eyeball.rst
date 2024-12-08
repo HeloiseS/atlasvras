@@ -1,8 +1,11 @@
 Eyeballer Cheat Sheet
 ===================
 
-st3ph3n
--------------
+.. warning::
+   We deployed a new version of the VRA on 2024-12-06. Because the ranking is done a little differently you may see a slight increase in the number of alerts to eyeball.
+
+st3ph3n-bot
+-----------------
 As an eyeballer the main bot you will encounter is your virtual eyeballer counterpart: ``st3ph3n``.
 It's role is to **rank the alerts from 0 to 10**, with higher ranks being more likely to be extra-galactic transients.
 It automatically garbages alerts with low scores (for more detail see [REF]) so you can focus on the most promising alerts.
