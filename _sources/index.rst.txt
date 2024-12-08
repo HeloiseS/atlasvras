@@ -10,6 +10,8 @@ ATLAS Virtual Research Assistants
    :maxdepth: 2
    :caption: Contents
 
+   Manual <manual>
+
 Eyeballer Cheat Sheet
 ===================
 As an eyeballer the main bot you will encounter is `st3ph3n`, the eyeballer VRA.
