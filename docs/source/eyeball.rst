@@ -1,8 +1,9 @@
 Eyeballer Cheat Sheet
 ===================
+.. _Eyeballing handbook: https://www.overleaf.com/project/653678f3e33892fbb51fe7b8
 
 .. note::
-   You should already be familiar with eyeballing either because you read Michael's`Eyeballing Handbook<https://www.overleaf.com/project/653678f3e33892fbb51fe7b8>`_ or because you were trained by one of the experienced eyeballers.
+   You should already be familiar with eyeballing either because you read Michael's `Eyeballing handbook`_ or because you were trained by one of the experienced eyeballers.
 
 Policies overview
 -------------------
