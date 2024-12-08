@@ -313,6 +313,10 @@
                   
   <section id="eyeballer-cheat-sheet">
 <h1>Eyeballer Cheat Sheet<a class="headerlink" href="#eyeballer-cheat-sheet" title="Link to this heading">#</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You should already be familiar with eyeballing either because you read Michael’s`Eyeballing Handbook&lt;<a class="reference external" href="https://www.overleaf.com/project/653678f3e33892fbb51fe7b8">https://www.overleaf.com/project/653678f3e33892fbb51fe7b8</a>&gt;`_ or because you were trained by one of the experienced eyeballers.</p>
+</div>
 <section id="policies-overview">
 <h2>Policies overview<a class="headerlink" href="#policies-overview" title="Link to this heading">#</a></h2>
 <ul class="simple">
@@ -337,24 +341,15 @@
 <section id="st3ph3n-bot">
 <h2>st3ph3n-bot<a class="headerlink" href="#st3ph3n-bot" title="Link to this heading">#</a></h2>
 <p>As an eyeballer the main bot you will encounter is your virtual eyeballer counterpart: <code class="docutils literal notranslate"><span class="pre">st3ph3n</span></code>.
+<strong>Make sure you are in the #vra channel and receiving alerts</strong>.
 It’s role is to <strong>rank the alerts from 0 to 10</strong>, with higher ranks being more likely to be extra-galactic transients.
 It automatically garbages alerts with low scores (for more detail see [REF]) so you can focus on the most promising alerts.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p><strong>Make sure you are in the #vra channel and receiving alerts</strong></p>
-</div>
 <p>The slackbot triggers at the end ATLAS ingest is complete and send a message to the <code class="docutils literal notranslate"><span class="pre">#vra</span></code> channel on the
 QUB slack. In each <cite>st3ph3n</cite> alert you will see two lines:</p>
-<ul class="simple">
-<li><ol class="arabic simple">
+<ol class="arabic simple">
 <li><p>How many Fast Track (&lt;100 Mpc) objects have rank &gt;4 and how many other (low rank) alerts there are.You should <strong>eyeball ALL ranks in the Fast Track list</strong>.</p></li>
-</ol>
-</li>
-<li><ol class="arabic simple" start="2">
 <li><p>How many alerts in the standard eyeball list with ranks &gt;4.</p></li>
 </ol>
-</li>
-</ul>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>The number of alerts to be eyeballed is <strong>usually over estimated</strong>. It’s a bug we have to fix.</p>
@@ -362,24 +357,12 @@ QUB slack. In each <cite>st3ph3n</cite> alert you will see two lines:</p>
 </section>
 <section id="tips">
 <h2>TIps<a class="headerlink" href="#tips" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><ol class="arabic simple">
+<ol class="arabic simple">
 <li><p><strong>Start with the Fast Track list</strong>. Also note that you need to eyeball <strong>all</strong> ranks (even the lower ones) in the Fast Track list.</p></li>
-</ol>
-</li>
-<li><ol class="arabic simple" start="2">
 <li><p>Go back to slack and <strong>click on the eyeball link</strong> provided by <code class="docutils literal notranslate"><span class="pre">st3ph3n</span></code>. This will take you to the curated eyeball list (ordered and cropped down to rank 4).</p></li>
-</ol>
-</li>
-<li><ol class="arabic simple" start="3">
 <li><p>Scroll down to the first alerts that or <strong>not</strong> rank 10 and eyeball these. They are the most promising which haven’t yet been pinched by another team.</p></li>
-</ol>
-</li>
-<li><ol class="arabic simple" start="4">
 <li><p>Finally clean up the rank 10 alerts.</p></li>
 </ol>
-</li>
-</ul>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>A rank of <strong>10</strong> means that the alert has been <strong>cross-matched to TNS</strong>. It does not necessarily mean it is real.</p>

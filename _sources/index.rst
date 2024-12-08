@@ -32,7 +32,6 @@ ATLAS Virtual Research Assistants
 
 
 
-
 Indices and tables
 ==================
 
