@@ -1,1 +1,2 @@
-sphinx-book-theme
+-e .[docs]
+-e .
