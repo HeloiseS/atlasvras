@@ -11,7 +11,7 @@ except (ModuleNotFoundError, ImportError):
         impmd = None
 
 try:
-    __version__ = impmd.version("atlasapiclient")
+    __version__ = impmd.version("atlasvras")
 except Exception:
     __version__ = "unknown"
 
