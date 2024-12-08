@@ -255,6 +255,7 @@ def max_mag_features_in(lightcurve: pd.DataFrame, atlas_id: str = None) -> tuple
 
     # Initialise our max mag to a very high value a.k.a low brightness
     max_mag = 99
+    max_mag_day= np.nan
 
     # #### LOOP OVER EACH DAYN #### #
     for i in range(lightcurve.shape[0]):
