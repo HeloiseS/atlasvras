@@ -12,6 +12,8 @@ jobs:
       # Checkout and build the docs with sphinx
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install sphinx theme
+        run: pip install sphinx-rtd-theme
       - name: Build HTML
         uses: ammaraskar/sphinx-action@7.4.7
         with:
