@@ -17,9 +17,10 @@
       <script src="_static/doctools.js?v=9a2dae69"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="ATLAS VRAs Manual" href="manual.html" />
+    <link rel="next" title="Curating the eyeball list" href="about.html" />
     <link rel="prev" title="ATLAS Virtual Research Assistants" href="index.html" /> 
 </head>
 
@@ -43,13 +44,22 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">TL;DR</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Eyeballer Cheat Sheet</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#st3ph3n">st3ph3n</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Cheat Sheet</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#st3ph3n-bot">st3ph3n-bot</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#strategy-and-tips">Strategy and tips</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">How does it work?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">The Deets</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="models.html">The Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html#training">Training</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">For Devs</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="manual.html">Manual</a></li>
 </ul>
 
@@ -79,8 +89,12 @@
              
   <section id="eyeballer-cheat-sheet">
 <h1>Eyeballer Cheat Sheet<a class="headerlink" href="#eyeballer-cheat-sheet" title="Link to this heading"></a></h1>
-<section id="st3ph3n">
-<h2>st3ph3n<a class="headerlink" href="#st3ph3n" title="Link to this heading"></a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>We deployed a new version of the VRA on 2024-12-06. Because the ranking is done a little differently you may see a slight increase in the number of alerts to eyeball.</p>
+</div>
+<section id="st3ph3n-bot">
+<h2>st3ph3n-bot<a class="headerlink" href="#st3ph3n-bot" title="Link to this heading"></a></h2>
 <p>As an eyeballer the main bot you will encounter is your virtual eyeballer counterpart: <code class="docutils literal notranslate"><span class="pre">st3ph3n</span></code>.
 It’s role is to <strong>rank the alerts from 0 to 10</strong>, with higher ranks being more likely to be extra-galactic transients.
 It automatically garbages alerts with low scores (for more detail see [REF]) so you can focus on the most promising alerts.</p>
@@ -140,7 +154,7 @@ This section builds on existing eyeballing guidelines.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="ATLAS Virtual Research Assistants" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="manual.html" class="btn btn-neutral float-right" title="ATLAS VRAs Manual" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="about.html" class="btn btn-neutral float-right" title="Curating the eyeball list" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
