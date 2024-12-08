@@ -1,5 +1,7 @@
 from atlasapiclient import client as atlasapiclient
 from atlasapiclient.utils import API_CONFIG_FILE
+
+from atlasvras.st3ph3n.slackbot import URL_BASE, EYEBALL_THRESHOLD
 from atlasvras.utils.misc import fetch_vra_dataframe
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
@@ -8,8 +10,23 @@ import pandas as pd
 from datetime import datetime
 import logging
 import sys
+import pkg_resources
+import yaml
 
-LOG_PATH = '/home/stevance/software/logs/'
+BOT_CONFIG_FILE = pkg_resources.resource_filename('atlasvras', 'data/bot_config_MINE.yaml')
+
+with open(BOT_CONFIG_FILE, 'r') as stream:
+    try:
+        config = yaml.safe_load(stream)
+        LOG_PATH = config['log_path']
+        SLACK_TOKEN = config['slack_token_el01z']
+        URL_BASE = config['base_url']
+        EYEBALL_THRESHOLD = config['eyeball_threshold']
+        URL_SLACK = config['url_slack']
+    except yaml.YAMLError as exc:
+        print(exc)
+
+
 # Get the last run date from the command line arguments. This will be handled by the
 # bash script that will call this python script.
 try:
@@ -30,11 +47,6 @@ logging.basicConfig(level=logging.INFO,
 
 # Write in the log that we are starting the script
 logging.info("Starting the script - last run date: " + last_run_date)
-
-
-#####################################################33333
-EYEBALL_THRESHOLD = 4
-URL_BASE = 'https://star.pst.qub.ac.uk/sne/atlas4/candidate/'
 
 ### Get all objects in Eyeball List right now
 get_ids_from_eyeball = atlasapiclient.GetATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,

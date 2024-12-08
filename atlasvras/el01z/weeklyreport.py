@@ -2,12 +2,9 @@
 import os
 from slack_sdk import WebClient
 from atlasvras.utils.prettify import vra_colors, label_to_color
-from slack_sdk.errors import SlackApiError
-# St3ph3n API
 from atlasapiclient import client as atlasapiclient
 from atlasvras.utils.misc import fetch_vra_dataframe
 # generic things
-import requests
 import logging
 import sys
 from datetime import datetime
@@ -16,8 +13,21 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+import yaml
+import pkg_resources
 
-LOG_PATH = '/home/stevance/software/logs/'
+BOT_CONFIG_FILE = pkg_resources.resource_filename('atlasvras', 'data/bot_config_MINE.yaml')
+
+with open(BOT_CONFIG_FILE, 'r') as stream:
+    try:
+        config = yaml.safe_load(stream)
+        LOG_PATH = config['log_path']
+        SLACK_TOKEN = config['slack_token_el01z']
+        URL_BASE = config['base_url']
+        EYEBALL_THRESHOLD = config['eyeball_threshold']
+        URL_SLACK = config['url_slack']
+    except yaml.YAMLError as exc:
+        print(exc)
 
 ####################################################################################
 ######################### STARTING THE SCRIPT ######################################
@@ -130,12 +140,9 @@ with open(f"{LOG_PATH}/report.csv", "a") as f:
 logging.info("numbers saved to report.csv")
 ###################################################
 
-client = WebClient(token=os.getenv('SLACK_TOKEN_el01z'))
+client = WebClient(token=SLACK_TOKEN)
 
 file_path = f'{LOG_PATH}/figures/{TODAY}.png'
-
-# Slack API URL
-url = 'https://slack.com/api/files.upload'
 
 file_response = client.files_upload_v2(
     channels=["C07HZGBKHQX"],

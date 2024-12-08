@@ -9,8 +9,21 @@ import os
 # Analysis things
 import numpy as np
 import pandas as pd
+import yaml
+import pkg_resources
 
-LOG_PATH = '/home/stevance/software/logs/'
+BOT_CONFIG_FILE = pkg_resources.resource_filename('atlasvras', 'data/bot_config_MINE.yaml')
+
+with open(BOT_CONFIG_FILE, 'r') as stream:
+    try:
+        config = yaml.safe_load(stream)
+        LOG_PATH = config['log_path']
+        SLACK_TOKEN = config['slack_token_el01z']
+        URL_BASE = config['base_url']
+        EYEBALL_THRESHOLD = config['eyeball_threshold']
+        URL_SLACK = config['url_slack']
+    except yaml.YAMLError as exc:
+        print(exc)
 
 ####################################################################################
 ######################### STARTING THE SCRIPT ######################################
@@ -101,7 +114,7 @@ for atlas_id in danger_zone_ids:
 
 logging.info("Sending the report to slack")
 
-client = WebClient(token=os.getenv('SLACK_TOKEN_el01z'))
+client = WebClient(token=SLACK_TOKEN)
 client.chat_postMessage(
   channel="#vra-dev",
   text=TEXT_REPORT,
