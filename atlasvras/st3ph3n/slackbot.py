@@ -1,3 +1,10 @@
+"""
+ST3PH3N SLACK BOT
+=================
+This is the eyeball notification bot that alerts when an ingest has finished
+and there are objects with rank > 4 in the eyeball and fast track lists.
+
+"""
 from atlasapiclient import client as atlasapiclient
 from atlasapiclient.utils import API_CONFIG_FILE
 from atlasvras.utils.misc import fetch_vra_dataframe
@@ -5,9 +12,26 @@ from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 import os
 import pandas as pd
+import yaml
+import pkg_resources
 
-EYEBALL_THRESHOLD = 4
-URL_BASE = 'https://star.pst.qub.ac.uk/sne/atlas4/'
+#########################################
+# LOAD PATHS AND TOKENS FROM THE CONFIG FILE
+#########################################
+
+BOT_CONFIG_FILE = pkg_resources.resource_filename('atlasvras', 'data/bot_config_MINE.yaml')
+
+with open(BOT_CONFIG_FILE, 'r') as stream:
+    try:
+        config = yaml.safe_load(stream)
+        LOG_PATH = config['log_path']
+        SLACK_TOKEN = config['slack_token_st3ph3n']
+        URL_BASE = config['base_url']
+        EYEBALL_THRESHOLD = config['eyeball_threshold']
+        URL_SLACK = config['url_slack']
+    except yaml.YAMLError as exc:
+        print(exc)
+
 # Get ATLAS IDs from the eyeball list -> set eyeball
 get_ids_from_eyeball = atlasapiclient.GetATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,
                                          list_name='eyeball',
@@ -50,11 +74,11 @@ bot_message = (f"*Ingest Complete*\n"
                )
 
 # SUMMONING THE SLACK BOT
-client = WebClient(token=os.getenv('SLACK_TOKEN'))
+client = WebClient(token=SLACK_TOKEN)
 
 try:
     response = client.chat_postMessage(
-        channel="#bot-test",
+        channel="#vra",
         text=bot_message
     )
 except SlackApiError as e:

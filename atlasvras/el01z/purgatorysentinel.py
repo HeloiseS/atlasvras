@@ -1,10 +1,7 @@
 from atlasapiclient import client as atlasapiclient
 from atlasapiclient.utils import API_CONFIG_FILE
-
-from atlasvras.st3ph3n.slackbot import URL_BASE, EYEBALL_THRESHOLD
 from atlasvras.utils.misc import fetch_vra_dataframe
 from slack_sdk import WebClient
-from slack_sdk.errors import SlackApiError
 import os
 import pandas as pd
 from datetime import datetime
