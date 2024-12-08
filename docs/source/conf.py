@@ -15,9 +15,9 @@ author = 'H.F.Stevance'
 
 extensions = []
 
-html_theme = 'sphinx_book_theme'
 
-#templates_path = ['_templates']
+
+templates_path = ['_templates']
 exclude_patterns = []
 
 
@@ -25,5 +25,5 @@ exclude_patterns = []
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'alabaster'
+html_theme = 'sphinx_book_theme'
 html_static_path = ['_static']
