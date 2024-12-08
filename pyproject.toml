@@ -19,7 +19,7 @@ dependencies = [
     "pytest",
     "requests",
     "tqdm",
-    "yaml",
+    "pyyaml",
     "joblib",
     "astropy",
     "matplotlib",
