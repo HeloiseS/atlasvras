@@ -15,7 +15,7 @@ author = 'H.F.Stevance'
 
 extensions = []
 
-templates_path = ['_templates']
+templates_path = 'sphinx_book_theme'
 exclude_patterns = []
 
 
