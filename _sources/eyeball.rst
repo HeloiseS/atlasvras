@@ -18,6 +18,9 @@ Second Eyeballer
 ~~~~~~~~~~~~~~~~
    - Check the **good** list for anything interesting to put in **follow-up**
 
+
+--------
+
 st3ph3n-bot
 -----------------
 As an eyeballer the main bot you will encounter is your virtual eyeballer counterpart: ``st3ph3n``.
