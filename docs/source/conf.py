@@ -5,16 +5,27 @@
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+import os
+import sys
+sys.path.insert(0, os.path.abspath('../../'))
 
 project = 'atlasvras'
 copyright = '2024, H.F.Stevance'
 author = 'H.F.Stevance'
 
+
+
+
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
+from atlasvras import __version__
 
-extensions = []
-
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary',
+]
+# The full version, including alpha/beta/rc tags
+release = __version__
 
 
 templates_path = ['_templates']
