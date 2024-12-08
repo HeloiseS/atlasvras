@@ -1,3 +1,2 @@
 sphinx_rtd_theme
 sphinx_book_theme
-sphinx_furo_theme
