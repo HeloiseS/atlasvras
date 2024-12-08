@@ -37,7 +37,7 @@ QUB slack. In each `st3ph3n` alert you will see two lines:
 .. warning::
    The number of alerts to be eyeballed is **usually over estimated**. It's a bug we have to fix.
 
-TIps
+Tips
 ---------
 
 1. **Start with the Fast Track list**. Also note that you need to eyeball **all** ranks (even the lower ones) in the Fast Track list.
