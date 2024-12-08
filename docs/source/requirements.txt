@@ -1,2 +1,2 @@
--e .[docs]
--e .
+sphinx-rtd-theme
+sphinx-book-theme

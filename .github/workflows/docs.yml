@@ -2,6 +2,9 @@
 name: docs
 on: [push, pull_request]
 jobs:
+  python:
+    install:
+      - requirements: docs/requirements.txt
   sphinx:
     runs-on: ubuntu-latest
     # The permissions are required to deploy to the gh-pages branch by the
