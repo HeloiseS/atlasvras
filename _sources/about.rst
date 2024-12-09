@@ -176,6 +176,8 @@ behaviour of the extra-galactic alerts in score space is better behaved
 .. caution::
    The fact that we are auto-garbaging galactic alerts means the garbage list will now have more contamination of real low SNR galactic events. We will have to be careful when creating future training sets to not introduce confusion to future models.
 
+.. note::
+   We have not cleaned the training set by giving it another round of eyeballing. Of the 30% of "lost" galactic objects, a signification fraction may actually be garbage.
 
 
 
