@@ -304,7 +304,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-challenge">The Challenge</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#how-does-it-work">How does it work?</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-virtual-research-assistant">The Virtual Research Assistant</a></li>
 </ul>
 
             </nav>
@@ -336,61 +336,71 @@ as follows:</p>
 <li><p><strong>Alerts to Sources</strong>: We aggregate individual alerts into sources (one source will likely have mutiple alerts). If the source is new, its unique 19 digit ATLAS ID is created.</p></li>
 <li><p><strong>Basic Cuts</strong>: Some simple quality cuts can help reduce the volume of the data stream. The main is that <strong>at least 3 detections per source (per night)</strong> are required to move onto the next stage.</p></li>
 <li><p><a class="reference external" href="https://lasair.readthedocs.io/en/develop/core_functions/sherlock.html">Sherlock</a> catalogue cross matching and <strong>remove variable stars</strong>.</p></li>
-<li><p><strong>Real/Bogus Score</strong>: We use a Convolutional Neural Network to classify the alerts as real or bogus (see <a href="#id1"><span class="problematic" id="id2">`Weston et al 2024`_</span></a>). <strong>If the RB score &gt;0.2</strong> they are passed on to eyeball list</p></li>
+<li><p><strong>Real/Bogus Score</strong>: We use a Convolutional Neural Network to classify the alerts as real or bogus (see <a href="#id1"><span class="problematic" id="id2">`Weston et. al 2024`_</span></a> ). <strong>If the RB score &gt;0.2</strong> they are passed on to eyeball list</p></li>
 <li><p><strong>Eyeball list</strong>: The alerts are eyeballed and classified as <code class="docutils literal notranslate"><span class="pre">garbage</span></code>, <code class="docutils literal notranslate"><span class="pre">good</span></code> or <code class="docutils literal notranslate"><span class="pre">attic</span></code> (for real alerts from transients within the galaxy). Good alerts are automatically pushed to TNS.</p></li>
 </ol>
-<p>The eyeball list in ATLAS still receives between 1000 and 3000 alerts every week depending on weather and phase of the moon.
+<p>The eyeball list in ATLAS still receives between <strong>1000 and 3000 alerts</strong>
+every week depending on weather and phase of the moon.
 Despite the fact that the CNN removes 98.5% of alerts, most of the eyeball list is still garbage.</p>
 <a class="reference internal image-reference" href="_images/pie_chart.png"><img alt="Pie chart showing the distribution of alerts in the eyeball list from data gathered between 27th March and 13th August 2024" class="align-center" src="_images/pie_chart.png" style="width: 400px;" />
 </a>
 </section>
 <section id="the-challenge">
 <h2>The Challenge<a class="headerlink" href="#the-challenge" title="Link to this heading">#</a></h2>
-<p>The difficulty in automating the eyeballing process is two fold:
-1. We need <strong>very high completeness</strong>
-2. Humans are FAST.</p>
+<p>The difficulty in automating the eyeballing process further is two fold:
+1. We need <strong>very high completeness</strong> (we don’t want to miss cool transients)
+2. Humans are FAST at the eyeballing task. Meaning they need _little_ data</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Given the cadence of ATLAS, people making over 90% of decisions within 24/48 hours means they most often only have <strong>one to two lightcurve points</strong> to look at.</p>
 </div>
-<a class="reference internal image-reference" href="_images/when_decision_made.png"><img alt="Histograms split by types showing the delay in human decisions" class="align-center" src="_images/when_decision_made.png" style="width: 400px;" />
+<a class="reference internal image-reference" href="_images/when_decision_made.png"><img alt="Histograms split by types showing the delay in human decisions" class="align-center" src="_images/when_decision_made.png" style="width: 650px;" />
 </a>
 <p>Because lightcurve information is not rich, classic transient classifiers made to reproduce
-spectroscopic classifications using only the lightcurve information are <strong>never going to have sufficient information</strong>
-to be useful in this regime.</p>
+spectroscopic classifications using only the lightcurve information are
+<strong>never going to have sufficient information</strong> to be useful in this regime.
+We therefore need to bridge the gap between the Real/Bogus classifiers (day 1 regime)
+and the Transient classifiers (day 7+ regime).</p>
 </section>
 </section>
 <hr class="docutils" />
-<section id="how-does-it-work">
-<h1>How does it work?<a class="headerlink" href="#how-does-it-work" title="Link to this heading">#</a></h1>
-<p>The virtual eyeballer <code class="docutils literal notranslate"><span class="pre">st3ph3n</span></code> uses <strong>context</strong> and <strong>lightcurve features</strong> (in addition to
-the RB score) to help distinguish further the alerts we care about from those we don’t.
-We have <code class="docutils literal notranslate"><span class="pre">st3ph3n</span></code> follow  a similar strategy to a human eyeballer, we ask <strong>two questions</strong>:</p>
+<section id="the-virtual-research-assistant">
+<h1>The Virtual Research Assistant<a class="headerlink" href="#the-virtual-research-assistant" title="Link to this heading">#</a></h1>
+<p>The VRA is designed to emulate the decision making of the eyeballers,
+and to leverage as much of the data available on the web server as possible.
+In addition to using the RB score, the virtual eyeballer <code class="docutils literal notranslate"><span class="pre">st3ph3n</span></code> also uses
+<strong>context</strong> and <strong>lightcurve features</strong>  and it follows  a similar strategy
+to the human team by asking <strong>two questions</strong>:</p>
 <ul class="simple">
-<li><p><em>Does this look REAL?</em></p></li>
-<li><p><em>Does this look GALACTIC ?</em></p></li>
+<li><p><em>Does this alert look REAL?</em></p></li>
+<li><p><em>Does this alert look GALACTIC ?</em></p></li>
 </ul>
 <p>To calculate the Real and Galactic scores, we train models called
-Histogram base Gradient Boosted Decision Trees [REF models].
+Histogram base Gradient Boosted Decision Trees (see <a class="reference external" href="https://scikit-learn.org/stable/modules/ensemble.html#histogram-based-gradient-boosting">scikit-learn docs</a> ).
 Both models use <strong>the same features</strong> but they <strong>calculate scores independently</strong>,
 and they are trained separately.</p>
 <p>They each score the alerts <strong>from 0 to 1</strong>, such that we can place our alerts in a plot
-we call the score space:
-[ADD picture]</p>
+we call the score space:</p>
+<a class="reference internal image-reference" href="_images/score_space.png"><img alt="Score space showing the balanced training data for the Crabby models" class="align-center" src="_images/score_space.png" style="width: 650px;" />
+</a>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>For more information about the data and the training of the models see the <strong>Data</strong> and <strong>Training</strong> subsections</p>
+</div>
 <p>Because we care about <strong>extragalactic transients</strong> we are interested in alerts
 nearest the <strong>bottom right</strong> (real=1, galactic=0).
 We’re going to use this to calculate the ranks.</p>
 <p>To rank our alerts we now use the <em>pythagoras theorem</em> :sparkles:.
-We calculate the distance from the bottom right corner of the score space, using a <strong>scalar</strong>
-(a.k.a fudge factor) to separate the bad alerts from the good ones more effectively.
-We scale the galactic axis by <strong>0.4</strong> to capture the real=1, galactic=1 corner and leave out
-as much or the garbage as possible.</p>
+We calculate the distance from the bottom right corner of the score space, scaling the
+galactic axis by <strong>0.4</strong> to separate the bad alerts from the good ones more effectively.
+It also ensures that our eyeballing policy (see below) encompasses the real=1, galactic=1 corner
+whilst leaving out as much or the garbage as possible.</p>
 <p>We then normalise all the distances (by the maximum distance that can be reached in the scaled score space),
 so that they range between 0 and 1. Then we multiply by 10 to get the values you see
 on the web server</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>In the previous version of the VRA the fudge factor was 0.5. This means the new models will give you a few more alerts to eyeball with more contamination down in the rank 4-6. But we’re also less likely to miss real galactic alerts.</p>
+<p>In the previous version of the VRA the scaling factor was 0.5. This means the new models will give you a few more alerts to eyeball with more contamination down in the rank 4-6. But we’re also less likely to miss real galactic alerts.</p>
 </div>
 <p>[ADD picture to show score space with the rank arcs]
 [Plots of the eyeballing policy fractions]</p>
@@ -459,7 +469,7 @@ alerts that are left in purgatory after they have fallen out of <code class="doc
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-challenge">The Challenge</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#how-does-it-work">How does it work?</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-virtual-research-assistant">The Virtual Research Assistant</a></li>
 </ul>
 
   </nav></div>
