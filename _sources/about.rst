@@ -36,8 +36,8 @@ Despite the fact that the CNN removes 98.5% of alerts, most of the eyeball list 
    :align: center
    :alt: Pie chart showing the distribution of alerts in the eyeball list from data gathered between 27th March and 13th August 2024
 
-The Challenge
------------------
+The Challenge of Automation
+----------------------------------------
 The difficulty in automating the eyeballing process further is two fold:
 1. We need **very high completeness** (we don't want to miss cool transients)
 2. Humans are FAST at the eyeballing task. Meaning they need _little_ data
@@ -73,7 +73,7 @@ to the human team by asking **two questions**:
 - *Does this alert look GALACTIC ?*
 
 Real and Galactic Scores
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 To calculate the Real and Galactic scores, we train models called
 Histogram base Gradient Boosted Decision Trees (see `scikit-learn docs`_ ).
 Both models use **the same features** but they **calculate scores independently**,
@@ -95,7 +95,7 @@ nearest the **bottom right** (real=1, galactic=0).
 We're going to use this to calculate the ranks.
 
 Ranking
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 To rank our alerts we now use the *pythagoras theorem* :sparkles:.
 We calculate the distance from the bottom right corner of the score space, scaling the
 galactic axis by **0.4** to separate the bad alerts from the good ones more effectively.
@@ -111,14 +111,18 @@ on the web server
 
 
 Eyeballing Policy
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
-[ADD picture to show score space with the rank arcs]
+.. image:: _static/ss_byalert_wranks.png
+    :width: 650
+    :align: center
+    :alt: Here we show the score space distributions for each alert type. We also plot the VRA rank contours.
+
 [Plots of the eyeballing policy fractions]
 
 
 Garbaging Policies
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 There are currently three "garbage collection" policies in place:
 * On **entering the eyeball list** with ``rank<1.5``
 * On a **second visit**, ``max(rank)<3``.

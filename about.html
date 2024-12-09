@@ -301,10 +301,16 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Background</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-journey-from-telescope-to-transient-name-server">Data Journey: From Telescope to Transient Name Server</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-challenge">The Challenge</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-challenge-of-automation">The Challenge of Automation</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-virtual-research-assistant">The Virtual Research Assistant</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-virtual-research-assistant">The Virtual Research Assistant</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-and-galactic-scores">Real and Galactic Scores</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking">Ranking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eyeballing-policy">Eyeballing Policy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#garbaging-policies">Garbaging Policies</a></li>
+</ul>
+</li>
 </ul>
 
             </nav>
@@ -345,8 +351,8 @@ Despite the fact that the CNN removes 98.5% of alerts, most of the eyeball list 
 <a class="reference internal image-reference" href="_images/pie_chart.png"><img alt="Pie chart showing the distribution of alerts in the eyeball list from data gathered between 27th March and 13th August 2024" class="align-center" src="_images/pie_chart.png" style="width: 400px;" />
 </a>
 </section>
-<section id="the-challenge">
-<h2>The Challenge<a class="headerlink" href="#the-challenge" title="Link to this heading">#</a></h2>
+<section id="the-challenge-of-automation">
+<h2>The Challenge of Automation<a class="headerlink" href="#the-challenge-of-automation" title="Link to this heading">#</a></h2>
 <p>The difficulty in automating the eyeballing process further is two fold:
 1. We need <strong>very high completeness</strong> (we don’t want to miss cool transients)
 2. Humans are FAST at the eyeballing task. Meaning they need _little_ data</p>
@@ -375,6 +381,8 @@ to the human team by asking <strong>two questions</strong>:</p>
 <li><p><em>Does this alert look REAL?</em></p></li>
 <li><p><em>Does this alert look GALACTIC ?</em></p></li>
 </ul>
+<section id="real-and-galactic-scores">
+<h2>Real and Galactic Scores<a class="headerlink" href="#real-and-galactic-scores" title="Link to this heading">#</a></h2>
 <p>To calculate the Real and Galactic scores, we train models called
 Histogram base Gradient Boosted Decision Trees (see <a class="reference external" href="https://scikit-learn.org/stable/modules/ensemble.html#histogram-based-gradient-boosting">scikit-learn docs</a> ).
 Both models use <strong>the same features</strong> but they <strong>calculate scores independently</strong>,
@@ -390,6 +398,9 @@ we call the score space:</p>
 <p>Because we care about <strong>extragalactic transients</strong> we are interested in alerts
 nearest the <strong>bottom right</strong> (real=1, galactic=0).
 We’re going to use this to calculate the ranks.</p>
+</section>
+<section id="ranking">
+<h2>Ranking<a class="headerlink" href="#ranking" title="Link to this heading">#</a></h2>
 <p>To rank our alerts we now use the <em>pythagoras theorem</em> :sparkles:.
 We calculate the distance from the bottom right corner of the score space, scaling the
 galactic axis by <strong>0.4</strong> to separate the bad alerts from the good ones more effectively.
@@ -402,8 +413,15 @@ on the web server</p>
 <p class="admonition-title">Warning</p>
 <p>In the previous version of the VRA the scaling factor was 0.5. This means the new models will give you a few more alerts to eyeball with more contamination down in the rank 4-6. But we’re also less likely to miss real galactic alerts.</p>
 </div>
-<p>[ADD picture to show score space with the rank arcs]
-[Plots of the eyeballing policy fractions]</p>
+</section>
+<section id="eyeballing-policy">
+<h2>Eyeballing Policy<a class="headerlink" href="#eyeballing-policy" title="Link to this heading">#</a></h2>
+<a class="reference internal image-reference" href="_images/ss_byalert_wranks.png"><img alt="Here we show the score space distributions for each alert type. We also plot the VRA rank contours." class="align-center" src="_images/ss_byalert_wranks.png" style="width: 650px;" />
+</a>
+<p>[Plots of the eyeballing policy fractions]</p>
+</section>
+<section id="garbaging-policies">
+<h2>Garbaging Policies<a class="headerlink" href="#garbaging-policies" title="Link to this heading">#</a></h2>
 <p>There are currently three “garbage collection” policies in place:
 * On <strong>entering the eyeball list</strong> with <code class="docutils literal notranslate"><span class="pre">rank&lt;1.5</span></code>
 * On a <strong>second visit</strong>, <code class="docutils literal notranslate"><span class="pre">max(rank)&lt;3</span></code>.
@@ -416,6 +434,7 @@ alerts that are left in purgatory after they have fallen out of <code class="doc
 <p class="admonition-title">Caution</p>
 <p>We will need to add a garbage collection policy to automate purgatory collection.</p>
 </div>
+</section>
 </section>
 
 
@@ -466,10 +485,16 @@ alerts that are left in purgatory after they have fallen out of <code class="doc
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Background</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-journey-from-telescope-to-transient-name-server">Data Journey: From Telescope to Transient Name Server</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-challenge">The Challenge</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-challenge-of-automation">The Challenge of Automation</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-virtual-research-assistant">The Virtual Research Assistant</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-virtual-research-assistant">The Virtual Research Assistant</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-and-galactic-scores">Real and Galactic Scores</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking">Ranking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eyeballing-policy">Eyeballing Policy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#garbaging-policies">Garbaging Policies</a></li>
+</ul>
+</li>
 </ul>
 
   </nav></div>
