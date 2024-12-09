@@ -152,12 +152,35 @@ alerts that are left in purgatory after they have fallen out of ``st3ph3n``'s tr
 
 Discussion
 ~~~~~~~~~~~~~
+Testing the effect of the policies on static data is tricky as we do not have
+an eyeball list refilling every day.
+What we can do is assess the effect of the eyeballing and garbaging policies on our
+validation set to see what fraction of our ``good``, ``galactic`` and ``garbage`` + ``pm``
+alerts will get eyeballed and auto-garbaged. The plot below shows this for the current generation of models.
 
 .. image:: _static/policy_results.png
     :width: 650
     :align: center
     :alt: Fraction of alerts eyeballed Vs auto-garbaged for the different alert types given our current policies.
 
+As we can see we eliminate 86% of the garbage and recover all the good ones save fore one event.
+However we do end up "sacrificing" 27% of the galactic alerts.
+
+At present this is an acceptable loss since our science case is focused on extra galactic transients.
+This could be remedied in the futures either by:
+
+1. Having a separate policy and eyeball list focused on galactic alerts. This would require a dedicated team of galactic eyeballers (likely people connected to those science  cases)
+2. Changing the ranking policy to a more complex function which better captures the shape of galactic event distribution.
+
+The former option is not viable right now since we do not have the team
+members to add this layer of operations.
+The second option is disfavoured because the simplicity of the ranking function
+makes it very understandable for the people who use it in our current team because the
+behaviour of the extra-galactic alerts in score space is better behaved
+(the tails are more symmetrical).
+
+.. caution::
+   The fact that we are auto-garbaging galactic alerts means the garbage list will now have more contamination of real low SNR galactic events. We will have to be careful when creating future training sets to not introduce confusion to future models.
 
 
 
