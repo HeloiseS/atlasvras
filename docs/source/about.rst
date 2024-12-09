@@ -25,7 +25,7 @@ as follows:
 2. **Basic Cuts**: Some simple quality cuts can help reduce the volume of the data stream. The main is that **at least 3 detections per source (per night)** are required to move onto the next stage.
 3. `Sherlock`_ catalogue cross matching and **remove variable stars**.
 4. **Real/Bogus Score**: We use a Convolutional Neural Network to classify the alerts as real or bogus (see `Weston et. al 2024`_ ). **If the RB score >0.2** they are passed on to eyeball list
-5. **Eyeball list**: The alerts are eyeballed and classified as ``garbage``, ``good`` or ``attic`` (for real alerts from transients within the galaxy). Good alerts are automatically pushed to TNS.
+5. **Eyeball list**: The alerts are eyeballed and classified as ``garbage``, ``pm`` (proper motion star),``good`` or ``attic`` (for real alerts from transients within the galaxy). Good alerts are automatically pushed to TNS.
 
 The eyeball list in ATLAS still receives between **1000 and 3000 alerts**
 every week depending on weather and phase of the moon.
