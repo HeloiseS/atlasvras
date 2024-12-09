@@ -416,9 +416,18 @@ on the web server</p>
 </section>
 <section id="eyeballing-policy">
 <h2>Eyeballing Policy<a class="headerlink" href="#eyeballing-policy" title="Link to this heading">#</a></h2>
-<a class="reference internal image-reference" href="_images/ss_byalert_wranks.png"><img alt="Here we show the score space distributions for each alert type. We also plot the VRA rank contours." class="align-center" src="_images/ss_byalert_wranks.png" style="width: 650px;" />
+<p>The current eyeballing policy is to ask human experts to check everything
+with a <code class="docutils literal notranslate"><span class="pre">rank</span> <span class="pre">&gt;4</span></code>. As we can see in the figure below, this encompasses
+nearly all the extra-galactic alerts (blue) and a large fraction of the galactic alerts (yellow).</p>
+<a class="reference internal image-reference" href="_images/ss_byalert_wranks.png"><img alt="Here we show the score space distributions for each alert type. We also plot the VRA rank contours." class="align-center" src="_images/ss_byalert_wranks.png" style="width: 800px;" />
 </a>
-<p>[Plots of the eyeballing policy fractions]</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Due the the distribution of the galactic alerts extending quite far down the Real axis, this policy means that a non negligible fraction of galactic transients will be missed.</p>
+</div>
+<p>This is something we are aware of and are okay with given our science goals.</p>
+<a class="reference internal image-reference" href="_images/policy_results.png"><img alt="Fraction of alerts eyeballed Vs auto-garbaged for the different alert types given our current policies." class="align-center" src="_images/policy_results.png" style="width: 650px;" />
+</a>
 </section>
 <section id="garbaging-policies">
 <h2>Garbaging Policies<a class="headerlink" href="#garbaging-policies" title="Link to this heading">#</a></h2>
