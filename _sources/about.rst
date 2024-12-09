@@ -94,6 +94,11 @@ Because we care about **extragalactic transients** we are interested in alerts
 nearest the **bottom right** (real=1, galactic=0).
 We're going to use this to calculate the ranks.
 
+Finally, the alerts are scored **every time new  data is available**.
+There is a distinction between the models that score when first entering the eyeball list (``day1`` models)
+and those updating the ranks on future visits (``dayN`` models), in that the latter
+use additional features (see the Training section). But the ranking logic remains the same.
+
 Ranking
 -----------------------------------
 To rank our alerts we now use the *pythagoras theorem* :sparkles:.
@@ -110,8 +115,11 @@ on the web server
    In the previous version of the VRA the scaling factor was 0.5. This means the new models will give you a few more alerts to eyeball with more contamination down in the rank 4-6. But we're also less likely to miss real galactic alerts.
 
 
-Eyeballing Policy
------------------------------------
+Policies
+---------------------------------------
+
+Eyeballing
+~~~~~~~~~~~
 
 The current eyeballing policy is to ask human experts to check everything
 with a ``rank >4``. As we can see in the figure below, this encompasses
@@ -123,19 +131,11 @@ nearly all the extra-galactic alerts (blue) and a large fraction of the galactic
     :alt: Here we show the score space distributions for each alert type. We also plot the VRA rank contours.
 
 .. warning::
-   Due the the distribution of the galactic alerts extending quite far down the Real axis, this policy means that a non negligible fraction of galactic transients will be missed.
-
-This is something we are aware of and are okay with given our science goals.
-
-.. image:: _static/policy_results.png
-    :width: 650
-    :align: center
-    :alt: Fraction of alerts eyeballed Vs auto-garbaged for the different alert types given our current policies.
+   Due the the distribution of the galactic alerts extending quite far down the Real axis, this policy means that a non negligible fraction of galactic transients will be missed. See the discussion at the bottom of this page for more info.
 
 
-
-Garbaging Policies
------------------------------------
+Garbaging
+~~~~~~~~~~~~~
 There are currently three "garbage collection" policies in place:
 * On **entering the eyeball list** with ``rank<1.5``
 * On a **second visit**, ``max(rank)<3``.
@@ -149,6 +149,16 @@ alerts that are left in purgatory after they have fallen out of ``st3ph3n``'s tr
 
 .. caution::
    We will need to add a garbage collection policy to automate purgatory collection.
+
+Discussion
+~~~~~~~~~~~~~
+
+.. image:: _static/policy_results.png
+    :width: 650
+    :align: center
+    :alt: Fraction of alerts eyeballed Vs auto-garbaged for the different alert types given our current policies.
+
+
 
 
 

@@ -14,10 +14,10 @@ ATLAS Virtual Research Assistants
 
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: The Deets
 
-   What? How? <about>
+   The VRA  <about>
    Training  <models>
    Monitoring <el01z>
 

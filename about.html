@@ -307,8 +307,12 @@
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-virtual-research-assistant">The Virtual Research Assistant</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-and-galactic-scores">Real and Galactic Scores</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking">Ranking</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eyeballing-policy">Eyeballing Policy</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#garbaging-policies">Garbaging Policies</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#policies">Policies</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eyeballing">Eyeballing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#garbaging">Garbaging</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discussion">Discussion</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -398,6 +402,10 @@ we call the score space:</p>
 <p>Because we care about <strong>extragalactic transients</strong> we are interested in alerts
 nearest the <strong>bottom right</strong> (real=1, galactic=0).
 We’re going to use this to calculate the ranks.</p>
+<p>Finally, the alerts are scored <strong>every time new  data is available</strong>.
+There is a distinction between the models that score when first entering the eyeball list (<code class="docutils literal notranslate"><span class="pre">day1</span></code> models)
+and those updating the ranks on future visits (<code class="docutils literal notranslate"><span class="pre">dayN</span></code> models), in that the latter
+use additional features (see the Training section). But the ranking logic remains the same.</p>
 </section>
 <section id="ranking">
 <h2>Ranking<a class="headerlink" href="#ranking" title="Link to this heading">#</a></h2>
@@ -414,8 +422,10 @@ on the web server</p>
 <p>In the previous version of the VRA the scaling factor was 0.5. This means the new models will give you a few more alerts to eyeball with more contamination down in the rank 4-6. But we’re also less likely to miss real galactic alerts.</p>
 </div>
 </section>
-<section id="eyeballing-policy">
-<h2>Eyeballing Policy<a class="headerlink" href="#eyeballing-policy" title="Link to this heading">#</a></h2>
+<section id="policies">
+<h2>Policies<a class="headerlink" href="#policies" title="Link to this heading">#</a></h2>
+<section id="eyeballing">
+<h3>Eyeballing<a class="headerlink" href="#eyeballing" title="Link to this heading">#</a></h3>
 <p>The current eyeballing policy is to ask human experts to check everything
 with a <code class="docutils literal notranslate"><span class="pre">rank</span> <span class="pre">&gt;4</span></code>. As we can see in the figure below, this encompasses
 nearly all the extra-galactic alerts (blue) and a large fraction of the galactic alerts (yellow).</p>
@@ -423,14 +433,11 @@ nearly all the extra-galactic alerts (blue) and a large fraction of the galactic
 </a>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Due the the distribution of the galactic alerts extending quite far down the Real axis, this policy means that a non negligible fraction of galactic transients will be missed.</p>
+<p>Due the the distribution of the galactic alerts extending quite far down the Real axis, this policy means that a non negligible fraction of galactic transients will be missed. See the discussion at the bottom of this page for more info.</p>
 </div>
-<p>This is something we are aware of and are okay with given our science goals.</p>
-<a class="reference internal image-reference" href="_images/policy_results.png"><img alt="Fraction of alerts eyeballed Vs auto-garbaged for the different alert types given our current policies." class="align-center" src="_images/policy_results.png" style="width: 650px;" />
-</a>
 </section>
-<section id="garbaging-policies">
-<h2>Garbaging Policies<a class="headerlink" href="#garbaging-policies" title="Link to this heading">#</a></h2>
+<section id="garbaging">
+<h3>Garbaging<a class="headerlink" href="#garbaging" title="Link to this heading">#</a></h3>
 <p>There are currently three “garbage collection” policies in place:
 * On <strong>entering the eyeball list</strong> with <code class="docutils literal notranslate"><span class="pre">rank&lt;1.5</span></code>
 * On a <strong>second visit</strong>, <code class="docutils literal notranslate"><span class="pre">max(rank)&lt;3</span></code>.
@@ -443,6 +450,12 @@ alerts that are left in purgatory after they have fallen out of <code class="doc
 <p class="admonition-title">Caution</p>
 <p>We will need to add a garbage collection policy to automate purgatory collection.</p>
 </div>
+</section>
+<section id="discussion">
+<h3>Discussion<a class="headerlink" href="#discussion" title="Link to this heading">#</a></h3>
+<a class="reference internal image-reference" href="_images/policy_results.png"><img alt="Fraction of alerts eyeballed Vs auto-garbaged for the different alert types given our current policies." class="align-center" src="_images/policy_results.png" style="width: 650px;" />
+</a>
+</section>
 </section>
 </section>
 
@@ -500,8 +513,12 @@ alerts that are left in purgatory after they have fallen out of <code class="doc
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-virtual-research-assistant">The Virtual Research Assistant</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-and-galactic-scores">Real and Galactic Scores</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking">Ranking</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eyeballing-policy">Eyeballing Policy</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#garbaging-policies">Garbaging Policies</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#policies">Policies</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eyeballing">Eyeballing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#garbaging">Garbaging</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discussion">Discussion</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
