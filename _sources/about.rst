@@ -1,5 +1,5 @@
-Background
-=============
+The Virtual Research Assistant
+=================================
 .. _Tonry et al. 2018: https://ui.adsabs.harvard.edu/abs/2018PASP..130f4505T/abstract
 .. _Smith et al. 2020: https://ui.adsabs.harvard.edu/abs/2020PASP..132h5002S/abstract
 .. _Sherlock: https://lasair.readthedocs.io/en/develop/core_functions/sherlock.html
@@ -56,12 +56,6 @@ spectroscopic classifications using only the lightcurve information are
 **never going to have sufficient information** to be useful in this regime.
 We therefore need to bridge the gap between the Real/Bogus classifiers (day 1 regime)
 and the Transient classifiers (day 7+ regime).
-
---------
-
-
-The Virtual Research Assistant
-=================================
 
 The VRA is designed to emulate the decision making of the eyeballers,
 and to leverage as much of the data available on the web server as possible.
