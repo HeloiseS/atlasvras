@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>How does it work? &#8212; ATLAS VRAs unknown documentation</title>
+    <title>Background &#8212; ATLAS VRAs unknown documentation</title>
   
   
   
@@ -150,7 +150,8 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">The Deets</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">How does it work?</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Background</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="models.html">The Data</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="el01z.html">Monitoring</a></li>
@@ -288,7 +289,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>How does it work?</h1>
+    <h1>Background</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -298,12 +299,14 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-and-galactic-scores">Real and Galactic Scores</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#day-1-vs-day-n-models">Day 1 Vs Day N Models</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking">Ranking</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eyeballing-policy">Eyeballing Policy</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#garbaging-policies">Garbaging Policies</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Background</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-journey-from-telescope-to-transient-name-server">Data Journey: From Telescope to Transient Name Server</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-challenge">The Challenge</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#how-does-it-work">How does it work?</a></li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -314,10 +317,52 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="how-does-it-work">
+  <section id="background">
+<h1>Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h1>
+<section id="data-journey-from-telescope-to-transient-name-server">
+<h2>Data Journey: From Telescope to Transient Name Server<a class="headerlink" href="#data-journey-from-telescope-to-transient-name-server" title="Link to this heading">#</a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>Survey Design: <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2018PASP..130f4505T/abstract">Tonry et al. 2018</a> | Transient Server <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2020PASP..132h5002S/abstract">Smith et al. 2020</a></p>
+</div>
+<p>The ATLAS data are first reduced (debiased and flat fielded) on site before
+being sent to Hawaii for difference imaging. Alerts are produced if a detection
+above 5 sigma is recorded, and these form the data stream that is handled by
+the servers at Queen’s University Belfast.</p>
+<p>The alert stream size is of order 10s millions per night. Most of these are artefacts from the
+difference imaging process, or known variable stars. The data stream is handled
+as follows:</p>
+<ol class="arabic simple">
+<li><p><strong>Alerts to Sources</strong>: We aggregate individual alerts into sources (one source will likely have mutiple alerts). If the source is new, its unique 19 digit ATLAS ID is created.</p></li>
+<li><p><strong>Basic Cuts</strong>: Some simple quality cuts can help reduce the volume of the data stream. The main is that <strong>at least 3 detections per source (per night)</strong> are required to move onto the next stage.</p></li>
+<li><p><a class="reference external" href="https://lasair.readthedocs.io/en/develop/core_functions/sherlock.html">Sherlock</a> catalogue cross matching and <strong>remove variable stars</strong>.</p></li>
+<li><p><strong>Real/Bogus Score</strong>: We use a Convolutional Neural Network to classify the alerts as real or bogus (see <a href="#id1"><span class="problematic" id="id2">`Weston et al 2024`_</span></a>). <strong>If the RB score &gt;0.2</strong> they are passed on to eyeball list</p></li>
+<li><p><strong>Eyeball list</strong>: The alerts are eyeballed and classified as <code class="docutils literal notranslate"><span class="pre">garbage</span></code>, <code class="docutils literal notranslate"><span class="pre">good</span></code> or <code class="docutils literal notranslate"><span class="pre">attic</span></code> (for real alerts from transients within the galaxy). Good alerts are automatically pushed to TNS.</p></li>
+</ol>
+<p>The eyeball list in ATLAS still receives between 1000 and 3000 alerts every week depending on weather and phase of the moon.
+Despite the fact that the CNN removes 98.5% of alerts, most of the eyeball list is still garbage.</p>
+<a class="reference internal image-reference" href="_images/pie_chart.png"><img alt="Pie chart showing the distribution of alerts in the eyeball list from data gathered between 27th March and 13th August 2024" class="align-center" src="_images/pie_chart.png" style="width: 400px;" />
+</a>
+</section>
+<section id="the-challenge">
+<h2>The Challenge<a class="headerlink" href="#the-challenge" title="Link to this heading">#</a></h2>
+<p>The difficulty in automating the eyeballing process is two fold:
+1. We need <strong>very high completeness</strong>
+2. Humans are FAST.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Given the cadence of ATLAS, people making over 90% of decisions within 24/48 hours means they most often only have <strong>one to two lightcurve points</strong> to look at.</p>
+</div>
+<a class="reference internal image-reference" href="_static/when_decisions_made.png"><img alt="Histograms split by types showing the delay in human decisions" class="align-center" src="_static/when_decisions_made.png" style="width: 400px;" />
+</a>
+<p>Because lightcurve information is not rich, classic transient classifiers made to reproduce
+spectroscopic classifications using only the lightcurve information are <strong>never going to have sufficient information</strong>
+to be useful in this regime.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="how-does-it-work">
 <h1>How does it work?<a class="headerlink" href="#how-does-it-work" title="Link to this heading">#</a></h1>
-<p>The eyeball list in ATLAS is defined as everything that gets a Real/Bogus score &gt;0.2 in our CNN.
-Every week that is between 1000 and 3000 alerts depending on weather and phase of the moon.</p>
 <p>The virtual eyeballer <code class="docutils literal notranslate"><span class="pre">st3ph3n</span></code> uses <strong>context</strong> and <strong>lightcurve features</strong> (in addition to
 the RB score) to help distinguish further the alerts we care about from those we don’t.
 We have <code class="docutils literal notranslate"><span class="pre">st3ph3n</span></code> follow  a similar strategy to a human eyeballer, we ask <strong>two questions</strong>:</p>
@@ -325,8 +370,6 @@ We have <code class="docutils literal notranslate"><span class="pre">st3ph3n</sp
 <li><p><em>Does this look REAL?</em></p></li>
 <li><p><em>Does this look GALACTIC ?</em></p></li>
 </ul>
-<section id="real-and-galactic-scores">
-<h2>Real and Galactic Scores<a class="headerlink" href="#real-and-galactic-scores" title="Link to this heading">#</a></h2>
 <p>To calculate the Real and Galactic scores, we train models called
 Histogram base Gradient Boosted Decision Trees [REF models].
 Both models use <strong>the same features</strong> but they <strong>calculate scores independently</strong>,
@@ -337,12 +380,6 @@ we call the score space:
 <p>Because we care about <strong>extragalactic transients</strong> we are interested in alerts
 nearest the <strong>bottom right</strong> (real=1, galactic=0).
 We’re going to use this to calculate the ranks.</p>
-</section>
-<section id="day-1-vs-day-n-models">
-<h2>Day 1 Vs Day N Models<a class="headerlink" href="#day-1-vs-day-n-models" title="Link to this heading">#</a></h2>
-</section>
-<section id="ranking">
-<h2>Ranking<a class="headerlink" href="#ranking" title="Link to this heading">#</a></h2>
 <p>To rank our alerts we now use the <em>pythagoras theorem</em> :sparkles:.
 We calculate the distance from the bottom right corner of the score space, using a <strong>scalar</strong>
 (a.k.a fudge factor) to separate the bad alerts from the good ones more effectively.
@@ -355,14 +392,8 @@ on the web server</p>
 <p class="admonition-title">Warning</p>
 <p>In the previous version of the VRA the fudge factor was 0.5. This means the new models will give you a few more alerts to eyeball with more contamination down in the rank 4-6. But we’re also less likely to miss real galactic alerts.</p>
 </div>
-</section>
-<section id="eyeballing-policy">
-<h2>Eyeballing Policy<a class="headerlink" href="#eyeballing-policy" title="Link to this heading">#</a></h2>
 <p>[ADD picture to show score space with the rank arcs]
 [Plots of the eyeballing policy fractions]</p>
-</section>
-<section id="garbaging-policies">
-<h2>Garbaging Policies<a class="headerlink" href="#garbaging-policies" title="Link to this heading">#</a></h2>
 <p>There are currently three “garbage collection” policies in place:
 * On <strong>entering the eyeball list</strong> with <code class="docutils literal notranslate"><span class="pre">rank&lt;1.5</span></code>
 * On a <strong>second visit</strong>, <code class="docutils literal notranslate"><span class="pre">max(rank)&lt;3</span></code>.
@@ -375,7 +406,6 @@ alerts that are left in purgatory after they have fallen out of <code class="doc
 <p class="admonition-title">Caution</p>
 <p>We will need to add a garbage collection policy to automate purgatory collection.</p>
 </div>
-</section>
 </section>
 
 
@@ -424,12 +454,14 @@ alerts that are left in purgatory after they have fallen out of <code class="doc
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-and-galactic-scores">Real and Galactic Scores</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#day-1-vs-day-n-models">Day 1 Vs Day N Models</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking">Ranking</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eyeballing-policy">Eyeballing Policy</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#garbaging-policies">Garbaging Policies</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Background</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-journey-from-telescope-to-transient-name-server">Data Journey: From Telescope to Transient Name Server</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-challenge">The Challenge</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#how-does-it-work">How does it work?</a></li>
+</ul>
+
   </nav></div>
 
 </div></div>

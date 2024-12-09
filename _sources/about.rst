@@ -1,8 +1,64 @@
+Background
+=============
+.. _Tonry et al. 2018: https://ui.adsabs.harvard.edu/abs/2018PASP..130f4505T/abstract
+.. _Smith et al. 2020: https://ui.adsabs.harvard.edu/abs/2020PASP..132h5002S/abstract
+.. _Sherlock: https://lasair.readthedocs.io/en/develop/core_functions/sherlock.html
+.. _Weston et al. 2024: https://academic.oup.com/rasti/article/3/1/385/7713043
+
+Data Journey: From Telescope to Transient Name Server
+------------------------------------------------------------
+
+.. seealso::
+   Survey Design: `Tonry et al. 2018`_ | Transient Server `Smith et al. 2020`_
+
+The ATLAS data are first reduced (debiased and flat fielded) on site before
+being sent to Hawaii for difference imaging. Alerts are produced if a detection
+above 5 sigma is recorded, and these form the data stream that is handled by
+the servers at Queen's University Belfast.
+
+The alert stream size is of order 10s millions per night. Most of these are artefacts from the
+difference imaging process, or known variable stars. The data stream is handled
+as follows:
+
+1. **Alerts to Sources**: We aggregate individual alerts into sources (one source will likely have mutiple alerts). If the source is new, its unique 19 digit ATLAS ID is created.
+2. **Basic Cuts**: Some simple quality cuts can help reduce the volume of the data stream. The main is that **at least 3 detections per source (per night)** are required to move onto the next stage.
+3. `Sherlock`_ catalogue cross matching and **remove variable stars**.
+4. **Real/Bogus Score**: We use a Convolutional Neural Network to classify the alerts as real or bogus (see `Weston et al 2024`_). **If the RB score >0.2** they are passed on to eyeball list
+5. **Eyeball list**: The alerts are eyeballed and classified as ``garbage``, ``good`` or ``attic`` (for real alerts from transients within the galaxy). Good alerts are automatically pushed to TNS.
+
+The eyeball list in ATLAS still receives between 1000 and 3000 alerts every week depending on weather and phase of the moon.
+Despite the fact that the CNN removes 98.5% of alerts, most of the eyeball list is still garbage.
+
+.. image:: _static/pie_chart.png
+   :width: 400
+   :align: center
+   :alt: Pie chart showing the distribution of alerts in the eyeball list from data gathered between 27th March and 13th August 2024
+
+The Challenge
+-----------------
+The difficulty in automating the eyeballing process is two fold:
+1. We need **very high completeness**
+2. Humans are FAST.
+
+.. important::
+   Given the cadence of ATLAS, people making over 90% of decisions within 24/48 hours means they most often only have **one to two lightcurve points** to look at.
+
+
+.. image:: _static/when_decisions_made.png
+    :width: 400
+    :align: center
+    :alt: Histograms split by types showing the delay in human decisions
+
+Because lightcurve information is not rich, classic transient classifiers made to reproduce
+spectroscopic classifications using only the lightcurve information are **never going to have sufficient information**
+to be useful in this regime.
+
+
+--------
+
+
 How does it work?
 ====================
-
-The eyeball list in ATLAS is defined as everything that gets a Real/Bogus score >0.2 in our CNN.
-Every week that is between 1000 and 3000 alerts depending on weather and phase of the moon.
 
 The virtual eyeballer ``st3ph3n`` uses **context** and **lightcurve features** (in addition to
 the RB score) to help distinguish further the alerts we care about from those we don't.

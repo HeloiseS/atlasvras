@@ -17,8 +17,8 @@ ATLAS Virtual Research Assistants
    :maxdepth: 1
    :caption: The Deets
 
-   How does it work? <about>
-   Training st3ph3n <models>
+   What? How? <about>
+   Training  <models>
    Monitoring <el01z>
 
 
