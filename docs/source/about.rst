@@ -44,7 +44,7 @@ The difficulty in automating the eyeballing process is two fold:
    Given the cadence of ATLAS, people making over 90% of decisions within 24/48 hours means they most often only have **one to two lightcurve points** to look at.
 
 
-.. image:: _static/when_decisions_made.png
+.. image:: _static/when_decision_made.png
     :width: 400
     :align: center
     :alt: Histograms split by types showing the delay in human decisions
