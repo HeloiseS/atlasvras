@@ -113,12 +113,25 @@ on the web server
 Eyeballing Policy
 -----------------------------------
 
+The current eyeballing policy is to ask human experts to check everything
+with a ``rank >4``. As we can see in the figure below, this encompasses
+nearly all the extra-galactic alerts (blue) and a large fraction of the galactic alerts (yellow).
+
 .. image:: _static/ss_byalert_wranks.png
-    :width: 650
+    :width: 800
     :align: center
     :alt: Here we show the score space distributions for each alert type. We also plot the VRA rank contours.
 
-[Plots of the eyeballing policy fractions]
+.. warning::
+   Due the the distribution of the galactic alerts extending quite far down the Real axis, this policy means that a non negligible fraction of galactic transients will be missed.
+
+This is something we are aware of and are okay with given our science goals.
+
+.. image:: _static/policy_results.png
+    :width: 650
+    :align: center
+    :alt: Fraction of alerts eyeballed Vs auto-garbaged for the different alert types given our current policies.
+
 
 
 Garbaging Policies
