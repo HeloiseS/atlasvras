@@ -298,7 +298,11 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">The Data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">The Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-numbers">Some Numbers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-caveats">Some Caveats</a></li>
+</ul>
+</li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#training">Training</a></li>
 </ul>
 
@@ -314,6 +318,67 @@
                   
   <section id="the-data">
 <h1>The Data<a class="headerlink" href="#the-data" title="Link to this heading">#</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The naming convention is as follows: new names are chosen for new
+data sets(not new features), with their names starting with incremented
+letters of the alphabet. The Crabby models are the third iteration of VRA
+models (the first two being unpublished prototypes)</p>
+</div>
+<p>The current family of models is called <code class="docutils literal notranslate"><span class="pre">Crabby</span></code> and encompasses
+data gathered between <code class="docutils literal notranslate"><span class="pre">2024-03-27</span></code> and <code class="docutils literal notranslate"><span class="pre">2024-08-13</span></code>.
+These dates were determined by technical reasons; the former
+corresponds to our implementation of the systems that record human
+decisions as they are being made whilst the latter corresponds to
+when we changed the eyeballing strategy to include the VRA ranks.
+We chose to only train on alerts whose data could be recorded
+as the human decisions were being made so that we have a truthful
+record of what they looked like at the time.</p>
+<p>Because of updates in e.g. the <code class="docutils literal notranslate"><span class="pre">Sherlock</span></code> cross-matching in some
+older data in the database, recreating the conditions under which each alert
+was eyeballed is non trivial and since we get a constant influx of new data,
+we opted for the thrifty option of using data we could control fully.
+The August cut off is chosen such that these data are not affected
+by any human-machine interaction considerations. <strong>Future data cleaning
+and gathering will have to take that into account.</strong></p>
+<section id="some-numbers">
+<h2>Some Numbers<a class="headerlink" href="#some-numbers" title="Link to this heading">#</a></h2>
+<p>As you can see in the <a class="reference external" href="about.html">pie chart</a> in the general description,
+the data eyeballed over the period covered by <code class="docutils literal notranslate"><span class="pre">crabby</span></code> includes over
+40,000 alerts, 88% of which were either Garbage or Proper Motion stars.</p>
+</section>
+<section id="some-caveats">
+<h2>Some Caveats<a class="headerlink" href="#some-caveats" title="Link to this heading">#</a></h2>
+<p>1. <strong>Only one eyeballer</strong> handled each alert (apart from a few exceptions
+posted on slack). Ideally for a well curated data set we would want
+two to three opinions especially for borderline cases. Here are a few
+ways this will affect the current data:</p>
+<blockquote>
+<div><p>a. Not all eyeballers use the Proper Motion star list. They will just
+put proper motion alerts in the garbage. This will lead to some confusion
+between the <code class="docutils literal notranslate"><span class="pre">garbage</span></code> and <code class="docutils literal notranslate"><span class="pre">pm</span></code> alerts.</p>
+<p>b. Most eyeballers will put galactic events in the <code class="docutils literal notranslate"><span class="pre">good</span></code> list if another team
+has mistakenly added those to the TNS. This will lead to some confusion
+between the <code class="docutils literal notranslate"><span class="pre">galactic</span></code> and <code class="docutils literal notranslate"><span class="pre">good</span></code> alerts.</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><dl class="simple">
+<dt>The  <code class="docutils literal notranslate"><span class="pre">galactic</span></code> tag is actually an <code class="docutils literal notranslate"><span class="pre">attic</span></code> list tag. But the attic list also contains:</dt><dd><ol class="loweralpha simple">
+<li><p>Duplicate supernovae</p></li>
+<li><p>Suspected AGN activity</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+<p>This will lead to further confusion between the <code class="docutils literal notranslate"><span class="pre">galactic</span></code> and <code class="docutils literal notranslate"><span class="pre">good</span></code> alerts.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>In the future we <strong>will</strong> re-eyeball the training data, which will solve all these issues.
+It will  be necessary anyway in future iterations because the auto-garbaged
+alerts will contain some galactic events.</p>
+</div>
+</section>
 </section>
 <section id="training">
 <h1>Training<a class="headerlink" href="#training" title="Link to this heading">#</a></h1>
@@ -365,7 +430,11 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">The Data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">The Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-numbers">Some Numbers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-caveats">Some Caveats</a></li>
+</ul>
+</li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#training">Training</a></li>
 </ul>
 
