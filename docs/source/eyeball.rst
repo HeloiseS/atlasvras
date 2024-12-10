@@ -64,7 +64,8 @@ Tips for eyeballer 1
 2. Go back to slack and **click on the eyeball link** provided by ``st3ph3n``. This will take you to the curated eyeball list (ordered and cropped down to rank 4).
 3. Scroll down to the first alerts that or **not** rank 10 and eyeball these. They are the most promising which haven't yet been pinched by another team.
 4. Finally clean up the rank 10 alerts.
-
+5. Typically the ATLAS data ingest cycle happens every few hours, so keep checking throughout the day or set the ``#vra`` channel push notifications for the week you're on.
+   10-20 objects per ingest to look at is fairly normal, per ingest cycle.
 
 .. warning::
    A rank of **10** means that the alert has been **cross-matched to TNS**. It does **not necessarily mean it is real**.
