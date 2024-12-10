@@ -31,8 +31,8 @@ with higher ranks being more likely to be extra-galactic transients.
 It also automatically garbages alerts with low scores (for more detail see
 `Garbage Policies <garbaging>`_) so you can focus on the most promising alerts.
 
-The slackbot triggers at the end ATLAS ingest is complete and send a message to the ``#vra`` channel on the
-QUB slack. In each `st3ph3n` alert you will see two lines:
+The slackbot triggers at the end of each ATLAS ingest and sends a message
+the ``#vra`` channel on the QUB slack. In each `st3ph3n` alert you will see two lines:
 
 1. How many Fast Track (<100 Mpc) objects have rank >4 and how many other (low rank) alerts there are.You should **eyeball ALL ranks in the Fast Track list**.
 2. How many alerts in the standard eyeball list with ranks >4.
