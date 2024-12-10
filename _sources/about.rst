@@ -130,6 +130,8 @@ nearly all the extra-galactic alerts (blue) and a large fraction of the galactic
 
 Garbaging
 ~~~~~~~~~~~~~
+.. _garbaging:
+
 There are currently three "garbage collection" policies in place:
 * On **entering the eyeball list** with ``rank<1.5``
 * On a **second visit**, ``max(rank)<3``.
