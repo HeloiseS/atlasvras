@@ -19,7 +19,7 @@ ATLAS Virtual Research Assistants
 
    The VRA  <about>
    Data <data>
-   Training <training>
+   Models <training>
    Monitoring <el01z>
 
 
