@@ -25,6 +25,11 @@ The August cut off is chosen such that these data are not affected
 by any human-machine interaction considerations. **Future data cleaning
 and gathering will have to take that into account.**
 
+The data downloaded is what is returned by the `ATLAS API`_, for the schema
+you can check the `json schema`_.
+
+.. _ATLAS API: https://heloises.github.io/atlasapiclient/users.html
+.. _json schema: https://psweb.mp.qub.ac.uk/misc/api/atlas/
 
 Some Caveats
 ~~~~~~~~~~~~~~~~~~~~
@@ -103,6 +108,10 @@ try training on the unbalanced training set and it was a disaster).
    * - Good
      - 1908
      - 348
+
+
+The Features
+------------------
 
 
 
