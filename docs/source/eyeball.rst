@@ -65,7 +65,7 @@ Rota
 ~~~~~
 
 .. list-table:: Rota for the next months
-   :widths: 25 25 50
+   :widths: 25 25 25
    :header-rows: 1
 
    * - Date
@@ -119,36 +119,51 @@ Rota
 
 
 .. list-table:: Xmas Rota
-   :widths: 50 50
+   :widths: 25 25 25
    :header-rows: 1
 
    * - Date
+     -
      - Eyeballer
    * - 23/12/2024
+     -
      - Stephen
    * - 24/12/2024
+     - Xmas Eve
      - Charlotte
    * - 25/12/2024
+     - Xmas Day
      - Ken
    * - 26/12/2024
+     - Boxing Day
      - Heloise
    * - 27/12/2024
+     -
      - Fiore
    * - 28/12/2024
+     -
      - Aysha
    * - 29/12/2024
+     -
      - Shubham
    * - 30/12/2024
+     -
      - Heloise
    * - 31/12/2024
+     - New Year's Eve
      - Stephen
    * - 1/1/2025
+     - New Year's Day
      - Ken
    * - 2/1/2025
+     -
      - Charlotte
    * - 3/1/2025
+     -
      - Shubham
    * - 4/1/2025
+     -
      - Matt
    * - 5/1/2025
+     -
      - Dave
