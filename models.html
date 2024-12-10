@@ -306,6 +306,8 @@
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-features">The Features</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#day-1-models">Day 1 models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#day-n-features">Day N features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forced-vs-unforced-photometry">Forced Vs Unforced Photometry</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#training">Training</a></li>
@@ -459,7 +461,7 @@ try training on the unbalanced training set and it was a disaster).</p>
 <h2>Day 1 models<a class="headerlink" href="#day-1-models" title="Link to this heading">#</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">day1</span></code> models are those that calculate the initial real and galactic
 scores when an alert first enters the eyeball list.
-They currently use <strong>19 features</strong>, which are summarised in thetable below.</p>
+They currently use <strong>19 features</strong>, which are summarised in the table below.</p>
 <div class="pst-scrollable-table-container"><table class="table" id="id2">
 <caption><span class="caption-text">Features</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
 <colgroup>
@@ -554,6 +556,79 @@ They currently use <strong>19 features</strong>, which are summarised in thetabl
 </table>
 </div>
 </section>
+<section id="day-n-features">
+<h2>Day N features<a class="headerlink" href="#day-n-features" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">dayN</span></code> models which update the real and galactic scores when new
+information comes to light, that is, when ATLAS has visited that part of the
+sky again and has either seen something or seen nothing. Either way
+it might tell us something about the event.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">dayN</span></code> models use all the features of the <code class="docutils literal notranslate"><span class="pre">day1</span></code> models plus
+an additional set of lightcurve features to try to capture the evolution
+of the lightcurve.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">dayN</span></code> features are calculated from -5 days to +15 days w.r.t
+the alert date.</p>
+</div>
+<div class="pst-scrollable-table-container"><table class="table" id="id3">
+<caption><span class="caption-text">Additional features for the <code class="docutils literal notranslate"><span class="pre">dayN</span></code> models.</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Feature</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DET_mag_median</span></code></p></td>
+<td><p>Median magnitude of the detections since phase -5 d</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DET_N_today</span></code></p></td>
+<td><p>Number of detections seen today</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DET_N_total</span></code></p></td>
+<td><p>Number of detections since phase -5 d</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NON_mag_median</span></code></p></td>
+<td><p>Median magnitude of the non detections since phase -5 d</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NON_N_today</span></code></p></td>
+<td><p>Number of non detections seen today</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NON_N_total</span></code></p></td>
+<td><p>Number of non detections since phase -5 d</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_mag</span></code></p></td>
+<td><p>Maximum (median) magnitude seen since phase -5 d</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">max_mag_day</span></code></p></td>
+<td><p>Day of the maximum magnitude</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Technically taking the median of a magnitude is not the proper way to bin
+a magnitude. But it’s quick and good enough and we have to do these
+operation over and over. There is nothing to gain from going into flux space
+and binning in there.</p>
+</div>
+</section>
+<section id="forced-vs-unforced-photometry">
+<h2>Forced Vs Unforced Photometry<a class="headerlink" href="#forced-vs-unforced-photometry" title="Link to this heading">#</a></h2>
+<p>The light curve features are calculated on the <strong>unforced</strong> photometry.
+This is quite limiting and in future iterations we will need to include forced
+photometry to get more useful features.
+The relation between detections and non detections changes with weather and
+the phase of the moon. I tried to capture that by having features that count
+both and measure both. But this is a loosing battle.</p>
+<p><strong>We need forced photometry</strong> to do a decent job of the lightcurve
+features. The challenge is that forced photometry is expensive to calculate
+so we don’t want to do that on everything in the stream.</p>
+</section>
 </section>
 <section id="training">
 <h1>Training<a class="headerlink" href="#training" title="Link to this heading">#</a></h1>
@@ -612,6 +687,8 @@ They currently use <strong>19 features</strong>, which are summarised in thetabl
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-features">The Features</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#day-1-models">Day 1 models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#day-n-features">Day N features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forced-vs-unforced-photometry">Forced Vs Unforced Photometry</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#training">Training</a></li>
