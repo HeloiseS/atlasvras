@@ -46,10 +46,10 @@ The difficulty in automating the eyeballing process further is two fold:
    Given the cadence of ATLAS, people making over 90% of decisions within 24/48 hours means they most often only have **one to two lightcurve points** to look at.
 
 
-.. image:: _static/when_decision_made.png
+.. figure:: _static/when_decision_made.png
     :width: 650
     :align: center
-    :alt: Histograms split by types showing the delay in human decisions
+    Histograms split by types showing the delay in human decisions
 
 Because lightcurve information is not rich, classic transient classifiers made to reproduce
 spectroscopic classifications using only the lightcurve information are
@@ -76,10 +76,10 @@ and they are trained separately.
 They each score the alerts **from 0 to 1**, such that we can place our alerts in a plot
 we call the score space:
 
-.. image:: _static/score_space.png
+.. figure:: _static/score_space.png
     :width: 650
     :align: center
-    :alt: Score space showing the balanced training data for the Crabby models
+    Score space showing the balanced training data for the Crabby models
 
 .. seealso::
    For more information about the data and the training of the models see the **Data** and **Training** subsections

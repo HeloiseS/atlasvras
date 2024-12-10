@@ -52,8 +52,8 @@ alert you will see two lines:
 .. warning::
    The number of alerts to be eyeballed is **usually over estimated**. It's a bug we have to fix.
 
-Tips
----------
+Tips for eyeballer 1
+----------------------
 
 1. **Start with the Fast Track list**. Also note that you need to eyeball **all** ranks (even the lower ones) in the Fast Track list.
 2. Go back to slack and **click on the eyeball link** provided by ``st3ph3n``. This will take you to the curated eyeball list (ordered and cropped down to rank 4).
