@@ -5,7 +5,10 @@ Eyeballer Cheat Sheet
 .. note::
    You should already be familiar with eyeballing either because you read Michael's `Eyeballing handbook`_ or because you were trained by one of the experienced eyeballers.
 
-Policies overview
+.. seealso::
+   The `rota <Rota_>`_ is at the bottom of this page.
+
+Strat. Overview
 -------------------
 
 First Eyeballer
@@ -20,58 +23,6 @@ Second Eyeballer
    - Check the **good** list for anything interesting to put in **follow-up**
 
 
-Rota
-~~~~~
-
-.. list-table:: Rota for the next months
-   :header-rows: 1
-
-   * - Date
-     - Eyeballer 1
-     - Eyeballer 2
-   * - 09/12/2024
-     - Aysha
-     - Ken
-   * - 16/12/2024
-     - Paige
-     - Aysha
-   * - 23/12/2024
-     - Everyone
-   * - 30/12/2024
-     - Everyone
-   * - 06/01/2024
-     - Josh
-     - Paige
-   * - 13/01/2024
-     - Michael
-     - Josh
-   * - 20/01/2024
-     - Lauren
-     - Michael
-   * - 27/01/2024
-     - Charlotte
-     - Lauren
-   * - 03/02/2024
-     - Dave
-     - Charlotte
-   * - 10/02/2024
-     - Xinyue
-     - Dave
-   * - 17/02/2024
-     - Heloise
-     - Xinyue
-   * - 24/02/2024
-     - Alex C
-     - Heloise
-   * - 03/03/2024
-     - Jack
-     - Alex C
-   * - 10/03/2024
-     - Shubham
-     - Jack
-   * - 17/03/2024
-     - Fiore
-     - Shubham
 
 --------
 
@@ -107,3 +58,97 @@ Tips
 .. warning::
    A rank of **10** means that the alert has been **cross-matched to TNS**. It does **not necessarily mean it is real**.
 
+
+
+
+Rota
+~~~~~
+
+.. list-table:: Rota for the next months
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Date
+     - Eyeballer 1
+     - Eyeballer 2
+   * - 09/12/2024
+     - Aysha
+     - Ken
+   * - 16/12/2024
+     - Paige
+     - Aysha
+   * - 23/12/2024
+     - Everyone
+     - Everyone
+   * - 30/12/2024
+     - Everyone
+     - Everyone
+   * - 06/01/2024
+     - Josh
+     - Paige
+   * - 13/01/2024
+     - Michael
+     - Josh
+   * - 20/01/2024
+     - Lauren
+     - Michael
+   * - 27/01/2024
+     - Charlotte
+     - Lauren
+   * - 03/02/2024
+     - Dave
+     - Charlotte
+   * - 10/02/2024
+     - Xinyue
+     - Dave
+   * - 17/02/2024
+     - Heloise
+     - Xinyue
+   * - 24/02/2024
+     - Alex C
+     - Heloise
+   * - 03/03/2024
+     - Jack
+     - Alex C
+   * - 10/03/2024
+     - Shubham
+     - Jack
+   * - 17/03/2024
+     - Fiore
+     - Shubham
+
+
+.. list-table:: Xmas Rota
+   :widths: 50 50
+   :header-rows: 1
+
+   * - Date
+     - Eyeballer
+   * - 23/12/2024
+     - Stephen
+   * - 24/12/2024
+     - Charlotte
+   * - 25/12/2024
+     - Ken
+   * - 26/12/2024
+     - Heloise
+   * - 27/12/2024
+     - Fiore
+   * - 28/12/2024
+     - Aysha
+   * - 29/12/2024
+     - Shubham
+   * - 30/12/2024
+     - Heloise
+   * - 31/12/2024
+     - Stephen
+   * - 1/1/2025
+     - Ken
+   * - 2/1/2025
+     - Charlotte
+   * - 3/1/2025
+     - Shubham
+   * - 4/1/2025
+     - Matt
+   * - 5/1/2025
+     - Dave
