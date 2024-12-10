@@ -2,14 +2,14 @@ Eyeballer Cheat Sheet
 ===================
 .. _Eyeballing handbook: https://www.overleaf.com/project/653678f3e33892fbb51fe7b8
 
-.. note::
-   You should already be familiar with eyeballing either because you read Michael's `Eyeballing handbook`_ or because you were trained by one of the experienced eyeballers.
-
 .. seealso::
    The `rota <Rota_>`_ is at the bottom of this page.
 
-Strat. Overview
--------------------
+
+.. note::
+   You should already be familiar with eyeballing either because you read Michael's `Eyeballing handbook`_ or because you were trained by one of the experienced eyeballers.
+
+
 
 First Eyeballer
 ~~~~~~~~~~~~
@@ -22,6 +22,12 @@ Second Eyeballer
 ~~~~~~~~~~~~~~~~
    - Check the **good** list for anything interesting to put in **follow-up**
 
+Xmas Eyeballing
+~~~~~~~~~~~~~~
+   - You can check the Xmas `rota <Rota_>`_ and add your day to your calendar.
+   - When it is your day **you are both eyeballer 1 and eyeballer 2**
+   - At the end of your shift **get in touch with the next eyeballer** to make sure
+     they know they are taking over.
 
 
 --------
