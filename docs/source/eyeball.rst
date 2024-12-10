@@ -17,14 +17,14 @@ Overview
 
 First Eyeballer
 ~~~~~~~~~~~~
-    - **Eyeball ASAP** when messages come through. GOTO, Alerce and other programs see the sky too ;)
+    - **Eyeball ASAP** when messages come through. ZTF (and its brokers), Pan-STARRS, Gaia, GOTO, ASASSN see the sky too ;)
     - **Fast Track list**: eyeball all ranks
     - **Standard list**: eyeball ranks >4
-    - If you're not sure: **snooze** by putting in **Possible list**.
+    - If you're not sure: **snooze** the alert by putting in **Possible list**. It'll come back to eyeball when the telescopes have looked at that part of the sky again.
 
 Second Eyeballer
 ~~~~~~~~~~~~~~~~
-   - Check the **good** list for anything interesting to put in **follow-up**
+   - Check the **good** list for anything interesting to put in **follow-up (particularly check the last week of objects).**  Alert the relevant people if rapid follow-up needed, or keep the source in your own list for later discussion.
 
 Xmas Eyeballing
 ~~~~~~~~~~~~~~
@@ -51,7 +51,7 @@ The slackbot triggers at the end of each ATLAS ingest and sends a
 message the ``#vra`` channel on the QUB slack. In each `st3ph3n`
 alert you will see two lines:
 
-1. How many Fast Track (<100 Mpc) objects have rank >4 and how many other (low rank) alerts there are.You should **eyeball ALL ranks in the Fast Track list**.
+1. How many Fast Track (<100 Mpc) objects have rank >4 and how many other (low rank) alerts there are.You should **eyeball ALL ranks in the Fast Track list** (there will not be many).
 2. How many alerts in the standard eyeball list with ranks >4.
 
 .. warning::
