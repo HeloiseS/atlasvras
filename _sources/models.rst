@@ -26,7 +26,14 @@ by any human-machine interaction considerations. **Future data cleaning
 and gathering will have to take that into account.**
 
 The data downloaded is what is returned by the `ATLAS API`_, for the schema
-you can check the `json schema`_.
+you can check the `json schema`_. It is cleaned up into a few csv files:
+- ``contextual_info_data_set.csv``
+- ``detections_data_set.csv``
+- ``non_detections_100days.csv``
+- ``vra_last_entry_withmjd.csv``
+
+.. seealso::
+   You can get the data and the codes used to clean it up **[HERE ADD ZENODO]**
 
 .. _ATLAS API: https://heloises.github.io/atlasapiclient/users.html
 .. _json schema: https://psweb.mp.qub.ac.uk/misc/api/atlas/
@@ -112,6 +119,81 @@ try training on the unbalanced training set and it was a disaster).
 
 The Features
 ------------------
+
+Day 1 models
+~~~~~~~~~~~~~~~~~~
+The ``day1`` models are those that calculate the initial real and galactic
+scores when an alert first enters the eyeball list.
+They currently use **19 features**, which are summarised in thetable below.
+
+
+.. list-table:: Features
+   :widths: 50 25 75
+   :header-rows: 1
+
+   * - Category
+     - Feature
+     - Description
+   * - Light curve long term history (last 100 days)
+     - ``Nnondet_std``
+     - Standard deviation of the number of non detections between each detection
+   * -
+     - ``Nnondet_mean``
+     - Mean of the number of non detections between each detection
+   * -
+     - ``magdet_std``
+     - Standard deviation of the magnitude of each historical detection
+   * - Light curve recent history (last 5 days)
+     - ``DET_Nsince_min5d``
+     - Number of detections
+   * -
+     - ``NON_Nsince_min5d``
+     - Number of non detections
+   * - Positional scatter recent history (last 5 days)
+     - ``log10_std_ra_min5d``
+     - Log10 of the standard deviation of the RA
+   * -
+     - ``log10_std_dec_min5d``
+     - Log10 of the standard deviation of the Dec
+   * - Contextual Information
+     - ``ra``
+     - Right Ascension
+   * -
+     - ``dec``
+     - Declination
+   * -
+     - ``rb_pix``
+     - Real/bogus score from the CNN
+   * -
+     - ``z``
+     - Spectroscopic redshift
+   * -
+     - ``photoz``
+     - Photometric redshift
+   * -
+     - ``ebv_sfd``
+     - E(B-V) (extinction in magnitudes)
+   * -
+     - ``log10_sep_arcsec``
+     - Log10 of the separation in arcsec from a nearby source
+
+   * - Boolean flags for the following sherlock features
+     - ``SN``
+     - Supernova (``Sherlock`` has associated with an extended source but not at its center)
+   * -
+     - ``NT``
+     - Nuclear Transient (``Sherlock`` has associated with an extended source at its center)
+   * -
+     - ``ORPHAN``
+     - No associated source (point or extended)
+   * -
+     - ``CV``
+     - Known Cataclysmic Variable
+   * -
+     - ``UNCLEAR``
+     - Not sure
+
+
 
 
 

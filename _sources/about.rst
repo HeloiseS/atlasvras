@@ -49,6 +49,7 @@ The difficulty in automating the eyeballing process further is two fold:
 .. figure:: _static/when_decision_made.png
     :width: 650
     :align: center
+
     Histograms split by types showing the delay in human decisions
 
 Because lightcurve information is not rich, classic transient classifiers made to reproduce
@@ -79,6 +80,7 @@ we call the score space:
 .. figure:: _static/score_space.png
     :width: 650
     :align: center
+
     Score space showing the balanced training data for the Crabby models
 
 .. seealso::
