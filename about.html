@@ -356,8 +356,6 @@ Despite the fact that the CNN removes 98.5% of alerts, most of the eyeball list 
 <p class="admonition-title">Important</p>
 <p>Given the cadence of ATLAS, people making over 90% of decisions within 24/48 hours means they most often only have <strong>one to two lightcurve points</strong> to look at.</p>
 </div>
-<a class="reference internal image-reference" href="_images/when_decision_made.png"><img alt="Histograms split by types showing the delay in human decisions" class="align-center" src="_images/when_decision_made.png" style="width: 650px;" />
-</a>
 <p>Because lightcurve information is not rich, classic transient classifiers made to reproduce
 spectroscopic classifications using only the lightcurve information are
 <strong>never going to have sufficient information</strong> to be useful in this regime.
@@ -381,8 +379,6 @@ Both models use <strong>the same features</strong> but they <strong>calculate sc
 and they are trained separately.</p>
 <p>They each score the alerts <strong>from 0 to 1</strong>, such that we can place our alerts in a plot
 we call the score space:</p>
-<a class="reference internal image-reference" href="_images/score_space.png"><img alt="Score space showing the balanced training data for the Crabby models" class="align-center" src="_images/score_space.png" style="width: 650px;" />
-</a>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p>For more information about the data and the training of the models see the <strong>Data</strong> and <strong>Training</strong> subsections</p>
