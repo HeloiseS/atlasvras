@@ -48,7 +48,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="ATLAS VRAs Manual" href="manual.html" />
-    <link rel="prev" title="Training" href="training.html" />
+    <link rel="prev" title="Training the models" href="training.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -277,7 +277,9 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -293,6 +295,16 @@
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weekly-reports">Weekly Reports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-purgatory">Monitoring Purgatory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-old-and-new-models">Comparing Old and New Models</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -304,6 +316,98 @@
                   
   <section id="monitoring-with-el01z">
 <h1>Monitoring with El01z<a class="headerlink" href="#monitoring-with-el01z" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">el01z</span></code> is the bot that monitors the behaviour of the VRA.
+It’s actually currently <strong>3 different bots</strong> (as in three separate scripts)
+that have slightly different purposes</p>
+<ol class="arabic simple">
+<li><p><strong>Weekly reports</strong></p></li>
+<li><p><strong>Monitoring purgatory</strong></p></li>
+<li><p><strong>Comparing old and new models</strong></p></li>
+</ol>
+<p>The first bot will be a permanent fixture although the body of the reports
+may evolve. The other two are dev helpers that will be turned off
+eventually.</p>
+<section id="weekly-reports">
+<h2>Weekly Reports<a class="headerlink" href="#weekly-reports" title="Link to this heading">#</a></h2>
+<p>Every Friday before the data wrangling meeting, <code class="docutils literal notranslate"><span class="pre">el01z</span></code> will generate a report
+to the <code class="docutils literal notranslate"><span class="pre">#vra-forum</span></code> channel which is meant for the whole QUB team.
+It will tell you:</p>
+<ul class="simple">
+<li><p>The number of eyeballed objects</p></li>
+<li><p>The number of objects with RB &gt; 0.2</p></li>
+<li><p>The number of objects that were found first by us</p></li>
+<li><p>The number of objects that were found by others</p></li>
+<li><p>The number of potential misses</p></li>
+<li><p>Uploads a pie chart of the distribution of alert types labeled this week</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Potential misses are defined as alerts that the VRA scored too low to be eyeballed
+but were already in TNS. These are <strong>not necessarily</strong> misses since some
+TNS crossmatches are bad, old, or simply because in ATLAS the object
+is simply so faint we can’t expect the VRA to catch it (that’s why we update
+the VRA ranks with cross-matching).</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">el01z</span></code> will also send a message to <code class="docutils literal notranslate"><span class="pre">#vra-dev</span></code> and save some data to
+a csv. For details, check the top of the docstring in
+<code class="docutils literal notranslate"><span class="pre">atlasvras/el01z/weeklyreport.py</span></code></p>
+</section>
+<section id="monitoring-purgatory">
+<h2>Monitoring Purgatory<a class="headerlink" href="#monitoring-purgatory" title="Link to this heading">#</a></h2>
+<dl class="simple">
+<dt>Purgatory</dt><dd><p>Objects that are stuck in the eyeball list because their rank is too high to be
+garbaged but too low to be eyeballed are in <em>purgatory</em>.</p>
+</dd>
+</dl>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Remember that the <code class="docutils literal notranslate"><span class="pre">dayN</span></code> models are only trained with data up to
+15 days after the initial alert. So there is little point (in fact it’d be reckless)
+giving the VRA data for objects that fall outside of its training window.</p>
+</div>
+<p>If alerts are still in purgatory after that 15 day window they must be looked at.
+Once a week, just before the weekly report, <code class="docutils literal notranslate"><span class="pre">el01z</span></code> will generate a list of
+objects in purgatory that are past that 15 day “best-by” date
+and send it to the <code class="docutils literal notranslate"><span class="pre">#vra-dev</span></code> channel so I can eyeball them.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Eventually I <em>will</em> add a new garbage collecting policy to get rid of the
+purgatory concept. The reason it exists is that I was panicked at the idea
+of garbaging an alert that was actually real.</p>
+</div>
+</section>
+<section id="comparing-old-and-new-models">
+<h2>Comparing Old and New Models<a class="headerlink" href="#comparing-old-and-new-models" title="Link to this heading">#</a></h2>
+<p>We added the new <code class="docutils literal notranslate"><span class="pre">Crabby</span></code> models in production on <code class="docutils literal notranslate"><span class="pre">2024-12-06</span></code>.
+We want to compare to previous models to:
+1. See how much more awesome they are
+2. Avoid binning something interesting if I messed up.</p>
+<p>The compare-bot runs once a day currently and sends to the
+<code class="docutils literal notranslate"><span class="pre">#vra-dev</span></code> channel two lists:</p>
+<ol class="arabic simple">
+<li><p>The <em>would-not-have-been-garbaged</em> alerts. That is those which
+would not have met the auto-garbaging policies in the old model.
+I eyeball each of these to see if there is any reason to doubt.</p></li>
+<li><p>The <em>danger-zone</em> alerts: Those that would have been eyeballed
+under the old scheme but are not being eyeballed now. I eyeball them
+to see if we might have missed something.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><em>“What about the alerts that would NOT have been eyeballed in the old model?”</em>
+Well those are being eyeballed by the other eyeballers. After a few weeks I
+will take a look and see if we are sending too many extra alerts for eyeballing and
+can cut back further.</p>
+</div>
+<p>The compare-bot also saves a few things to a  file to allow me to do some
+comparison plots in a few weeks:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rank_NEW</span></code>: the rank given by the new model</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rank_OLD</span></code>: the rank given by the old model</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">garbage_flag</span></code>: whether the object was garbaged (rank = -1)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">timestamp_bot</span></code>: the timestamp of the bot run</p></li>
+</ul>
+</section>
 </section>
 
 
@@ -323,7 +427,7 @@
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Training</p>
+        <p class="prev-next-title">Training the models</p>
       </div>
     </a>
     <a class="right-next"
@@ -341,6 +445,24 @@
             </div>
             
             
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weekly-reports">Weekly Reports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-purgatory">Monitoring Purgatory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-old-and-new-models">Comparing Old and New Models</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
