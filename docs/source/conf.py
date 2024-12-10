@@ -28,6 +28,7 @@ from atlasvras import __version__
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
+    'sphinx.ext.intersphinx',
 ]
 # The full version, including alpha/beta/rc tags
 release = __version__
