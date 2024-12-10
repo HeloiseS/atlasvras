@@ -251,6 +251,77 @@ both and measure both. But this is a loosing battle.
 features. The challenge is that forced photometry is expensive to calculate
 so we don't want to do that on everything in the stream.
 
+Feature Importance
+---------------------------
+.. _permutation importance: https://scikit-learn.org/stable/modules/permutation_importance.html
 
-Training
----------------
+These features were chosen based on my conversations with the eyeballers
+and my own eyeballing experience, but whether and how much they
+contribute to the model is only something we can see once we have trained them.
+
+To explore that we can look at the `permutation importance`_ of our features.
+The basic concept is simple: you take a feature column and shuffle it. Then
+you retrain the model and see how much worse the predictions are.
+**The worse you do when you scramble a feature, the more important that feature is.**
+
+Real ScoreModel - day1 Features
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. figure:: _static/perm_imp_real.png
+   :width: 700
+   :align: center
+
+   Permutation importance of the day 1 features for the real scoring model
+
+``rb_pix`` being the most important feature is not surprising.
+But some of the other important features may seem a bit odd. Why would the
+``log10_sep_arcsec`` be so high on the list? Likely because
+bad subtractions and artefacts from proper motion stars happen in
+the vicinity of the cross matches.
+``RA`` and ``dec`` are also very important because bogus alerts are often
+found in the galactic plane (note in BMO, a previous version we did try
+to use the galactic coordinates to do the training but it gave worse results!).
+``ebv_sfd`` is also somewhat significant, likely because it's a proxy for the
+galactic plane more than extinction directly causing bogus alerts.
+
+Some features like ``z`` and ``photoz`` are not important here, but they
+will be for the galactic model which is why they're included.
+
+
+Galactic Score Model - day1 Features
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. figure:: _static/perm_imp_gal.png
+   :width: 700
+   :align: center
+
+   Permutation importance of the day 1 features for the gal scoring model
+
+For the galactic scores, the most important feature is ``ebv_sfd``, as
+one might expect (since anything with too high an extinction will automatically
+and safely get a galactic tag).
+``rb_pix`` is also important, which is somewhat surprising but likely a result
+of how RB score is affected by bad subtractions in the galactic plane or by
+proper motion star.
+
+Again  ``log10_sep_arcsec`` is important, and I suspect it is a proxy for
+wether an alert is associated with a galaxy. As we can see in the
+``sherlock`` features, ``SN`` and ``NT`` are NOT nearly as important as
+we might have thought (in fact ``NT`` looks like it hinders).
+This is likely a result of the fact that a lot of "extended" sources in the PS
+catalogues are actually stars, and to be more complete with the ``SN`` tag
+``sherlock`` allows for a lot of contamination. For our model that means
+that the ``SN`` chategory is not very informative, *but* using the separation
+directly allows it to infer whether the source is likely to be a SN (they're usually
+offset, whereas stars and NT aren't).
+
+Finally note that ``z`` and ``photoz`` are now showing some importance,
+as we expected.
+
+.. important::
+   *"Why don't you get rid of unimportant features or use differen tfeatures for the*
+   *galactic and real models?"* Because the models we use are robust to "useless"
+   features and it's easier in prod to calculate all the features at once and then parse
+   them to the two models. Eventually we might prune the features that are useless
+   for both.
+
+
