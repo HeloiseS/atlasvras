@@ -26,13 +26,6 @@ by any human-machine interaction considerations. **Future data cleaning
 and gathering will have to take that into account.**
 
 
-Some Numbers
-~~~~~~~~~~~~~~~~~~~~~~
-As you can see in the `pie chart <about.html>`_ in the general description,
-the data eyeballed over the period covered by ``crabby`` includes over
-40,000 alerts, 88% of which were either Garbage or Proper Motion stars.
-
-
 Some Caveats
 ~~~~~~~~~~~~~~~~~~~~
 1. **Only one eyeballer** handled each alert (apart from a few exceptions
@@ -53,10 +46,47 @@ ways this will affect the current data:
 
 This will lead to further confusion between the ``galactic`` and ``good`` alerts.
 
-.. seealso::
+.. attention::
    In the future we **will** re-eyeball the training data, which will solve all these issues.
    It will  be necessary anyway in future iterations because the auto-garbaged
    alerts will contain some galactic events.
+
+Training and Validation sets
+~~~~~~~~~~~~~~~~~~~~~~~~
+As you can see in the `pie chart <about.html>`_ in the general description,
+the data eyeballed over the period covered by ``crabby`` includes over
+40,000 alerts, 88% of which were either Garbage or Proper Motion stars.
+Roughly 5.5% were classified as ``good`` and 6.5% as ``galactic`` (i.e. put
+in the attic).
+
+With these data we create a **balanced** training set and an **unbalanced**
+validation set that we will use to check that our models generalise decently and
+to tune some hyperparameters.
+
+.. note::
+   We do not call it a **test set** because it isn't : we use it to check our models
+   hyperparameters and decided if we want to keep or add features. A real test set
+   is an unseen data set we **only use to calculate performance metrics**.
+   Realistically, we test in prod.
+
+We keep the validation set unbalanced so that it is representative of
+what the model will see in production so that the metrics we calculate to
+check performance and generalisation are representative of what we might
+see in real life.
+
+The training set is *nearly* balanced, the numbers are:
+
+====== =======
+Label      Number
+====== =======
+galactic  2210
+garbage 2200
+pm          2200
+good       1908
+====== =======
+
+
+
 
 Training
 ---------------

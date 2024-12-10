@@ -299,8 +299,8 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">The Data</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-numbers">Some Numbers</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-caveats">Some Caveats</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-and-validation-sets">Training and Validation sets</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#training">Training</a></li>
@@ -341,12 +341,6 @@ we opted for the thrifty option of using data we could control fully.
 The August cut off is chosen such that these data are not affected
 by any human-machine interaction considerations. <strong>Future data cleaning
 and gathering will have to take that into account.</strong></p>
-<section id="some-numbers">
-<h2>Some Numbers<a class="headerlink" href="#some-numbers" title="Link to this heading">#</a></h2>
-<p>As you can see in the <a class="reference external" href="about.html">pie chart</a> in the general description,
-the data eyeballed over the period covered by <code class="docutils literal notranslate"><span class="pre">crabby</span></code> includes over
-40,000 alerts, 88% of which were either Garbage or Proper Motion stars.</p>
-</section>
 <section id="some-caveats">
 <h2>Some Caveats<a class="headerlink" href="#some-caveats" title="Link to this heading">#</a></h2>
 <p>1. <strong>Only one eyeballer</strong> handled each alert (apart from a few exceptions
@@ -372,12 +366,35 @@ between the <code class="docutils literal notranslate"><span class="pre">galacti
 </li>
 </ol>
 <p>This will lead to further confusion between the <code class="docutils literal notranslate"><span class="pre">galactic</span></code> and <code class="docutils literal notranslate"><span class="pre">good</span></code> alerts.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
 <p>In the future we <strong>will</strong> re-eyeball the training data, which will solve all these issues.
 It will  be necessary anyway in future iterations because the auto-garbaged
 alerts will contain some galactic events.</p>
 </div>
+</section>
+<section id="training-and-validation-sets">
+<h2>Training and Validation sets<a class="headerlink" href="#training-and-validation-sets" title="Link to this heading">#</a></h2>
+<p>As you can see in the <a class="reference external" href="about.html">pie chart</a> in the general description,
+the data eyeballed over the period covered by <code class="docutils literal notranslate"><span class="pre">crabby</span></code> includes over
+40,000 alerts, 88% of which were either Garbage or Proper Motion stars.
+Roughly 5.5% were classified as <code class="docutils literal notranslate"><span class="pre">good</span></code> and 6.5% as <code class="docutils literal notranslate"><span class="pre">galactic</span></code> (i.e. put
+in the attic).</p>
+<p>With these data we create a <strong>balanced</strong> training set and an <strong>unbalanced</strong>
+validation set that we will use to check that our models generalise decently and
+to tune some hyperparameters.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We do not call it a <strong>test set</strong> because it isn’t : we use it to check our models
+hyperparameters and decided if we want to keep or add features. A real test set
+is an unseen data set we <strong>only use to calculate performance metrics</strong>.
+Realistically, we test in prod.</p>
+</div>
+<p>We keep the validation set unbalanced so that it is representative of
+what the model will see in production so that the metrics we calculate to
+check performance and generalisation are representative of what we might
+see in real life.</p>
+<p>The training set is <em>nearly</em> balanced, the numbers are:</p>
 </section>
 </section>
 <section id="training">
@@ -431,8 +448,8 @@ alerts will contain some galactic events.</p>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">The Data</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-numbers">Some Numbers</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-caveats">Some Caveats</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-and-validation-sets">Training and Validation sets</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#training">Training</a></li>
