@@ -352,9 +352,11 @@ counterpart: <code class="docutils literal notranslate"><span class="pre">st3ph3
 and receiving alerts</strong>. Its role is to <strong>rank the alerts from 0 to 10</strong>,
 with higher ranks being more likely to be extra-galactic transients.
 It also automatically garbages alerts with low scores (for more detail see
-<a class="reference external" href="garbaging">Garbage Policies</a>) so you can focus on the most promising alerts.</p>
-<p>The slackbot triggers at the end of each ATLAS ingest and sends a message
-the <code class="docutils literal notranslate"><span class="pre">#vra</span></code> channel on the QUB slack. In each <cite>st3ph3n</cite> alert you will see two lines:</p>
+<a class="reference external" href="about.html#garbaging">Garbage Policies</a>) so you can focus on the most
+promising alerts.</p>
+<p>The slackbot triggers at the end of each ATLAS ingest and sends a
+message the <code class="docutils literal notranslate"><span class="pre">#vra</span></code> channel on the QUB slack. In each <cite>st3ph3n</cite>
+alert you will see two lines:</p>
 <ol class="arabic simple">
 <li><p>How many Fast Track (&lt;100 Mpc) objects have rank &gt;4 and how many other (low rank) alerts there are.You should <strong>eyeball ALL ranks in the Fast Track list</strong>.</p></li>
 <li><p>How many alerts in the standard eyeball list with ranks &gt;4.</p></li>
@@ -374,7 +376,7 @@ the <code class="docutils literal notranslate"><span class="pre">#vra</span></co
 </ol>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>A rank of <strong>10</strong> means that the alert has been <strong>cross-matched to TNS</strong>. It does not necessarily mean it is real.</p>
+<p>A rank of <strong>10</strong> means that the alert has been <strong>cross-matched to TNS</strong>. It does <strong>not necessarily mean it is real</strong>.</p>
 </div>
 </section>
 </section>
