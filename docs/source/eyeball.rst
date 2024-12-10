@@ -20,6 +20,59 @@ Second Eyeballer
    - Check the **good** list for anything interesting to put in **follow-up**
 
 
+Rota
+~~~~~
+
+.. list-table:: Rota for the next months
+   :header-rows: 1
+
+   * - Date
+     - Eyeballer 1
+     - Eyeballer 2
+   * - 09/12/2024
+     - Aysha
+     - Ken
+   * - 16/12/2024
+     - Paige
+     - Aysha
+   * - 23/12/2024
+     - Everyone
+   * - 30/12/2024
+     - Everyone
+   * - 06/01/2024
+     - Josh
+     - Paige
+   * - 13/01/2024
+     - Michael
+     - Josh
+   * - 20/01/2024
+     - Lauren
+     - Michael
+   * - 27/01/2024
+     - Charlotte
+     - Lauren
+   * - 03/02/2024
+     - Dave
+     - Charlotte
+   * - 10/02/2024
+     - Xinyue
+     - Dave
+   * - 17/02/2024
+     - Heloise
+     - Xinyue
+   * - 24/02/2024
+     - Alex C
+     - Heloise
+   * - 03/03/2024
+     - Jack
+     - Alex C
+   * - 10/03/2024
+     - Shubham
+     - Jack
+   * - 17/03/2024
+     - Fiore
+     - Shubham
+
 --------
 
 st3ph3n-bot
