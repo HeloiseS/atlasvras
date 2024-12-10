@@ -10,6 +10,7 @@ Policies overview
 
 First Eyeballer
 ~~~~~~~~~~~~
+    - **Eyeball ASAP** when messages come through. GOTO, Alerce and other programs see the sky too ;)
     - **Fast Track list**: eyeball all ranks
     - **Standard list**: eyeball ranks >4
     - If you're not sure: **snooze** by putting in **Possible list**.
@@ -23,10 +24,12 @@ Second Eyeballer
 
 st3ph3n-bot
 -----------------
-As an eyeballer the main bot you will encounter is your virtual eyeballer counterpart: ``st3ph3n``.
-**Make sure you are in the #vra channel and receiving alerts**.
-It's role is to **rank the alerts from 0 to 10**, with higher ranks being more likely to be extra-galactic transients.
-It automatically garbages alerts with low scores (for more detail see [REF]) so you can focus on the most promising alerts.
+As an eyeballer, the main bot you will encounter is your virtual
+counterpart: ``st3ph3n``. **Make sure you are in the #vra channel
+and receiving alerts**. Its role is to **rank the alerts from 0 to 10**,
+with higher ranks being more likely to be extra-galactic transients.
+It also automatically garbages alerts with low scores (for more detail see
+`Garbage Policies <garbaging>`_) so you can focus on the most promising alerts.
 
 The slackbot triggers at the end ATLAS ingest is complete and send a message to the ``#vra`` channel on the
 QUB slack. In each `st3ph3n` alert you will see two lines:
