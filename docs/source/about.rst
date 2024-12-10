@@ -3,7 +3,7 @@ The Virtual Research Assistant
 .. _Tonry et al. 2018: https://ui.adsabs.harvard.edu/abs/2018PASP..130f4505T/abstract
 .. _Smith et al. 2020: https://ui.adsabs.harvard.edu/abs/2020PASP..132h5002S/abstract
 .. _Sherlock: https://lasair.readthedocs.io/en/develop/core_functions/sherlock.html
-.. _Weston et al. 2024: https://academic.oup.com/rasti/article/3/1/385/7713043
+.. _Weston et al. 2024: https://ui.adsabs.harvard.edu/abs/2024RASTI...3..385W/abstract
 .. _scikit-learn docs: https://scikit-learn.org/stable/modules/ensemble.html#histogram-based-gradient-boosting
 
 Data Journey: From Telescope to Transient Name Server
@@ -24,7 +24,7 @@ as follows:
 1. **Alerts to Sources**: We aggregate individual alerts into sources (one source will likely have mutiple alerts). If the source is new, its unique 19 digit ATLAS ID is created.
 2. **Basic Cuts**: Some simple quality cuts can help reduce the volume of the data stream. The main is that **at least 3 detections per source (per night)** are required to move onto the next stage.
 3. `Sherlock`_ catalogue cross matching and **remove variable stars**.
-4. **Real/Bogus Score**: We use a Convolutional Neural Network to classify the alerts as real or bogus (see `Weston et. al 2024`_ ). **If the RB score >0.2** they are passed on to eyeball list
+4. **Real/Bogus Score**: We use a Convolutional Neural Network to classify the alerts as real or bogus (see `Weston et al. 2024`_ ). **If the RB score >0.2** they are passed on to eyeball list
 5. **Eyeball list**: The alerts are eyeballed and classified as ``garbage``, ``pm`` (proper motion star),``good`` or ``attic`` (for real alerts from transients within the galaxy). Good alerts are automatically pushed to TNS.
 
 The eyeball list in ATLAS still receives between **1000 and 3000 alerts**
@@ -185,7 +185,6 @@ behaviour of the extra-galactic alerts in score space is better behaved
 
 .. note::
    We have not cleaned the training set by giving it another round of eyeballing. Of the 30% of "lost" galactic objects, a signification fraction may actually be garbage.
-
 
 
 
