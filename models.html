@@ -382,7 +382,9 @@ Roughly 5.5% were classified as <code class="docutils literal notranslate"><span
 in the attic).</p>
 <p>With these data we create a <strong>balanced</strong> training set and an <strong>unbalanced</strong>
 validation set that we will use to check that our models generalise decently and
-to tune some hyperparameters.</p>
+to tune some hyperparameters.
+We do this by randomly sampling the alerts <em>before</em> balancing, selecting
+15% to be our validation set. Then we balance what’s left to create the training set.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>We do not call it a <strong>test set</strong> because it isn’t : we use it to check our models
@@ -394,7 +396,46 @@ Realistically, we test in prod.</p>
 what the model will see in production so that the metrics we calculate to
 check performance and generalisation are representative of what we might
 see in real life.</p>
-<p>The training set is <em>nearly</em> balanced, the numbers are:</p>
+<p>The number of alerts in out training and validation sets are shown in the
+table below. As you can see the training set is <em>slightly</em> unbalanced
+with 300 more garbage, pm and galactic alerts than good alerts.
+That’s because I wanted to keep as large a training set as possible
+so I balanced based on the number of galactic alerts. The slight imbalance
+did not affect the model’s performance in early tests (but we did
+try training on the unbalanced training set and it was a disaster).</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id1">
+<caption><span class="caption-text">Numbers</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 29.4%" />
+<col style="width: 35.3%" />
+<col style="width: 35.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Label</p></th>
+<th class="head"><p>Training</p></th>
+<th class="head"><p>Validation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Garbage</p></td>
+<td><p>2200</p></td>
+<td><p>4619</p></td>
+</tr>
+<tr class="row-odd"><td><p>PM</p></td>
+<td><p>2200</p></td>
+<td><p>797</p></td>
+</tr>
+<tr class="row-even"><td><p>Galactic</p></td>
+<td><p>2210</p></td>
+<td><p>357</p></td>
+</tr>
+<tr class="row-odd"><td><p>Good</p></td>
+<td><p>1908</p></td>
+<td><p>348</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 </section>
 <section id="training">

@@ -62,6 +62,8 @@ in the attic).
 With these data we create a **balanced** training set and an **unbalanced**
 validation set that we will use to check that our models generalise decently and
 to tune some hyperparameters.
+We do this by randomly sampling the alerts *before* balancing, selecting
+15% to be our validation set. Then we balance what's left to create the training set.
 
 .. note::
    We do not call it a **test set** because it isn't : we use it to check our models
@@ -74,17 +76,33 @@ what the model will see in production so that the metrics we calculate to
 check performance and generalisation are representative of what we might
 see in real life.
 
-The training set is *nearly* balanced, the numbers are:
+The number of alerts in out training and validation sets are shown in the
+table below. As you can see the training set is *slightly* unbalanced
+with 300 more garbage, pm and galactic alerts than good alerts.
+That's because I wanted to keep as large a training set as possible
+so I balanced based on the number of galactic alerts. The slight imbalance
+did not affect the model's performance in early tests (but we did
+try training on the unbalanced training set and it was a disaster).
 
-====== =======
-Label      Number
-====== =======
-galactic  2210
-garbage 2200
-pm          2200
-good       1908
-====== =======
+.. list-table:: Numbers
+   :widths: 25 30 30
+   :header-rows: 1
 
+   * - Label
+     - Training
+     - Validation
+   * - Garbage
+     - 2200
+     - 4619
+   * - PM
+     - 2200
+     - 797
+   * - Galactic
+     - 2210
+     - 357
+   * - Good
+     - 1908
+     - 348
 
 
 
