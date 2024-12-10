@@ -314,6 +314,7 @@
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importance">Feature Importance</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-scoremodel-day1-features">Real ScoreModel - day1 Features</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#galactic-score-model-day1-features">Galactic Score Model - day1 Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">day N features</a></li>
 </ul>
 </li>
 </ul>
@@ -425,8 +426,8 @@ That’s because I wanted to keep as large a training set as possible
 so I balanced based on the number of galactic alerts. The slight imbalance
 did not affect the model’s performance in early tests (but we did
 try training on the unbalanced training set and it was a disaster).</p>
-<div class="pst-scrollable-table-container"><table class="table" id="id1">
-<caption><span class="caption-text">Numbers</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id2">
+<caption><span class="caption-text">Numbers</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 29.4%" />
 <col style="width: 35.3%" />
@@ -467,8 +468,8 @@ try training on the unbalanced training set and it was a disaster).</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">day1</span></code> models are those that calculate the initial real and galactic
 scores when an alert first enters the eyeball list.
 They currently use <strong>19 features</strong>, which are summarised in the table below.</p>
-<div class="pst-scrollable-table-container"><table class="table" id="id2">
-<caption><span class="caption-text">Features</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id3">
+<caption><span class="caption-text">Features</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 33.3%" />
 <col style="width: 16.7%" />
@@ -575,8 +576,8 @@ of the lightcurve.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">dayN</span></code> features are calculated from -5 days to +15 days w.r.t
 the alert date.</p>
 </div>
-<div class="pst-scrollable-table-container"><table class="table" id="id3">
-<caption><span class="caption-text">Additional features for the <code class="docutils literal notranslate"><span class="pre">dayN</span></code> models.</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id4">
+<caption><span class="caption-text">Additional features for the <code class="docutils literal notranslate"><span class="pre">dayN</span></code> models.</span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 33.3%" />
 <col style="width: 66.7%" />
@@ -646,11 +647,11 @@ you retrain the model and see how much worse the predictions are.
 <strong>The worse you do when you scramble a feature, the more important that feature is.</strong></p>
 <section id="real-scoremodel-day1-features">
 <h2>Real ScoreModel - day1 Features<a class="headerlink" href="#real-scoremodel-day1-features" title="Link to this heading">#</a></h2>
-<figure class="align-center" id="id4">
-<a class="reference internal image-reference" href="_static/perm_imp_real.png"><img alt="_static/perm_imp_real.png" src="_static/perm_imp_real.png" style="width: 700px;" />
+<figure class="align-center" id="id5">
+<a class="reference internal image-reference" href="_images/perm_imp_real.png"><img alt="_images/perm_imp_real.png" src="_images/perm_imp_real.png" style="width: 700px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">Permutation importance of the day 1 features for the real scoring model</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
+<p><span class="caption-text">Permutation importance of the day 1 features for the real scoring model</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p><code class="docutils literal notranslate"><span class="pre">rb_pix</span></code> being the most important feature is not surprising.
@@ -668,11 +669,11 @@ will be for the galactic model which is why they’re included.</p>
 </section>
 <section id="galactic-score-model-day1-features">
 <h2>Galactic Score Model - day1 Features<a class="headerlink" href="#galactic-score-model-day1-features" title="Link to this heading">#</a></h2>
-<figure class="align-center" id="id5">
-<a class="reference internal image-reference" href="_static/perm_imp_gal.png"><img alt="_static/perm_imp_gal.png" src="_static/perm_imp_gal.png" style="width: 700px;" />
+<figure class="align-center" id="id6">
+<a class="reference internal image-reference" href="_images/perm_imp_gal.png"><img alt="_images/perm_imp_gal.png" src="_images/perm_imp_gal.png" style="width: 700px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">Permutation importance of the day 1 features for the gal scoring model</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
+<p><span class="caption-text">Permutation importance of the day 1 features for the gal scoring model</span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>For the galactic scores, the most important feature is <code class="docutils literal notranslate"><span class="pre">ebv_sfd</span></code>, as
@@ -695,12 +696,27 @@ offset, whereas stars and NT aren’t).</p>
 as we expected.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p><em>“Why don’t you get rid of unimportant features or use differen tfeatures for the</em>
+<p><em>“Why don’t you get rid of unimportant features or use different features for the</em>
 <em>galactic and real models?”</em> Because the models we use are robust to “useless”
 features and it’s easier in prod to calculate all the features at once and then parse
 them to the two models. Eventually we might prune the features that are useless
 for both.</p>
 </div>
+</section>
+<section id="id1">
+<h2>day N features<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>So what about the <code class="docutils literal notranslate"><span class="pre">dayN</span></code> models and the extra features we added?
+The plots are big and bully you can find them in the paper or in the data release,
+so here is the general gist.</p>
+<dl class="simple">
+<dt>For the real and galactic models the features that have the most impact are</dt><dd><p><code class="docutils literal notranslate"><span class="pre">max_mag</span></code>  and <code class="docutils literal notranslate"><span class="pre">max_mag_day</span></code>.</p>
+</dd>
+</dl>
+<p>For the real scorer <code class="docutils literal notranslate"><span class="pre">DET_N_TOTAL</span></code> (the total number of detections) so far
+is also important. <strong>Everything else has little to no impact</strong>.
+To be fair human eyeballers really rely on the forced photometry in this regime
+to make decisions, so trying to tease out other features on the raw phot is
+probably beating a dead horse.</p>
 </section>
 </section>
 
@@ -764,6 +780,7 @@ for both.</p>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importance">Feature Importance</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-scoremodel-day1-features">Real ScoreModel - day1 Features</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#galactic-score-model-day1-features">Galactic Score Model - day1 Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">day N features</a></li>
 </ul>
 </li>
 </ul>

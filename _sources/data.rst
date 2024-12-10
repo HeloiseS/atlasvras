@@ -318,10 +318,25 @@ Finally note that ``z`` and ``photoz`` are now showing some importance,
 as we expected.
 
 .. important::
-   *"Why don't you get rid of unimportant features or use differen tfeatures for the*
+   *"Why don't you get rid of unimportant features or use different features for the*
    *galactic and real models?"* Because the models we use are robust to "useless"
    features and it's easier in prod to calculate all the features at once and then parse
    them to the two models. Eventually we might prune the features that are useless
    for both.
+
+
+day N features
+~~~~~~~~~~~~~~~~~~
+So what about the ``dayN`` models and the extra features we added?
+The plots are big and bully you can find them in the paper or in the data release,
+so here is the general gist.
+
+For the real and galactic models the features that have the most impact are
+ ``max_mag``  and ``max_mag_day``.
+For the real scorer ``DET_N_TOTAL`` (the total number of detections) so far
+is also important. **Everything else has little to no impact**.
+To be fair human eyeballers really rely on the forced photometry in this regime
+to make decisions, so trying to tease out other features on the raw phot is
+probably beating a dead horse.
 
 
