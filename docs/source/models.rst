@@ -124,7 +124,7 @@ Day 1 models
 ~~~~~~~~~~~~~~~~~~
 The ``day1`` models are those that calculate the initial real and galactic
 scores when an alert first enters the eyeball list.
-They currently use **19 features**, which are summarised in thetable below.
+They currently use **19 features**, which are summarised in the table below.
 
 
 .. list-table:: Features
@@ -194,7 +194,62 @@ They currently use **19 features**, which are summarised in thetable below.
      - Not sure
 
 
+Day N features
+~~~~~~~~~~~~~~~
+The ``dayN`` models which update the real and galactic scores when new
+information comes to light, that is, when ATLAS has visited that part of the
+sky again and has either seen something or seen nothing. Either way
+it might tell us something about the event.
 
+The ``dayN`` models use all the features of the ``day1`` models plus
+an additional set of lightcurve features to try to capture the evolution
+of the lightcurve.
+
+.. note::
+   The ``dayN`` features are calculated from -5 days to +15 days w.r.t
+   the alert date.
+
+.. list-table:: Additional features for the ``dayN`` models.
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Feature
+     - Description
+   * - ``DET_mag_median``
+     - Median magnitude of the detections since phase -5 d
+   * - ``DET_N_today``
+     - Number of detections seen today
+   * - ``DET_N_total``
+     - Number of detections since phase -5 d
+   * - ``NON_mag_median``
+     - Median magnitude of the non detections since phase -5 d
+   * - ``NON_N_today``
+     - Number of non detections seen today
+   * - ``NON_N_total``
+     - Number of non detections since phase -5 d
+   * - ``max_mag``
+     - Maximum (median) magnitude seen since phase -5 d
+   * - ``max_mag_day``
+     - Day of the maximum magnitude
+
+.. note::
+   Technically taking the median of a magnitude is not the proper way to bin
+   a magnitude. But it's quick and good enough and we have to do these
+   operation over and over. There is nothing to gain from going into flux space
+   and binning in there.
+
+Forced Vs Unforced Photometry
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The light curve features are calculated on the **unforced** photometry.
+This is quite limiting and in future iterations we will need to include forced
+photometry to get more useful features.
+The relation between detections and non detections changes with weather and
+the phase of the moon. I tried to capture that by having features that count
+both and measure both. But this is a loosing battle.
+
+**We need forced photometry** to do a decent job of the lightcurve
+features. The challenge is that forced photometry is expensive to calculate
+so we don't want to do that on everything in the stream.
 
 
 Training

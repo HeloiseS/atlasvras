@@ -31,10 +31,11 @@ The eyeball list in ATLAS still receives between **1000 and 3000 alerts**
 every week depending on weather and phase of the moon.
 Despite the fact that the CNN removes 98.5% of alerts, most of the eyeball list is still garbage.
 
-.. image:: _static/pie_chart.png
+.. figure:: _static/pie_chart.png
    :width: 400
    :align: center
-   :alt: Pie chart showing the distribution of alerts in the eyeball list from data gathered between 27th March and 13th August 2024
+
+    Pie chart showing the distribution of alerts in the eyeball list from data gathered between 27th March and 13th August 2024
 
 The Challenge of Automation
 ----------------------------------------
@@ -121,10 +122,11 @@ The current eyeballing policy is to ask human experts to check everything
 with a ``rank >4``. As we can see in the figure below, this encompasses
 nearly all the extra-galactic alerts (blue) and a large fraction of the galactic alerts (yellow).
 
-.. image:: _static/ss_byalert_wranks.png
+.. figure:: _static/ss_byalert_wranks.png
     :width: 800
     :align: center
-    :alt: Here we show the score space distributions for each alert type. We also plot the VRA rank contours.
+
+    Here we show the score space distributions for each alert type. We also plot the VRA rank contours.
 
 .. warning::
    Due the the distribution of the galactic alerts extending quite far down the Real axis, this policy means that a non negligible fraction of galactic transients will be missed. See the discussion at the bottom of this page for more info.
@@ -156,10 +158,11 @@ What we can do is assess the effect of the eyeballing and garbaging policies on 
 validation set to see what fraction of our ``good``, ``galactic`` and ``garbage`` + ``pm``
 alerts will get eyeballed and auto-garbaged. The plot below shows this for the current generation of models.
 
-.. image:: _static/policy_results.png
+.. figure:: _static/policy_results.png
     :width: 650
     :align: center
-    :alt: Fraction of alerts eyeballed Vs auto-garbaged for the different alert types given our current policies.
+
+    Fraction of alerts eyeballed Vs auto-garbaged for the different alert types given our current policies.
 
 As we can see we eliminate 86% of the garbage and recover all the good ones save fore one event.
 However we do end up "sacrificing" 27% of the galactic alerts.
