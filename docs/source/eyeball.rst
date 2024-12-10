@@ -2,12 +2,16 @@ Eyeballer Cheat Sheet
 ===================
 .. _Eyeballing handbook: https://www.overleaf.com/project/653678f3e33892fbb51fe7b8
 
+Overview
+-----------------
+
 .. seealso::
    The `rota <Rota_>`_ is at the bottom of this page.
 
 
 .. note::
-   You should already be familiar with eyeballing either because you read Michael's `Eyeballing handbook`_ or because you were trained by one of the experienced eyeballers.
+   You should already be familiar with eyeballing either because
+   you read Michael's `Eyeballing handbook`_ or because you were trained by one of the experienced eyeballers.
 
 
 
@@ -31,6 +35,7 @@ Xmas Eyeballing
 
 
 --------
+
 
 st3ph3n-bot
 -----------------
