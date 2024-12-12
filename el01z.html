@@ -154,7 +154,7 @@
 <li class="toctree-l1"><a class="reference internal" href="data.html">The Data</a></li>
 
 
-<li class="toctree-l1"><a class="reference internal" href="training.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="training.html">The Models</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Monitoring</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">For Devs</span></p>
@@ -317,16 +317,16 @@
   <section id="monitoring-with-el01z">
 <h1>Monitoring with El01z<a class="headerlink" href="#monitoring-with-el01z" title="Link to this heading">#</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">el01z</span></code> is the bot that monitors the behaviour of the VRA.
-It’s actually currently <strong>3 different bots</strong> (as in three separate scripts)
+It’s actually currently made of <strong>3 different bots</strong> (as in: three separate scripts)
 that have slightly different purposes</p>
 <ol class="arabic simple">
 <li><p><strong>Weekly reports</strong></p></li>
 <li><p><strong>Monitoring purgatory</strong></p></li>
 <li><p><strong>Comparing old and new models</strong></p></li>
 </ol>
-<p>The first bot will be a permanent fixture although the body of the reports
-may evolve. The other two are dev helpers that will be turned off
-eventually.</p>
+<p>The first bot is a permanent fixture although the body of the reports
+may evolve (and have already).
+The other two are 100% dev helpers that will be turned off eventually.</p>
 <section id="weekly-reports">
 <h2>Weekly Reports<a class="headerlink" href="#weekly-reports" title="Link to this heading">#</a></h2>
 <p>Every Friday before the data wrangling meeting, <code class="docutils literal notranslate"><span class="pre">el01z</span></code> will generate a report
@@ -338,7 +338,7 @@ It will tell you:</p>
 <li><p>The number of objects that were found first by us</p></li>
 <li><p>The number of objects that were found by others</p></li>
 <li><p>The number of potential misses</p></li>
-<li><p>Uploads a pie chart of the distribution of alert types labeled this week</p></li>
+<li><p>Upload a pie chart of the distribution of alert types labeled this week</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -362,8 +362,8 @@ garbaged but too low to be eyeballed are in <em>purgatory</em>.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Remember that the <code class="docutils literal notranslate"><span class="pre">dayN</span></code> models are only trained with data up to
-15 days after the initial alert. So there is little point (in fact it’d be reckless)
-giving the VRA data for objects that fall outside of its training window.</p>
+15 days after the initial alert. So there is little point giving the VRA data
+for objects that fall outside of its training window (in fact it’d be reckless).</p>
 </div>
 <p>If alerts are still in purgatory after that 15 day window they must be looked at.
 Once a week, just before the weekly report, <code class="docutils literal notranslate"><span class="pre">el01z</span></code> will generate a list of
@@ -373,15 +373,18 @@ and send it to the <code class="docutils literal notranslate"><span class="pre">
 <p class="admonition-title">Note</p>
 <p>Eventually I <em>will</em> add a new garbage collecting policy to get rid of the
 purgatory concept. The reason it exists is that I was panicked at the idea
-of garbaging an alert that was actually real.</p>
+of garbaging an alert that was actually real and I made garbaging policies
+that were conservative.</p>
 </div>
 </section>
 <section id="comparing-old-and-new-models">
 <h2>Comparing Old and New Models<a class="headerlink" href="#comparing-old-and-new-models" title="Link to this heading">#</a></h2>
 <p>We added the new <code class="docutils literal notranslate"><span class="pre">Crabby</span></code> models in production on <code class="docutils literal notranslate"><span class="pre">2024-12-06</span></code>.
-We want to compare to previous models to:
-1. See how much more awesome they are
-2. Avoid binning something interesting if I messed up.</p>
+We want to compare to previous models to:</p>
+<ol class="arabic simple">
+<li><p>See how much more awesome they are</p></li>
+<li><p>Avoid binning something interesting if I messed up.</p></li>
+</ol>
 <p>The compare-bot runs once a day currently and sends to the
 <code class="docutils literal notranslate"><span class="pre">#vra-dev</span></code> channel two lists:</p>
 <ol class="arabic simple">

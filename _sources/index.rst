@@ -18,8 +18,8 @@ ATLAS Virtual Research Assistants
    :caption: The Deets
 
    The VRA  <about>
-   Data <data>
-   Models <training>
+   The Data <data>
+   The Models <training>
    Monitoring <el01z>
 
 

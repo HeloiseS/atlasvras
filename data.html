@@ -154,7 +154,7 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">The Data</a></li>
 
 
-<li class="toctree-l1"><a class="reference internal" href="training.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="training.html">The Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="el01z.html">Monitoring</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">For Devs</span></p>
@@ -331,6 +331,8 @@
                   
   <section id="the-data">
 <h1>The Data<a class="headerlink" href="#the-data" title="Link to this heading">#</a></h1>
+<p>The current family of models is called <code class="docutils literal notranslate"><span class="pre">Crabby</span></code> and encompasses
+data gathered between <code class="docutils literal notranslate"><span class="pre">2024-03-27</span></code> and <code class="docutils literal notranslate"><span class="pre">2024-08-13</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The naming convention is as follows: new names are chosen for new
@@ -338,16 +340,15 @@ data sets(not new features), with their names starting with incremented
 letters of the alphabet. The Crabby models are the third iteration of VRA
 models (the first two being unpublished prototypes)</p>
 </div>
-<p>The current family of models is called <code class="docutils literal notranslate"><span class="pre">Crabby</span></code> and encompasses
-data gathered between <code class="docutils literal notranslate"><span class="pre">2024-03-27</span></code> and <code class="docutils literal notranslate"><span class="pre">2024-08-13</span></code>.
-These dates were determined by technical reasons; the former
+<p>The cut-off dates were determined by technical reasons; the former
 corresponds to our implementation of the systems that record human
 decisions as they are being made whilst the latter corresponds to
 when we changed the eyeballing strategy to include the VRA ranks.
 We chose to only train on alerts whose data could be recorded
 as the human decisions were being made so that we have a truthful
 record of what they looked like at the time.</p>
-<p>Because of updates in e.g. the <code class="docutils literal notranslate"><span class="pre">Sherlock</span></code> cross-matching in some
+<p><strong>[DOUBLE CHECK THIS PARAGRAPH WITH KEN]</strong>
+Because of updates in e.g. the <code class="docutils literal notranslate"><span class="pre">Sherlock</span></code> cross-matching in some
 older data in the database, recreating the conditions under which each alert
 was eyeballed is non trivial and since we get a constant influx of new data,
 we opted for the thrifty option of using data we could control fully.
@@ -355,30 +356,33 @@ The August cut off is chosen such that these data are not affected
 by any human-machine interaction considerations. <strong>Future data cleaning
 and gathering will have to take that into account.</strong></p>
 <p>The data downloaded is what is returned by the <a class="reference external" href="https://heloises.github.io/atlasapiclient/users.html">ATLAS API</a>, for the schema
-you can check the <a class="reference external" href="https://psweb.mp.qub.ac.uk/misc/api/atlas/">json schema</a>. It is cleaned up into a few csv files:
-- <code class="docutils literal notranslate"><span class="pre">contextual_info_data_set.csv</span></code>
-- <code class="docutils literal notranslate"><span class="pre">detections_data_set.csv</span></code>
-- <code class="docutils literal notranslate"><span class="pre">non_detections_100days.csv</span></code>
-- <code class="docutils literal notranslate"><span class="pre">vra_last_entry_withmjd.csv</span></code></p>
+you can check the <a class="reference external" href="https://psweb.mp.qub.ac.uk/misc/api/atlas/">json schema</a>. It is cleaned up into a few csv files:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">contextual_info_data_set.csv</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">detections_data_set.csv</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">non_detections_100days.csv</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vra_last_entry_withmjd.csv</span></code></p></li>
+</ul>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p>You can get the data and the codes used to clean it up <strong>[HERE ADD ZENODO]</strong></p>
 </div>
 <section id="some-caveats">
 <h2>Some Caveats<a class="headerlink" href="#some-caveats" title="Link to this heading">#</a></h2>
-<p>1. <strong>Only one eyeballer</strong> handled each alert (apart from a few exceptions
+<ol class="arabic simple">
+<li><p><strong>Only one eyeballer</strong> handled each alert (apart from a few exceptions
 posted on slack). Ideally for a well curated data set we would want
 two to three opinions especially for borderline cases. Here are a few
 ways this will affect the current data:</p>
-<blockquote>
-<div><p>a. Not all eyeballers use the Proper Motion star list. They will just
+<ol class="loweralpha simple">
+<li><p>Not all eyeballers use the Proper Motion star list. They will just
 put proper motion alerts in the garbage. This will lead to some confusion
-between the <code class="docutils literal notranslate"><span class="pre">garbage</span></code> and <code class="docutils literal notranslate"><span class="pre">pm</span></code> alerts.</p>
-<p>b. Most eyeballers will put galactic events in the <code class="docutils literal notranslate"><span class="pre">good</span></code> list if another team
+between the <code class="docutils literal notranslate"><span class="pre">garbage</span></code> and <code class="docutils literal notranslate"><span class="pre">pm</span></code> alerts.</p></li>
+<li><p>Most eyeballers will put galactic events in the <code class="docutils literal notranslate"><span class="pre">good</span></code> list if another team
 has mistakenly added those to the TNS. This will lead to some confusion
-between the <code class="docutils literal notranslate"><span class="pre">galactic</span></code> and <code class="docutils literal notranslate"><span class="pre">good</span></code> alerts.</p>
-</div></blockquote>
-<ol class="arabic simple" start="2">
+between the <code class="docutils literal notranslate"><span class="pre">galactic</span></code> and <code class="docutils literal notranslate"><span class="pre">good</span></code> alerts.</p></li>
+</ol>
+</li>
 <li><dl class="simple">
 <dt>The  <code class="docutils literal notranslate"><span class="pre">galactic</span></code> tag is actually an <code class="docutils literal notranslate"><span class="pre">attic</span></code> list tag. But the attic list also contains:</dt><dd><ol class="loweralpha simple">
 <li><p>Duplicate supernovae</p></li>
@@ -406,8 +410,17 @@ in the attic).</p>
 <p>With these data we create a <strong>balanced</strong> training set and an <strong>unbalanced</strong>
 validation set that we will use to check that our models generalise decently and
 to tune some hyperparameters.
-We do this by randomly sampling the alerts <em>before</em> balancing, selecting
-15% to be our validation set. Then we balance what’s left to create the training set.</p>
+We do this by randomly sampling 15% of our alerts <em>before</em> balancing
+to be our validation set.
+We then balance what’s left to make our training set.
+We use <strong>undersampling</strong> of the larger categories (<code class="docutils literal notranslate"><span class="pre">pm</span></code> and <code class="docutils literal notranslate"><span class="pre">garbage</span></code>)
+rather than oversampling of the smaller categories.
+I started with that because I didn’t want to duplicate data and the models
+were working decently with just a few thousand samples, but oversampling
+has not actually been tested and compared.
+I think it will be more beneficial to focus on expanding the data set with more
+recent data (especially since, as you’ll see below, RA and DEC are such important
+features).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>We do not call it a <strong>test set</strong> because it isn’t : we use it to check our models
@@ -419,11 +432,11 @@ Realistically, we test in prod.</p>
 what the model will see in production so that the metrics we calculate to
 check performance and generalisation are representative of what we might
 see in real life.</p>
-<p>The number of alerts in out training and validation sets are shown in the
+<p>The number of alerts in our training and validation sets are shown in the
 table below. As you can see the training set is <em>slightly</em> unbalanced
-with 300 more garbage, pm and galactic alerts than good alerts.
+with 300 more <code class="docutils literal notranslate"><span class="pre">garbage</span></code>, <code class="docutils literal notranslate"><span class="pre">pm</span></code> and <code class="docutils literal notranslate"><span class="pre">galactic</span></code> alerts than <code class="docutils literal notranslate"><span class="pre">good</span></code> alerts.
 That’s because I wanted to keep as large a training set as possible
-so I balanced based on the number of galactic alerts. The slight imbalance
+so I balanced based on the number of <code class="docutils literal notranslate"><span class="pre">galactic</span></code> alerts. The slight imbalance
 did not affect the model’s performance in early tests (but we did
 try training on the unbalanced training set and it was a disaster).</p>
 <div class="pst-scrollable-table-container"><table class="table" id="id2">
@@ -564,10 +577,10 @@ They currently use <strong>19 features</strong>, which are summarised in the tab
 </section>
 <section id="day-n-features">
 <h2>Day N features<a class="headerlink" href="#day-n-features" title="Link to this heading">#</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">dayN</span></code> models which update the real and galactic scores when new
-information comes to light, that is, when ATLAS has visited that part of the
-sky again and has either seen something or seen nothing. Either way
-it might tell us something about the event.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">dayN</span></code>  models update the real and galactic scores when new
+information becomes available, that is, when ATLAS has visited that part of the
+sky again and has either seen something or seen nothing (Either way
+it might tell us something about the event).</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">dayN</span></code> models use all the features of the <code class="docutils literal notranslate"><span class="pre">day1</span></code> models plus
 an additional set of lightcurve features to try to capture the evolution
 of the lightcurve.</p>
@@ -633,14 +646,16 @@ the phase of the moon. I tried to capture that by having features that count
 both and measure both. But this is a loosing battle.</p>
 <p><strong>We need forced photometry</strong> to do a decent job of the lightcurve
 features. The challenge is that forced photometry is expensive to calculate
-so we don’t want to do that on everything in the stream.</p>
+so we don’t want to do that on everything in the stream.
+<strong>[NOTE: in Lasair we have FP for ZTF, will we get that for LSST?]</strong></p>
 </section>
 </section>
 <section id="feature-importance">
 <h1>Feature Importance<a class="headerlink" href="#feature-importance" title="Link to this heading">#</a></h1>
-<p>These features were chosen based on my conversations with the eyeballers
-and my own eyeballing experience, but whether and how much they
-contribute to the model is only something we can see once we have trained them.</p>
+<p>The features described above were chosen based on my conversations
+with the eyeballers and my own eyeballing experience,
+but whether and how much they contribute to the model is only
+something we can assess once we have trained them.</p>
 <p>To explore that we can look at the <a class="reference external" href="https://scikit-learn.org/stable/modules/permutation_importance.html">permutation importance</a> of our features.
 The basic concept is simple: you take a feature column and shuffle it. Then
 you retrain the model and see how much worse the predictions are.
@@ -658,14 +673,15 @@ you retrain the model and see how much worse the predictions are.
 But some of the other important features may seem a bit odd. Why would the
 <code class="docutils literal notranslate"><span class="pre">log10_sep_arcsec</span></code> be so high on the list? Likely because
 bad subtractions and artefacts from proper motion stars happen in
-the vicinity of the cross matches.
-<code class="docutils literal notranslate"><span class="pre">RA</span></code> and <code class="docutils literal notranslate"><span class="pre">dec</span></code> are also very important because bogus alerts are often
-found in the galactic plane (note in BMO, a previous version we did try
+the vicinity of the cross matches.</p>
+<p><code class="docutils literal notranslate"><span class="pre">RA</span></code> and <code class="docutils literal notranslate"><span class="pre">dec</span></code> are also very important because bogus alerts are often
+found in the galactic plane (note in BMO, a previous version, we did try
 to use the galactic coordinates to do the training but it gave worse results!).
 <code class="docutils literal notranslate"><span class="pre">ebv_sfd</span></code> is also somewhat significant, likely because it’s a proxy for the
-galactic plane more than extinction directly causing bogus alerts.</p>
-<p>Some features like <code class="docutils literal notranslate"><span class="pre">z</span></code> and <code class="docutils literal notranslate"><span class="pre">photoz</span></code> are not important here, but they
-will be for the galactic model which is why they’re included.</p>
+galactic plane and crowded fields that yield more artefacts
+rather than extinction directly causing bogus alerts.</p>
+<p>Some features like <code class="docutils literal notranslate"><span class="pre">z</span></code> and <code class="docutils literal notranslate"><span class="pre">photoz</span></code> are not important here (as expected),
+but they will be for the galactic model which is why they’re included.</p>
 </section>
 <section id="galactic-score-model-day1-features">
 <h2>Galactic Score Model - day1 Features<a class="headerlink" href="#galactic-score-model-day1-features" title="Link to this heading">#</a></h2>
@@ -683,13 +699,13 @@ and safely get a galactic tag).
 of how RB score is affected by bad subtractions in the galactic plane or by
 proper motion star.</p>
 <p>Again  <code class="docutils literal notranslate"><span class="pre">log10_sep_arcsec</span></code> is important, and I suspect it is a proxy for
-wether an alert is associated with a galaxy. As we can see in the
+whether an alert is associated with a galaxy. As we can see in the
 <code class="docutils literal notranslate"><span class="pre">sherlock</span></code> features, <code class="docutils literal notranslate"><span class="pre">SN</span></code> and <code class="docutils literal notranslate"><span class="pre">NT</span></code> are NOT nearly as important as
-we might have thought (in fact <code class="docutils literal notranslate"><span class="pre">NT</span></code> looks like it hinders).
+we might have thought (in fact <code class="docutils literal notranslate"><span class="pre">NT</span></code> looks like it hinders a bit!).
 This is likely a result of the fact that a lot of “extended” sources in the PS
 catalogues are actually stars, and to be more complete with the <code class="docutils literal notranslate"><span class="pre">SN</span></code> tag
 <code class="docutils literal notranslate"><span class="pre">sherlock</span></code> allows for a lot of contamination. For our model that means
-that the <code class="docutils literal notranslate"><span class="pre">SN</span></code> chategory is not very informative, <em>but</em> using the separation
+that the <code class="docutils literal notranslate"><span class="pre">SN</span></code> category is not very informative, <em>but</em> using the separation
 directly allows it to infer whether the source is likely to be a SN (they’re usually
 offset, whereas stars and NT aren’t).</p>
 <p>Finally note that <code class="docutils literal notranslate"><span class="pre">z</span></code> and <code class="docutils literal notranslate"><span class="pre">photoz</span></code> are now showing some importance,
@@ -706,8 +722,9 @@ for both.</p>
 <section id="id1">
 <h2>day N features<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>So what about the <code class="docutils literal notranslate"><span class="pre">dayN</span></code> models and the extra features we added?
-The plots are big and bully you can find them in the paper or in the data release,
-so here is the general gist.</p>
+The plots are big and bulky so I’m not adding them here, but you will be
+able to find them in the paper or in the data release.
+Here is the general gist.</p>
 <dl class="simple">
 <dt>For the real and galactic models the features that have the most impact are</dt><dd><p><code class="docutils literal notranslate"><span class="pre">max_mag</span></code>  and <code class="docutils literal notranslate"><span class="pre">max_mag_day</span></code>.</p>
 </dd>
@@ -716,7 +733,7 @@ so here is the general gist.</p>
 is also important. <strong>Everything else has little to no impact</strong>.
 To be fair human eyeballers really rely on the forced photometry in this regime
 to make decisions, so trying to tease out other features on the raw phot is
-probably beating a dead horse.</p>
+probably beating a dead horse. It was worth a go.</p>
 </section>
 </section>
 

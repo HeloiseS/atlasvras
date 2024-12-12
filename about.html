@@ -154,7 +154,7 @@
 <li class="toctree-l1"><a class="reference internal" href="data.html">The Data</a></li>
 
 
-<li class="toctree-l1"><a class="reference internal" href="training.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="training.html">The Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="el01z.html">Monitoring</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">For Devs</span></p>
@@ -323,6 +323,8 @@
                   
   <section id="the-virtual-research-assistant">
 <h1>The Virtual Research Assistant<a class="headerlink" href="#the-virtual-research-assistant" title="Link to this heading">#</a></h1>
+<p><em>This page is a high level overview the ATLAS VRA: why it exists and what it does</em>
+<em>For more details on the data used to train it and the types of models used you can the Data and Models pages</em></p>
 <section id="data-journey-from-telescope-to-transient-name-server">
 <h2>Data Journey: From Telescope to Transient Name Server<a class="headerlink" href="#data-journey-from-telescope-to-transient-name-server" title="Link to this heading">#</a></h2>
 <div class="admonition seealso">
@@ -334,40 +336,41 @@ being sent to Hawaii for difference imaging. Alerts are produced if a detection
 above 5 sigma is recorded, and these form the data stream that is handled by
 the servers at Queen’s University Belfast.</p>
 <p>The alert stream size is of order 10s millions per night. Most of these are artefacts from the
-difference imaging process, or known variable stars. The data stream is handled
-as follows:</p>
+difference imaging process, or known variable stars. The stream processing steps are:</p>
 <ol class="arabic simple">
 <li><p><strong>Alerts to Sources</strong>: We aggregate individual alerts into sources (one source will likely have mutiple alerts). If the source is new, its unique 19 digit ATLAS ID is created.</p></li>
-<li><p><strong>Basic Cuts</strong>: Some simple quality cuts can help reduce the volume of the data stream. The main is that <strong>at least 3 detections per source (per night)</strong> are required to move onto the next stage.</p></li>
+<li><p><strong>Basic Cuts</strong>: Some simple quality cuts can help reduce the volume of the data stream. The main requirement is that <strong>at least 3 detections per source (per night)</strong> are required to move onto the next stage.</p></li>
 <li><p><a class="reference external" href="https://lasair.readthedocs.io/en/develop/core_functions/sherlock.html">Sherlock</a> catalogue cross matching and <strong>remove variable stars</strong>.</p></li>
 <li><p><strong>Real/Bogus Score</strong>: We use a Convolutional Neural Network to classify the alerts as real or bogus (see <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2024RASTI...3..385W/abstract">Weston et al. 2024</a> ). <strong>If the RB score &gt;0.2</strong> they are passed on to eyeball list</p></li>
-<li><p><strong>Eyeball list</strong>: The alerts are eyeballed and classified as <code class="docutils literal notranslate"><span class="pre">garbage</span></code>, <code class="docutils literal notranslate"><span class="pre">pm</span></code> (proper motion star),``good`` or <code class="docutils literal notranslate"><span class="pre">attic</span></code> (for real alerts from transients within the galaxy). Good alerts are automatically pushed to TNS.</p></li>
+<li><p><strong>Eyeball list</strong>: The alerts are eyeballed and classified as <code class="docutils literal notranslate"><span class="pre">garbage</span></code>, <code class="docutils literal notranslate"><span class="pre">pm</span></code> (proper motion star), <code class="docutils literal notranslate"><span class="pre">good</span></code>  or <code class="docutils literal notranslate"><span class="pre">attic</span></code> (for real alerts from transients within the galaxy). Good alerts are automatically pushed to TNS.</p></li>
 </ol>
 <p>The eyeball list in ATLAS still receives between <strong>1000 and 3000 alerts</strong>
 every week depending on weather and phase of the moon.
 Despite the fact that the CNN removes 98.5% of alerts, most of the eyeball list is still garbage.</p>
 <figure class="align-center">
-<a class="reference internal image-reference" href="_images/pie_chart.png"><img alt="_images/pie_chart.png" src="_images/pie_chart.png" style="width: 400px;" />
+<a class="reference internal image-reference" href="_images/pie_chart.png"><img alt="_images/pie_chart.png" src="_images/pie_chart.png" style="width: 500px;" />
 </a>
 </figure>
 </section>
 <section id="the-challenge-of-automation">
 <h2>The Challenge of Automation<a class="headerlink" href="#the-challenge-of-automation" title="Link to this heading">#</a></h2>
-<p>The difficulty in automating the eyeballing process further is two fold:
-1. We need <strong>very high completeness</strong> (we don’t want to miss cool transients)
-2. Humans are FAST at the eyeballing task. Meaning they need _little_ data</p>
+<p>The difficulty in automating the eyeballing process further is two fold:</p>
+<ol class="arabic simple">
+<li><p>We need <strong>very high completeness</strong> (we don’t want to miss cool transients)</p></li>
+<li><p>Humans are FAST at the eyeballing task. Meaning they need <em>little</em> data</p></li>
+</ol>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Given the cadence of ATLAS, people making over 90% of decisions within 24/48 hours means they most often only have <strong>one to two lightcurve points</strong> to look at.</p>
 </div>
 <figure class="align-center" id="id2">
-<a class="reference internal image-reference" href="_images/when_decision_made.png"><img alt="_images/when_decision_made.png" src="_images/when_decision_made.png" style="width: 650px;" />
+<a class="reference internal image-reference" href="_images/when_decision_made.png"><img alt="_images/when_decision_made.png" src="_images/when_decision_made.png" style="width: 800px;" />
 </a>
 <figcaption>
 <p><span class="caption-text">Histograms split by types showing the delay in human decisions</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Because lightcurve information is not rich, classic transient classifiers made to reproduce
+<p>Because lightcurve information is spares, classic transient classifiers made to reproduce
 spectroscopic classifications using only the lightcurve information are
 <strong>never going to have sufficient information</strong> to be useful in this regime.
 We therefore need to bridge the gap between the Real/Bogus classifiers (day 1 regime)
@@ -397,28 +400,38 @@ we call the score space:</p>
 <p><span class="caption-text">Score space showing the balanced training data for the Crabby models</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p>For more information about the data and the training of the models see the <strong>Data</strong> and <strong>Training</strong> subsections</p>
-</div>
 <p>Because we care about <strong>extragalactic transients</strong> we are interested in alerts
 nearest the <strong>bottom right</strong> (real=1, galactic=0).
 We’re going to use this to calculate the ranks.</p>
-<p>Finally, the alerts are scored <strong>every time new  data is available</strong>.
+<p>Finally, the alerts are <strong>scored again every time new  data is available</strong>.
 There is a distinction between the models that score when first entering the eyeball list (<code class="docutils literal notranslate"><span class="pre">day1</span></code> models)
 and those updating the ranks on future visits (<code class="docutils literal notranslate"><span class="pre">dayN</span></code> models), in that the latter
-use additional features (see the Training section). But the ranking logic remains the same.</p>
+use additional features (see the Data section). But the ranking logic remains the same.</p>
 </section>
 <section id="ranking">
 <h2>Ranking<a class="headerlink" href="#ranking" title="Link to this heading">#</a></h2>
-<p>To rank our alerts we now use the <em>pythagoras theorem</em> :sparkles:.
-We calculate the distance from the bottom right corner of the score space, scaling the
-galactic axis by <strong>0.4</strong> to separate the bad alerts from the good ones more effectively.
-It also ensures that our eyeballing policy (see below) encompasses the real=1, galactic=1 corner
-whilst leaving out as much or the garbage as possible.</p>
-<p>We then normalise all the distances (by the maximum distance that can be reached in the scaled score space),
-so that they range between 0 and 1. Then we multiply by 10 to get the values you see
-on the web server</p>
+<p>To rank our alerts we now use the <em>pythagoras theorem</em>.
+The bottom right hand corner of the plot is the “most” Real and Extra-galactic.
+Hypothetically that is the alert we care about the most.
+To calculate the ranks we therefore <strong>calculate the distance to that (1,0) point</strong>.
+Now… there are a couple extra steps.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>I scale the galactic axis by 0.4 to separate the garbage from the real alerts more effectively.</dt><dd><p>It also ensures our eyeballing policy (see below) encompasses the real=1, galactic=1 corner.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>To get a score between 0 and 10 you also have to invert the distance (the smaller the distance the higher the score),</dt><dd><p>normalise by the diagonal of the plot and multiply by 10.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>TL;DR</strong>: The closer to the Real-ExtraGalactic corner (1,0) - the higher the rank.
+A <strong>rank = 10</strong> is a special case were a TNS crossmatch has been found.</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>In the previous version of the VRA the scaling factor was 0.5. This means the new models will give you a few more alerts to eyeball with more contamination down in the rank 4-6. But we’re also less likely to miss real galactic alerts.</p>
@@ -426,6 +439,15 @@ on the web server</p>
 </section>
 <section id="policies">
 <h2>Policies<a class="headerlink" href="#policies" title="Link to this heading">#</a></h2>
+<p>The goal of the VRA is to reduce human workload so now that we have the ranks we need to decide</p>
+<ol class="arabic simple">
+<li><p>Which alerts are worth asking the humans to eyeball</p></li>
+<li><p>Which ones we can ditch automatically</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Nothing is deleted</strong> from the server when an alert is garbaged. It’s just <em>tagged</em> as garbage.</p>
+</div>
 <section id="eyeballing">
 <h3>Eyeballing<a class="headerlink" href="#eyeballing" title="Link to this heading">#</a></h3>
 <p>The current eyeballing policy is to ask human experts to check everything
@@ -449,9 +471,11 @@ nearly all the extra-galactic alerts (blue) and a large fraction of the galactic
 * On <strong>entering the eyeball list</strong> with <code class="docutils literal notranslate"><span class="pre">rank&lt;1.5</span></code>
 * On a <strong>second visit</strong>, <code class="docutils literal notranslate"><span class="pre">max(rank)&lt;3</span></code>.
 * On the <strong>third and subsequent visits</strong>, <code class="docutils literal notranslate"><span class="pre">mean(rank)&lt;3</span></code>.</p>
-<p>Because the cadence is often 2 to 3 days, after the 3rd or 4th visit we will get close to +15 days after initial alert, which falls out of the training window.</p>
-<p>Now because we eyeball everything with rank &gt;4, these garbaging policies will leave some alerts in “purgratory”.
-These are now being handled by <code class="docutils literal notranslate"><span class="pre">el01z</span></code> which has a sentinel looking out for
+<p>Because the cadence is often 2 to 3 days, after the 3rd or 4th visit we will
+get close to +15 days after initial alert, which falls out of the training window.
+Because we eyeball everything with rank &gt;4, these garbaging policies will leave some alerts in
+what is called the “purgratory”.
+These are now being handled by <code class="docutils literal notranslate"><span class="pre">el01z</span></code>  (see the Monitoring section) which has a sentinel looking out for
 alerts that are left in purgatory after they have fallen out of <code class="docutils literal notranslate"><span class="pre">st3ph3n</span></code>’s training window.</p>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
@@ -462,9 +486,10 @@ alerts that are left in purgatory after they have fallen out of <code class="doc
 <h3>Discussion<a class="headerlink" href="#discussion" title="Link to this heading">#</a></h3>
 <p>Testing the effect of the policies on static data is tricky as we do not have
 an eyeball list refilling every day.
-What we can do is assess the effect of the eyeballing and garbaging policies on our
+What we can do thought is assess the effect of the eyeballing and garbaging policies on our
 validation set to see what fraction of our <code class="docutils literal notranslate"><span class="pre">good</span></code>, <code class="docutils literal notranslate"><span class="pre">galactic</span></code> and <code class="docutils literal notranslate"><span class="pre">garbage</span></code> + <code class="docutils literal notranslate"><span class="pre">pm</span></code>
-alerts will get eyeballed and auto-garbaged. The plot below shows this for the current generation of models.</p>
+alerts will get eyeballed and auto-garbaged.
+The plot below shows this for the current generation of models.</p>
 <figure class="align-center" id="id5">
 <a class="reference internal image-reference" href="_images/policy_results.png"><img alt="_images/policy_results.png" src="_images/policy_results.png" style="width: 650px;" />
 </a>
@@ -480,12 +505,10 @@ This could be remedied in the futures either by:</p>
 <li><p>Having a separate policy and eyeball list focused on galactic alerts. This would require a dedicated team of galactic eyeballers (likely people connected to those science  cases)</p></li>
 <li><p>Changing the ranking policy to a more complex function which better captures the shape of galactic event distribution.</p></li>
 </ol>
-<p>The former option is not viable right now since we do not have the team
-members to add this layer of operations.
+<p>The former option is not viable right now since we do not have enough team
+members to add this extra layer of operations.
 The second option is disfavoured because the simplicity of the ranking function
-makes it very understandable for the people who use it in our current team because the
-behaviour of the extra-galactic alerts in score space is better behaved
-(the tails are more symmetrical).</p>
+makes it very understandable for the people who use it in our current team.</p>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
 <p>The fact that we are auto-garbaging galactic alerts means the garbage list will now have more contamination of real low SNR galactic events. We will have to be careful when creating future training sets to not introduce confusion to future models.</p>
