@@ -2,16 +2,16 @@ Monitoring with El01z
 ===================
 
 ``el01z`` is the bot that monitors the behaviour of the VRA.
-It's actually currently **3 different bots** (as in three separate scripts)
+It's actually currently made of **3 different bots** (as in: three separate scripts)
 that have slightly different purposes
 
 1. **Weekly reports**
 2. **Monitoring purgatory**
 3. **Comparing old and new models**
 
-The first bot will be a permanent fixture although the body of the reports
-may evolve. The other two are dev helpers that will be turned off
-eventually.
+The first bot is a permanent fixture although the body of the reports
+may evolve (and have already).
+The other two are 100% dev helpers that will be turned off eventually.
 
 Weekly Reports
 --------------------
@@ -24,7 +24,7 @@ It will tell you:
 - The number of objects that were found first by us
 - The number of objects that were found by others
 - The number of potential misses
-- Uploads a pie chart of the distribution of alert types labeled this week
+- Upload a pie chart of the distribution of alert types labeled this week
 
 .. note::
    Potential misses are defined as alerts that the VRA scored too low to be eyeballed
@@ -47,8 +47,8 @@ Purgatory
 
 .. important::
    Remember that the ``dayN`` models are only trained with data up to
-   15 days after the initial alert. So there is little point (in fact it'd be reckless)
-   giving the VRA data for objects that fall outside of its training window.
+   15 days after the initial alert. So there is little point giving the VRA data
+   for objects that fall outside of its training window (in fact it'd be reckless).
 
 If alerts are still in purgatory after that 15 day window they must be looked at.
 Once a week, just before the weekly report, ``el01z`` will generate a list of
@@ -58,7 +58,8 @@ and send it to the ``#vra-dev`` channel so I can eyeball them.
 .. note::
    Eventually I *will* add a new garbage collecting policy to get rid of the
    purgatory concept. The reason it exists is that I was panicked at the idea
-   of garbaging an alert that was actually real.
+   of garbaging an alert that was actually real and I made garbaging policies
+   that were conservative.
 
 
 Comparing Old and New Models
@@ -66,6 +67,7 @@ Comparing Old and New Models
 
 We added the new ``Crabby`` models in production on ``2024-12-06``.
 We want to compare to previous models to:
+
 1. See how much more awesome they are
 2. Avoid binning something interesting if I messed up.
 
