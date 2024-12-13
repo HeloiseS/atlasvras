@@ -108,7 +108,7 @@ for atlas_id in stuck_in_purgatory:
 
 logging.info("Sending the report to slack")
 
-client = WebClient(token=os.getenv('SLACK_TOKEN_el01z'))
+client = WebClient(token=SLACK_TOKEN)
 client.chat_postMessage(
   channel="#vra-dev",
   text=TEXT_REPORT,
