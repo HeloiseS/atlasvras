@@ -159,7 +159,7 @@ TEXT_REPORT +=f"*The Deets*\n"
 TEXT_REPORT +=f"- Week Starting: {last_run_date}\n"
 TEXT_REPORT += (f"- You eyeballed *{N_2EYEBALL}* ({np.round(N_2EYEBALL/N_RBSCORE_GT0p2*100,1)}%) "
                 f"alerts out of the *{N_RBSCORE_GT0p2}* with RB > 0.2\n")
-TEXT_REPORT += (f"- **TNS**: *{N_FOUND_FIRST}* Reported by us first "
+TEXT_REPORT += (f"- *TNS*: *{N_FOUND_FIRST}* Reported by us first "
                 f"and another *{N_FOUND_BY_OTHERS}* (Cross-matched to TNS) \n\n")
 
 ### THINGS THAT GOT LOW VRA SCORE BUT WERE IN TNS
@@ -203,7 +203,7 @@ file_response = client.files_upload_v2(
 file_url = file_response["file"]["permalink"]
 
 client.chat_postMessage(
-    channels="C07HZGBKHQX", # #vra-forum for real thing
+    channel="C07HZGBKHQX", # #vra-forum for real thing
     #channel="C0842K2QZS8", # #vra-dev to test
     text=TEXT_REPORT,
 )
@@ -251,6 +251,7 @@ label_to_color = {'garbage':vra_colors['red'],
                  'galactic':vra_colors['yellow'],
                  'auto-garbage':'grey',
                  'possible': vra_colors['white'],
+                 None: 'white',
                  np.nan: 'white'
                 }
 
