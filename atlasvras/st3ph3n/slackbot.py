@@ -52,12 +52,15 @@ set_fasttrack_ids = set(get_ids_from_fasttrack.atlas_id_list_int)
 # Using the oldest data in the To Do list to set the datethreshold
 todo_list = atlasapiclient.RequestVRAToDoList(api_config_file=API_CONFIG_FILE)
 todo_list.get_response()
-DATETHRESHOLD= pd.DataFrame(todo_list.response).sort_values('timestamp').timestamp.iloc[0]
+todo_df = pd.DataFrame(todo_list.response).sort_values('timestamp')
+DATETHRESHOLD= todo_df.timestamp.iloc[0]
+
 
 vra_df = fetch_vra_dataframe(datethreshold=DATETHRESHOLD)
 # NEED TO ENSURE WE ARE LOOKING AT THE LAST VRA SCORE GIVEN
-vra_df = vra_df[vra_df.apiusername=='vra']
-vra_df.drop_duplicates('transient_object_id', keep='last', inplace=True)
+vra_df = vra_df[vra_df.apiusername=='vra'] # only looks at rows that the VRA dded
+vra_df = vra_df[vra_df.rank_alt1.isna()] # remove all the rows with alternate ranks, where rank == NaN
+vra_df.drop_duplicates('transient_object_id', keep='last', inplace=True) # remove duplicates and keep last rank
 
 # set_hi_vra_rank : ATLAS IDS from vra scores tbale where rank >= EYEBALL_THRESHOLD
 set_hi_vra_rank_ids = set(vra_df[vra_df['rank'] >= EYEBALL_THRESHOLD].transient_object_id)
@@ -80,7 +83,7 @@ if len(set_fasttrack_ids)>0:
                 f"({len(set_fasttrack_ids) - len(set_fasttrack_hi_rank_ids)} with low ranks): :link:"
                 f"<{URL_BASE}followup_quickview/8/|Fast Track List>\n\n")
 
-if len(set_eyeball_ids)>0:
+if len(set_eyeball_hi_rank_ids)>0:
     bot_message += (f":eye:  {len(set_eyeball_hi_rank_ids)} objects with rank > {EYEBALL_THRESHOLD}. :link: "
                f"<{URL_BASE}followup_quickview/4/?vra__gte=4.0&sort=-vra|Eyeball List>\n"
                )
