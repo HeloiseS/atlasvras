@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 ST3PH3N SLACK BOT
 =================
@@ -54,6 +55,9 @@ todo_list.get_response()
 DATETHRESHOLD= pd.DataFrame(todo_list.response).sort_values('timestamp').timestamp.iloc[0]
 
 vra_df = fetch_vra_dataframe(datethreshold=DATETHRESHOLD)
+# NEED TO ENSURE WE ARE LOOKING AT THE LAST VRA SCORE GIVEN
+vra_df = vra_df[vra_df.apiusername=='vra']
+vra_df.drop_duplicates('transient_object_id', keep='last', inplace=True)
 
 # set_hi_vra_rank : ATLAS IDS from vra scores tbale where rank >= EYEBALL_THRESHOLD
 set_hi_vra_rank_ids = set(vra_df[vra_df['rank'] >= EYEBALL_THRESHOLD].transient_object_id)
@@ -64,12 +68,20 @@ set_fasttrack_hi_rank_ids = set_fasttrack_ids.intersection(set_hi_vra_rank_ids)
 # set_eyeball_hi_rank = intersection set eyeball and set hi vra rank
 set_eyeball_hi_rank_ids = set_eyeball_ids.intersection(set_hi_vra_rank_ids)
 
-# OUTPUTS: len(set_fasttrack_hi_rank), len(set_eyeball_hi_rank)
-bot_message = (f"*Ingest Complete*\n"
-               f":bell: {len(set_fasttrack_hi_rank_ids)} objects with rank > {EYEBALL_THRESHOLD}. "
-               f"({len(set_fasttrack_ids) - len(set_fasttrack_hi_rank_ids)} with low ranks): :link:"
-               f"<{URL_BASE}followup_quickview/8/|Fast Track List>\n\n"
-               f":eye:  {len(set_eyeball_hi_rank_ids)} objects with rank > {EYEBALL_THRESHOLD}. :link: "
+# OUTPUTS
+bot_message = f"*Ingest Complete*\n"
+
+if len(set_fasttrack_ids) == 0 and len(set_eyeball_hi_rank_ids) == 0:
+    # If nothing in Fast track or eyeball end the script without sending a message
+    exit(1)
+
+if len(set_fasttrack_ids)>0:
+    bot_message += (f":bell: {len(set_fasttrack_hi_rank_ids)} objects with rank > {EYEBALL_THRESHOLD}. "
+                f"({len(set_fasttrack_ids) - len(set_fasttrack_hi_rank_ids)} with low ranks): :link:"
+                f"<{URL_BASE}followup_quickview/8/|Fast Track List>\n\n")
+
+if len(set_eyeball_ids)>0:
+    bot_message += (f":eye:  {len(set_eyeball_hi_rank_ids)} objects with rank > {EYEBALL_THRESHOLD}. :link: "
                f"<{URL_BASE}followup_quickview/4/?vra__gte=4.0&sort=-vra|Eyeball List>\n"
                )
 
