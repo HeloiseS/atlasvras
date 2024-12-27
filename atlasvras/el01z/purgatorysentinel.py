@@ -17,7 +17,7 @@ with open(BOT_CONFIG_FILE, 'r') as stream:
         config = yaml.safe_load(stream)
         LOG_PATH = config['log_path']
         SLACK_TOKEN = config['slack_token_el01z']
-        URL_BASE = config['base_url']
+        URL_BASE = config['base_url']+'candidate/'
         EYEBALL_THRESHOLD = config['eyeball_threshold']
         URL_SLACK = config['url_slack']
     except yaml.YAMLError as exc:
@@ -66,7 +66,7 @@ vra_df = fetch_vra_dataframe(datethreshold=DATETHRESHOLD)
 vra_df.set_index('transient_object_id', inplace=True)
 
 # Crop df so only objects in eyeball list are left
-vra_df=vra_df.loc[get_ids_from_eyeball.atlas_id_list_int]
+vra_df=vra_df.loc[list(set(get_ids_from_eyeball.atlas_id_list_int).intersection(set(vra_df.index)))]
 logging.info("Got the VRA dataframe")
 
 # add a column recording the first timestamp for each object

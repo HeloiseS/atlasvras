@@ -55,7 +55,7 @@ with open(BOT_CONFIG_FILE, 'r') as stream:
         config = yaml.safe_load(stream)
         LOG_PATH = config['log_path']
         SLACK_TOKEN = config['slack_token_el01z']
-        URL_BASE = config['base_url']
+        URL_BASE = config['base_url']+ 'candidate/'
         EYEBALL_THRESHOLD = config['eyeball_threshold']
         URL_SLACK = config['url_slack']
     except yaml.YAMLError as exc:
