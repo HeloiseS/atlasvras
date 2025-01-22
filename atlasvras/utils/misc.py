@@ -42,6 +42,6 @@ def fetch_vra_dataframe(datethreshold: str = None,
                                                payload={'datethreshold': datethreshold},
                                                get_response=True
                                                 )
-    vra_df = pd.DataFrame(request_vra.response)
+    vra_df = pd.DataFrame(request_vra.response_data)
 
     return vra_df
