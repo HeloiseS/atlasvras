@@ -18,5 +18,6 @@ label_to_color = {'garbage':vra_colors['red'],
                  'galactic':vra_colors['yellow'],
                  'auto-garbage':'grey',
                  'possible': vra_colors['white'],
+                  'AGN': vra_colors['white'],
                  None:'k'
                 }

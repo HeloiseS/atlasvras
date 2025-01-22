@@ -235,6 +235,9 @@ vra_df_old_ranks = vra_decisions_df[(vra_decisions_df['rank']!=-1)
                                     & (~vra_decisions_df.rank_alt1.isna())
                                     & (vra_decisions_df['rank'] != 10)]
 
+# TODO: Not that this join is a problem when the index is not unique
+# not a bgi deal for the quick weekly report but worth keeping i mind.
+
 # Making the comparison dataframe
 comparison_df = vra_df_new_ranks[['rank']].join(vra_df_old_ranks.rank_alt1
                                                 )
