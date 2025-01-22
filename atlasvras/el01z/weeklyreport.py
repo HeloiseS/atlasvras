@@ -55,7 +55,7 @@ with open(BOT_CONFIG_FILE, 'r') as stream:
         config = yaml.safe_load(stream)
         LOG_PATH = config['log_path']
         SLACK_TOKEN = config['slack_token_el01z']
-        URL_BASE = config['base_url']
+        URL_BASE = config['base_url']+ 'candidate/'
         EYEBALL_THRESHOLD = config['eyeball_threshold']
         URL_SLACK = config['url_slack']
     except yaml.YAMLError as exc:
@@ -234,6 +234,9 @@ vra_df_new_ranks = vra_decisions_df[(vra_decisions_df['rank']!=-1)
 vra_df_old_ranks = vra_decisions_df[(vra_decisions_df['rank']!=-1)
                                     & (~vra_decisions_df.rank_alt1.isna())
                                     & (vra_decisions_df['rank'] != 10)]
+
+# TODO: Not that this join is a problem when the index is not unique
+# not a bgi deal for the quick weekly report but worth keeping i mind.
 
 # Making the comparison dataframe
 comparison_df = vra_df_new_ranks[['rank']].join(vra_df_old_ranks.rank_alt1
