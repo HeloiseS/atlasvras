@@ -132,4 +132,4 @@ class JsonDataFromServer(JsonData):
                                                                      )
 
         # now initialise the JsonData object with the response
-        super().__init__(response=single_source_data.response[0])
+        super().__init__(response=single_source_data.response_data[0])

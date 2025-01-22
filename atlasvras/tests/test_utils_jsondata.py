@@ -22,7 +22,7 @@ class TestJsonData():
                                                           atlas_id='1103337110432157700',
                                                           get_response=True
                                                           )
-        JsonData(request_source.response[0])
+        JsonData(request_source.response_data[0])
 
     def test_instanciation_from_bad_response(self):
         request_source = atlasapi.client.RequestSingleSourceData(api_config_file=API_CONFIG_FILE,
@@ -30,7 +30,7 @@ class TestJsonData():
                                                           get_response=True
                                                           )
         with pytest.raises(AssertionError):
-            JsonData(request_source.response)
+            JsonData(request_source.response_data)
 
     def test_values_sn(self):
         lc_mag = self.json_data_sn.get_values(['lc', 'mag'])
