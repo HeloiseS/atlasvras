@@ -67,3 +67,12 @@ class ScoreAndRank(object):
         raw_ranks = np.sqrt(self.real_scores.T[0]**2 + (fudge_factor*self.gal_scores.T[1])**2)
         max_distance = np.sqrt(fudge_factor**2 + 1)
         self.ranks = (max_distance - raw_ranks) * max_score / max_distance
+
+    @property
+    def is_candidate_gal(self, fudge_factor=1, distance=0.45):
+        # TODO: add a test
+        """
+        If distance to coordinate (1,1) is <= 0.45 then returns True
+        """
+        d = np.sqrt((self.real_scores.T[0]) ** 2 + fudge_factor ** 2 * (self.gal_scores.T[0]) ** 2)
+        return d <= distance
