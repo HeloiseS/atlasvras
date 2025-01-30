@@ -34,7 +34,7 @@ with open(BOT_CONFIG_FILE, 'r') as stream:
         print(exc)
 
 # Get ATLAS IDs from the eyeball list -> set eyeball
-get_ids_from_eyeball = atlasapiclient.GetATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,
+get_ids_from_eyeball = atlasapiclient.RequestATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,
                                          list_name='eyeball',
                                          get_response=True
                                          )
@@ -42,7 +42,7 @@ get_ids_from_eyeball = atlasapiclient.GetATLASIDsFromWebServerList(api_config_fi
 set_eyeball_ids = set(get_ids_from_eyeball.atlas_id_list_int)
 
 # Get ATLAS IDS from the fast track eyeball list -> set fast track
-get_ids_from_fasttrack = atlasapiclient.GetATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,
+get_ids_from_fasttrack = atlasapiclient.RequestATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,
                                          list_name='fasttrack',
                                          get_response=True
                                          )
@@ -52,7 +52,7 @@ set_fasttrack_ids = set(get_ids_from_fasttrack.atlas_id_list_int)
 # Using the oldest data in the To Do list to set the datethreshold
 todo_list = atlasapiclient.RequestVRAToDoList(api_config_file=API_CONFIG_FILE)
 todo_list.get_response()
-todo_df = pd.DataFrame(todo_list.response).sort_values('timestamp')
+todo_df = pd.DataFrame(todo_list.response_data).sort_values('timestamp')
 DATETHRESHOLD= todo_df.timestamp.iloc[0]
 
 
@@ -71,6 +71,14 @@ set_fasttrack_hi_rank_ids = set_fasttrack_ids.intersection(set_hi_vra_rank_ids)
 # set_eyeball_hi_rank = intersection set eyeball and set hi vra rank
 set_eyeball_hi_rank_ids = set_eyeball_ids.intersection(set_hi_vra_rank_ids)
 
+
+# Counting the number of events in the Galactic candidate list
+get_ids_from_galcand = atlasapiclient.RequestATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,
+                                         list_name='galcand',
+                                         get_response=True
+                                         )
+n_gal_candidates = len(get_ids_from_galcand.response_data)
+
 # OUTPUTS
 bot_message = f"*Ingest Complete*\n"
 
@@ -84,16 +92,21 @@ if len(set_fasttrack_ids)>0:
                 f"<{URL_BASE}followup_quickview/8/|Fast Track List>\n\n")
 
 if len(set_eyeball_hi_rank_ids)>0:
-    bot_message += (f":eye:  {len(set_eyeball_hi_rank_ids)} objects with rank > {EYEBALL_THRESHOLD}. :link: "
-               f"<{URL_BASE}followup_quickview/4/?vra__gte=4.0&sort=-vra|Eyeball List>\n"
+    bot_message += (f":boom:  {len(set_eyeball_hi_rank_ids)} objects with rank > {EYEBALL_THRESHOLD}. :link: "
+               f"<{URL_BASE}followup_quickview/4/?vra__gte=4.0&sort=-vra| Extragalactic Candidates>\n"
                )
+
+if n_gal_candidates> 0:
+    bot_message += (f":stars: {n_gal_candidates} objects. "
+                f":link:"
+                f"<{URL_BASE}followup_quickview/12/| Galactic Candidates>\n\n")
 
 # SUMMONING THE SLACK BOT
 client = WebClient(token=SLACK_TOKEN)
 
 try:
     response = client.chat_postMessage(
-        channel="#vra",
+        channel="#vra-dev",
         text=bot_message
     )
 except SlackApiError as e:
