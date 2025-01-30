@@ -93,7 +93,7 @@ if len(set_fasttrack_ids)>0:
 
 if len(set_eyeball_hi_rank_ids)>0:
     bot_message += (f":boom:  {len(set_eyeball_hi_rank_ids)} objects with rank > {EYEBALL_THRESHOLD}. :link: "
-               f"<{URL_BASE}followup_quickview/4/?vra__gte=4.0&sort=-vra| Extragalactic Candidates>\n"
+               f"<{URL_BASE}followup_quickview/4/?vra__gte={EYEBALL_THRESHOLD}&sort=-vra| Extragalactic Candidates>\n"
                )
 
 if n_gal_candidates> 0:
