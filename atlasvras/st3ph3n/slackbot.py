@@ -106,7 +106,7 @@ client = WebClient(token=SLACK_TOKEN)
 
 try:
     response = client.chat_postMessage(
-        channel="#vra-dev",
+        channel="#vra",
         text=bot_message
     )
 except SlackApiError as e:
