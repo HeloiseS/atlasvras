@@ -69,7 +69,7 @@ class ScoreAndRank(object):
         self.ranks = (max_distance - raw_ranks) * max_score / max_distance
 
     @property
-    def is_candidate_gal(self, fudge_factor=1, distance=0.45):
+    def is_gal_cand(self, fudge_factor=1, distance=0.45):
         # TODO: add a test
         """
         If distance to coordinate (1,1) is <= 0.45 then returns True

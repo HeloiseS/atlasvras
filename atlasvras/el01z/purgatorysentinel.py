@@ -46,7 +46,7 @@ logging.basicConfig(level=logging.INFO,
 logging.info("Starting the script - last run date: " + last_run_date)
 
 ### Get all objects in Eyeball List right now
-get_ids_from_eyeball = atlasapiclient.GetATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,
+get_ids_from_eyeball = atlasapiclient.RequestATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,
                                          list_name='eyeball',
                                          get_response=True
                                          )
@@ -55,11 +55,11 @@ get_ids_from_eyeball = atlasapiclient.GetATLASIDsFromWebServerList(api_config_fi
 todo_list = atlasapiclient.RequestVRAToDoList(api_config_file=API_CONFIG_FILE)
 todo_list.get_response()
 # if the response is empty list  we want to exit the script
-if not todo_list.response:
+if not todo_list.response_data:
     logging.info("ToDo List is empty - Finished")
     sys.exit()
 
-DATETHRESHOLD= pd.DataFrame(todo_list.response).sort_values('timestamp').timestamp.iloc[0]
+DATETHRESHOLD= pd.DataFrame(todo_list.response_data).sort_values('timestamp').timestamp.iloc[0]
 logging.info("Fetched the TODO List dataframe")
 
 vra_df = fetch_vra_dataframe(datethreshold=DATETHRESHOLD)

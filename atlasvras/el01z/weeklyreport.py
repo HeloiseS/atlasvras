@@ -127,6 +127,7 @@ logging.info("Fetched the VRA datarame")
 TEXT_REPORT = f"*VRA Weekly Report*\n"
 
 #### N_RBScore > 0.2
+# TODO: this logic needs to change to reflect the new strat - easier if we have a column for galactic flag
 N_2EYEBALL= vra_past_week[(vra_past_week['rank']>4)
                             ].index.unique().shape[0]
 N_RBSCORE_GT0p2 = vra_past_week[~pd.isna(vra_past_week.apiusername)].index.unique().shape[0]
