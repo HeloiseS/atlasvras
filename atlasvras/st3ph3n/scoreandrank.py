@@ -10,7 +10,7 @@ MODELS_PATH = pkg_resources.resource_filename('atlasvras', 'st3ph3n/models')
 
 class ScoreAndRank(object):
 
-    def __init__(self, features, model_type, model_name='crabby'):
+    def __init__(self, features, model_type, model_name='duck'):
         """
         Pipes to calculate the scores and ranks (mostly used in production)
 

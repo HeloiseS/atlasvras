@@ -97,7 +97,7 @@ if len(set_eyeball_hi_rank_ids)>0:
                )
 
 if n_gal_candidates> 0:
-    bot_message += (f":stars: {n_gal_candidates} objects. "
+    bot_message += (f":stars:  {n_gal_candidates} objects. "
                 f":link:"
                 f"<{URL_BASE}followup_quickview/12/| Galactic Candidates>\n\n")
 

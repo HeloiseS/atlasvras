@@ -196,7 +196,7 @@ client = WebClient(token=SLACK_TOKEN)
 file_path = f'{LOG_PATH}/figures/{TODAY}.png'
 
 file_response = client.files_upload_v2(
-    channels=["C07HZGBKHQX"],
+    channel="C07HZGBKHQX",
     #channels=["C0842K2QZS8"], # #vra-dev to test
     initial_comment=f"Here are the label distributions for the week starting on {TODAY}",
     file=file_path,
