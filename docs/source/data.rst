@@ -82,7 +82,7 @@ the data eyeballed over the period covered by ``crabby`` includes over
 Roughly 5.5% were classified as ``good`` and 6.5% as ``galactic`` (i.e. put
 in the attic).
 
-With these data we create a **balanced** training set and an **unbalanced**
+With these data we create a (somewhat) **balanced** training set and an **unbalanced**
 validation set that we will use to check that our models generalise decently and
 to tune some hyperparameters.
 We do this by randomly sampling 15% of our alerts *before* balancing
@@ -121,26 +121,42 @@ so I balanced based on the number of ``galactic`` alerts. The slight imbalance
 did not affect the model's performance in early tests (but we did
 try training on the unbalanced training set and it was a disaster).
 
+
 .. list-table:: Numbers
-   :widths: 25 30 30
+   :widths: 25 30 30 30
    :header-rows: 1
 
    * - Label
      - Training
      - Validation
+     - Whole
+   * - Auto-Garbage
+     - N/A
+     - 3,590
+     - 23,752
    * - Garbage
-     - 2200
-     - 4619
+     - 4,447
+     - 5,545
+     - 36,622
    * - PM
-     - 2200
-     - 797
+     - 3,464
+     - 894
+     - 5,843
    * - Galactic
-     - 2210
-     - 357
+     - 2,887
+     - 467
+     - 4,185
    * - Good
-     - 1908
-     - 348
+     - 4,234
+     - 759
+     - 4,751
 
+**[why are there too many good objects??]**
+
+The training set is not fully balanced because I didn't want to downsample ``Good`` objects
+in the additional data available in ``Duck``.
+Also note the training and validation data sets include some guess labels but the
+reported numbers for the whole data set do not.
 
 The Features
 ------------------
