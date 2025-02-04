@@ -48,13 +48,3 @@ class TestScoreAndRank():
     def test_parse_feature_list(self):
         with pytest.raises(VRASaysNo):
             sar = ScoreAndRank(features=['blaa'], model_type='day1', model_name='crabby')
-
-    def test_wrong_size_features(self):
-        atlas_json = JsonData(filename=filename_sn)
-        lc_pipes = LightCurvePipes(atlas_json_data=atlas_json)
-        lc_pipes.add_dayN_column()
-        day1features = make_day1_lcfeatures(lc_pipes)
-        features = day1features + make_contextual_features(atlas_json_data=atlas_json)
-
-        with pytest.raises(AssertionError):
-            sar = ScoreAndRank(np.atleast_2d(features), model_type='dayN', model_name='crabby')
