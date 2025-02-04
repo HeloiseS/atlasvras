@@ -7,11 +7,8 @@ that have slightly different purposes
 
 1. **Weekly reports**
 2. **Monitoring purgatory**
-3. **Comparing old and new models**
+3. **TNS crossmatch to garbage**
 
-The first bot is a permanent fixture although the body of the reports
-may evolve (and have already).
-The other two are 100% dev helpers that will be turned off eventually.
 
 Weekly Reports
 --------------------
@@ -53,45 +50,11 @@ Purgatory
 If alerts are still in purgatory after that 15 day window they must be looked at.
 Once a week, just before the weekly report, ``el01z`` will generate a list of
 objects in purgatory that are past that 15 day "best-by" date
-and send it to the ``#vra-dev`` channel so I can eyeball them.
-
-.. note::
-   Eventually I *will* add a new garbage collecting policy to get rid of the
-   purgatory concept. The reason it exists is that I was panicked at the idea
-   of garbaging an alert that was actually real and I made garbaging policies
-   that were conservative.
+and send it to the ``#vra-forum`` channel so this week's eyeballer cna eyeball them.
 
 
-Comparing Old and New Models
+TNS Cross-match to Garbage
 ------------------------------------
-
-We added the new ``Crabby`` models in production on ``2024-12-06``.
-We want to compare to previous models to:
-
-1. See how much more awesome they are
-2. Avoid binning something interesting if I messed up.
-
-The compare-bot runs once a day currently and sends to the
-``#vra-dev`` channel two lists:
-
-1. The *would-not-have-been-garbaged* alerts. That is those which
-   would not have met the auto-garbaging policies in the old model.
-   I eyeball each of these to see if there is any reason to doubt.
-
-2. The *danger-zone* alerts: Those that would have been eyeballed
-   under the old scheme but are not being eyeballed now. I eyeball them
-   to see if we might have missed something.
-
-.. note::
-   *"What about the alerts that would NOT have been eyeballed in the old model?"*
-   Well those are being eyeballed by the other eyeballers. After a few weeks I
-   will take a look and see if we are sending too many extra alerts for eyeballing and
-   can cut back further.
-
-The compare-bot also saves a few things to a  file to allow me to do some
-comparison plots in a few weeks:
-
-- ``rank_NEW``: the rank given by the new model
-- ``rank_OLD``: the rank given by the old model
-- ``garbage_flag``: whether the object was garbaged (rank = -1)
-- ``timestamp_bot``: the timestamp of the bot run
+New with ``Duck`` we have a cron-job checking the ``garbage`` with ``rb_pix>0.2``
+and [CURRENT YEAR] cross-matches. If runs every friday and checks the last 7 days.
+The links to the cross-matches are sent to the ``#vra-dev`` channel.

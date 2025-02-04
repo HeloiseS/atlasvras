@@ -14,25 +14,22 @@ Overview
    you read Michael's `Eyeballing handbook`_ or because you were trained by one of the experienced eyeballers.
 
 
-
 First Eyeballer
 ~~~~~~~~~~~~
-    - **Eyeball ASAP** when messages come through. ZTF (and its brokers), Pan-STARRS, Gaia, GOTO, ASASSN see the sky too ;)
-    - **Fast Track list**: eyeball all ranks
-    - **Standard list**: eyeball ranks >4
-    - If you're not sure: **snooze** the alert by putting in **Possible list**. It'll come back to eyeball when the telescopes have looked at that part of the sky again.
+Follow the links sent by st3ph3n - here is the list of priorities:
+    - **Fast Track list**: **Eyeball Now**
+    - **Extragalactic candidates**: **Eyeball ASAP (within 1h)**
+    - Galactic candidates: Eyeball within 24 to 48h
+    - Eyeball the purgatory list sent by el01z on Fridays
+
+Obviously these times apply for when you're awake - don't be setting alarms during the night.
+
+If you're not sure: **snooze** the alert by putting in **Possible list**.
+It'll come back to eyeball when the telescopes have looked at that part of the sky again.
 
 Second Eyeballer
 ~~~~~~~~~~~~~~~~
    - Check the **good** list for anything interesting to put in **follow-up (particularly check the last week of objects).**  Alert the relevant people if rapid follow-up needed, or keep the source in your own list for later discussion.
-
-Xmas Eyeballing
-~~~~~~~~~~~~~~
-   - You can check the Xmas `rota <Rota_>`_ and add your day to your calendar.
-   - When it is your day **you are both eyeballer 1 and eyeballer 2**
-   - At the end of your shift **get in touch with the next eyeballer** to make sure
-     they know they are taking over.
-
 
 --------
 
@@ -49,13 +46,7 @@ promising alerts.
 
 The slackbot triggers at the end of each ATLAS ingest and sends a
 message the ``#vra`` channel on the QUB slack. In each `st3ph3n`
-alert you will see two lines:
-
-1. How many Fast Track (<100 Mpc) objects have rank >4 and how many other (low rank) alerts there are.You should **eyeball ALL ranks in the Fast Track list** (there will not be many).
-2. How many alerts in the standard eyeball list with ranks >4.
-
-.. warning::
-   The number of alerts to be eyeballed is **usually over estimated**. It's a bug we have to fix.
+alert you will see the links to the available eyeballing tasks
 
 Tips for eyeballer 1
 ----------------------
@@ -64,13 +55,8 @@ Tips for eyeballer 1
 2. Go back to slack and **click on the eyeball link** provided by ``st3ph3n``. This will take you to the curated eyeball list (ordered and cropped down to rank 4).
 3. Scroll down to the first alerts that or **not** rank 10 and eyeball these. They are the most promising which haven't yet been pinched by another team.
 4. Finally clean up the rank 10 alerts.
-5. Typically the ATLAS data ingest cycle happens every few hours, so keep checking throughout the day or set the ``#vra`` channel push notifications for the week you're on.
-   10-20 objects per ingest to look at is fairly normal, per ingest cycle.
-
-.. warning::
-   A rank of **10** means that the alert has been **cross-matched to TNS**. It does **not necessarily mean it is real**.
-
-
+5. The ATLAS ingest cycle is faster than it used to be so you may get alerts every 30 minutes when there is not a lot of data being ingested.
+**If you do not snooze the data** you will keep getting poked by ``st3ph3n`` even if nothing has changed.
 
 
 Rota
@@ -83,30 +69,6 @@ Rota
    * - Date
      - Eyeballer 1
      - Eyeballer 2
-   * - 09/12/2024
-     - Aysha
-     - Ken
-   * - 16/12/2024
-     - Paige
-     - Aysha
-   * - 23/12/2024
-     - Everyone
-     - Everyone
-   * - 30/12/2024
-     - Everyone
-     - Everyone
-   * - 06/01/2024
-     - Josh
-     - Paige
-   * - 13/01/2024
-     - Michael
-     - Josh
-   * - 20/01/2024
-     - Lauren
-     - Michael
-   * - 27/01/2024
-     - Charlotte
-     - Lauren
    * - 03/02/2024
      - Dave
      - Charlotte
@@ -128,54 +90,3 @@ Rota
    * - 17/03/2024
      - Fiore
      - Shubham
-
-
-.. list-table:: Xmas Rota
-   :widths: 25 25 25
-   :header-rows: 1
-
-   * - Date
-     -
-     - Eyeballer
-   * - 23/12/2024
-     -
-     - Stephen
-   * - 24/12/2024
-     - Xmas Eve
-     - Charlotte
-   * - 25/12/2024
-     - Xmas Day
-     - Ken
-   * - 26/12/2024
-     - Boxing Day
-     - Heloise
-   * - 27/12/2024
-     -
-     - Fiore
-   * - 28/12/2024
-     -
-     - Aysha
-   * - 29/12/2024
-     -
-     - Shubham
-   * - 30/12/2024
-     -
-     - Heloise
-   * - 31/12/2024
-     - New Year's Eve
-     - Stephen
-   * - 1/1/2025
-     - New Year's Day
-     - Ken
-   * - 2/1/2025
-     -
-     - Daryll
-   * - 3/1/2025
-     -
-     - Shubham
-   * - 4/1/2025
-     -
-     - Matt
-   * - 5/1/2025
-     -
-     - Dave
