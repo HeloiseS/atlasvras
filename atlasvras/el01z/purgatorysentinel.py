@@ -119,7 +119,7 @@ logging.info("Sending the report to slack")
 
 client = WebClient(token=SLACK_TOKEN)
 client.chat_postMessage(
-  channel="#vra-dev",
+  channel="#vra-forum",
   text=TEXT_REPORT,
 )#"C0842K2QZS8",
 
