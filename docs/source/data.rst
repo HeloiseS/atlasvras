@@ -1,14 +1,21 @@
 The Data
 -------------
 
+
+
 The current family of models is called ``Duck`` and encompasses
 data gathered between ``2024-03-27`` and ``2024-01-02``.
+It is a super-set of the ``Crabby`` data gathered between  ``2024-03-27`` and ``2024-08-13``,
+with an additional few months of data gathered between ``2024-08-18`` and ``2025-01-22``.
 
 .. note::
    The naming convention is as follows: new names are chosen for new
    data sets(not new features), with their names starting with incremented
-   letters of the alphabet. The Duck models are the fourth iteration of VRA
-   models and a superset of the Crabby and BMO models.
+   letters of the alphabet. The Duck data-set is the fourth iteration of the VRA
+   training set.
+
+Time windows explained
+~~~~~~~~~~~~~~~~~~~~~~
 
 The start date corresponds to our implementation of the systems that record human
 decisions as they are being made.
@@ -16,14 +23,14 @@ We chose to only train on alerts whose data could be recorded
 as the human decisions were being made so that we have a truthful
 record of what they looked like at the time.
 
-**[DOUBLE CHECK THIS PARAGRAPH WITH KEN]**
 Because of updates in e.g. the ``Sherlock`` cross-matching in some
 older data in the database, recreating the conditions under which each alert
 was eyeballed is non trivial and since we get a constant influx of new data,
 we opted for the thrifty option of using data we could control fully.
 The August cut off is chosen such that these data are not affected
-by any human-machine interaction considerations. **Future data cleaning
-and gathering will have to take that into account.**
+by any human-machine interaction considerations.
+
+
 
 The data downloaded is what is returned by the `ATLAS API`_, for the schema
 you can check the `json schema`_. It is cleaned up into a few csv files:
