@@ -167,10 +167,12 @@ TEXT_REPORT += (f"- *TNS*: *{N_FOUND_FIRST}* Reported by us first "
                 f"and another *{N_FOUND_BY_OTHERS}* (Cross-matched to TNS) \n\n")
 
 ### THINGS THAT GOT LOW VRA SCORE BUT WERE IN TNS
-misses_index = set(trace[(trace['rank'] < EYEBALL_THRESHOLD)].index) - set(trace[(trace['rank'] > EYEBALL_THRESHOLD) & (trace['rank'] < 10)].index)
+misses_index = set(trace[(trace['rank'] < EYEBALL_THRESHOLD)
+                         & (trace['is_gal_cand'] == 0)  ].index) - set(trace[((trace['rank'] > EYEBALL_THRESHOLD) |  (trace['is_gal_cand'] == 1)   )& (trace['rank'] < 10)].index)
 N_POTENTIAL_MISSES = len(misses_index)
 
-RANKS = trace[trace['rank'] < EYEBALL_THRESHOLD].loc[list(misses_index)]['rank']
+RANKS = trace[(trace['rank'] < EYEBALL_THRESHOLD)
+              & (trace['is_gal_cand'] == 0)  ].loc[list(misses_index)]['rank']
 
 TEXT_REPORT += f":warning: {N_POTENTIAL_MISSES} *Potential Misses* (low VRA scores but X-match raised their ranks.\n"
 #for index in misses_index:
