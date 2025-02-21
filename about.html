@@ -489,10 +489,12 @@ the distribution of our alerts in our training and validation set.</p>
 </section>
 <section id="garbaging">
 <h3>Garbaging<a class="headerlink" href="#garbaging" title="Link to this heading">#</a></h3>
-<p id="id1">There are currently three “garbage collection” policies in place:
-* On <strong>entering the eyeball list</strong> with <code class="docutils literal notranslate"><span class="pre">rank&lt;1.0</span></code>
-* On a <strong>second visit</strong>, <code class="docutils literal notranslate"><span class="pre">max(rank)&lt;2.0</span></code>.
-* On the <strong>third and subsequent visits</strong>, <code class="docutils literal notranslate"><span class="pre">mean(rank)&lt;3</span></code>.</p>
+<p id="id1">There are currently three “garbage collection” policies in place:</p>
+<ul class="simple">
+<li><p>On <strong>entering the eyeball list</strong> with <code class="docutils literal notranslate"><span class="pre">rank&lt;1.0</span></code></p></li>
+<li><p>On a <strong>second visit</strong>, <code class="docutils literal notranslate"><span class="pre">max(rank)&lt;2.0</span></code>.</p></li>
+<li><p>On the <strong>third and subsequent visits</strong>, <code class="docutils literal notranslate"><span class="pre">mean(rank)&lt;3</span></code>.</p></li>
+</ul>
 <p>Because the cadence is often 2 to 3 days, after the 3rd or 4th visit we will
 get close to +15 days after initial alert, which falls out of the training window.
 Because we eyeball everything with rank &gt;7.5 these garbaging policies will leave some alerts in
@@ -504,7 +506,7 @@ There are few of those and they are sent to the slack for eyeballing.</p>
 </section>
 <section id="the-paper">
 <h2>The Paper<a class="headerlink" href="#the-paper" title="Link to this heading">#</a></h2>
-<p><strong>for more info see the paper [update when out]</strong></p>
+<p><strong>for more info see the paper [out soon]</strong></p>
 </section>
 </section>
 

@@ -321,7 +321,6 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">The Data</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-windows-explained">Time windows explained</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-caveats">Some Caveats</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-and-validation-sets">Training and Validation sets</a></li>
 </ul>
@@ -363,8 +362,6 @@ data sets(not new features), with their names starting with incremented
 letters of the alphabet. The Duck data-set is the fourth iteration of the VRA
 training set.</p>
 </div>
-<section id="time-windows-explained">
-<h2>Time windows explained<a class="headerlink" href="#time-windows-explained" title="Link to this heading">#</a></h2>
 <p>The start date corresponds to our implementation of the systems that record human
 decisions as they are being made.
 We chose to only train on alerts whose data could be recorded
@@ -388,7 +385,6 @@ you can check the <a class="reference external" href="https://psweb.mp.qub.ac.uk
 <p class="admonition-title">See also</p>
 <p>You can get the data and the codes used to clean it up <strong>[HERE ADD ZENODO]</strong></p>
 </div>
-</section>
 <section id="some-caveats">
 <h2>Some Caveats<a class="headerlink" href="#some-caveats" title="Link to this heading">#</a></h2>
 <ol class="arabic">
@@ -718,11 +714,8 @@ for both.</p>
 The plots are big and bulky so I’m not adding them here, but you will be
 able to find them in the paper or in the data release.
 Here is the general gist.</p>
-<dl class="simple">
-<dt>For the real and galactic models the features that have the most impact are</dt><dd><p><code class="docutils literal notranslate"><span class="pre">max_mag</span></code>  and <code class="docutils literal notranslate"><span class="pre">max_mag_day</span></code>.</p>
-</dd>
-</dl>
-<p>For the real scorer <code class="docutils literal notranslate"><span class="pre">DET_N_TOTAL</span></code> (the total number of detections) so far
+<p>For the real and galactic models the features that have the most impact are <code class="docutils literal notranslate"><span class="pre">max_mag</span></code>  and <code class="docutils literal notranslate"><span class="pre">max_mag_day</span></code>.
+For the real scorer <code class="docutils literal notranslate"><span class="pre">DET_N_TOTAL</span></code> (the total number of detections) so far
 is also important. <strong>Everything else has little to no impact</strong>.
 To be fair human eyeballers really rely on the forced photometry in this regime
 to make decisions, so trying to tease out other features on the raw phot is
@@ -776,7 +769,6 @@ probably beating a dead horse. It was worth a go.</p>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">The Data</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-windows-explained">Time windows explained</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-caveats">Some Caveats</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-and-validation-sets">Training and Validation sets</a></li>
 </ul>

@@ -29,7 +29,16 @@ It'll come back to eyeball when the telescopes have looked at that part of the s
 
 Second Eyeballer
 ~~~~~~~~~~~~~~~~
-   - Check the **good** list for anything interesting to put in **follow-up (particularly check the last week of objects).**  Alert the relevant people if rapid follow-up needed, or keep the source in your own list for later discussion.
+The duties of the second eyeballers are now limited to:
+    - Check the **good** list for anything interesting to put in **follow-up (particularly check the last week of objects).**  Alert the relevant people if rapid follow-up needed, or keep the source in your own list for later discussion.
+
+
+Reminders
+~~~~~~~~~~~~~~~~
+A couple of reminders ( if these don't make sense please ask so I can make these docs more useful to you):
+    - CVs do not go in TNS if you're not sure if something is galactic snooze to wait for more data or ask on slack.
+    - Nuclear transients only go in TNS if you think they are TDEs. AGNs do not go to TNS
+    - The Attic/Galactic list is **only** for real galactic events. Bad subtractions due to high proper motion stars go in the HPM list.
 
 --------
 
@@ -69,15 +78,6 @@ Rota
    * - Date
      - Eyeballer 1
      - Eyeballer 2
-   * - 03/02/2024
-     - Dave
-     - Charlotte
-   * - 10/02/2024
-     - Xinyue
-     - Dave
-   * - 17/02/2024
-     - Heloise
-     - Xinyue
    * - 24/02/2024
      - Alex C
      - Heloise
