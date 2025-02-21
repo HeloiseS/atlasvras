@@ -1,10 +1,7 @@
 The Data
 -------------
-
-
-
 The current family of models is called ``Duck`` and encompasses
-data gathered between ``2024-03-27`` and ``2024-01-02``.
+data gathered between ``2024-03-27`` and ``2024-01-22``.
 It is a super-set of the ``Crabby`` data gathered between  ``2024-03-27`` and ``2024-08-13``,
 with an additional few months of data gathered between ``2024-08-18`` and ``2025-01-22``.
 
@@ -29,8 +26,6 @@ was eyeballed is non trivial and since we get a constant influx of new data,
 we opted for the thrifty option of using data we could control fully.
 The August cut off is chosen such that these data are not affected
 by any human-machine interaction considerations.
-
-
 
 The data downloaded is what is returned by the `ATLAS API`_, for the schema
 you can check the `json schema`_. It is cleaned up into a few csv files:
@@ -77,32 +72,38 @@ Some Caveats
 
 .. attention::
    The new iteration of the VRA works really well despite some of the grabage and PM being labelled by the previous model.
-   At this point re-eyeballing the data is not a priority but we can talk about it.
-
+   I am considering trying to use auto-garbage just as a preal == 0 label and not try to use PM and garbage to train the galactic classifier.
 
 Training and Validation sets
 ~~~~~~~~~~~~~~~~~~~~~~~~
-[UPDATE]
-As you can see in the `pie chart <about.html>`_ in the general description,
-the data eyeballed over the period covered by ``crabby`` includes over
+The data eyeballed over the period covered by ``crabby`` includes over
 40,000 alerts, 88% of which were either Garbage or Proper Motion stars.
 Roughly 5.5% were classified as ``good`` and 6.5% as ``galactic`` (i.e. put
 in the attic).
+
+.. figure:: _static/pie_chart.png
+   :width: 500
+   :align: center
+
+In the additional data set included in ``Duck`` we have over 34k new alerts
+but a significant fraction that were auto-garbaged - handled automatically by the VRA.
+
+.. figure:: _static/pie_chart_duck.png
+   :width: 500
+   :align: center
 
 With these data we create a (somewhat) **balanced** training set and an **unbalanced**
 validation set that we will use to check that our models generalise decently and
 to tune some hyperparameters.
 We do this by randomly sampling 15% of our alerts *before* balancing
 to be our validation set.
+
 We then balance what's left to make our training set.
 We use **undersampling** of the larger categories (``pm`` and ``garbage``)
 rather than oversampling of the smaller categories.
 I started with that because I didn't want to duplicate data and the models
 were working decently with just a few thousand samples, but oversampling
 has not actually been tested and compared.
-I think it will be more beneficial to focus on expanding the data set with more
-recent data (especially since, as you'll see below, RA and DEC are such important
-features).
 
 When making the ``Duck`` validation set I do not re-sample the whole dataset from
 March 2024. Instead I take the same validation set as in ``Crabby`` and sample
@@ -129,6 +130,9 @@ did not affect the model's performance in early tests (but we did
 try training on the unbalanced training set and it was a disaster).
 
 
+
+
+
 .. list-table:: Numbers
    :widths: 25 30 30 30
    :header-rows: 1
@@ -136,29 +140,24 @@ try training on the unbalanced training set and it was a disaster).
    * - Label
      - Training
      - Validation
-     - Whole
    * - Auto-Garbage
      - N/A
      - 3,590
-     - 23,752
    * - Garbage
      - 4,447
      - 5,545
-     - 36,622
    * - PM
      - 3,464
      - 894
-     - 5,843
    * - Galactic
      - 2,887
      - 467
-     - 4,185
    * - Good
      - 4,234
      - 759
-     - 4,751
-
-**[why are there too many good objects??]**
+   * - **Total**
+     - **15,032**
+     - **11,255**
 
 The training set is not fully balanced because I didn't want to downsample ``Good`` objects
 in the additional data available in ``Duck``.
@@ -257,6 +256,8 @@ of the lightcurve.
      - Description
    * - ``DET_N_total``
      - Number of detections since phase -5 d
+   * - ``DET_mag_median``
+     - Median magnitude of the detections since phase -5 d
    * - ``NON_mag_median``
      - Median magnitude of the non detections since phase -5 d
    * - ``NON_N_total``
@@ -266,12 +267,10 @@ of the lightcurve.
    * - ``max_mag_day``
      - Day of the maximum magnitude
 
-The features ``DET_N_today``, ``NON_N_today``, ``DET_mag_median``
+The features ``DET_N_today``, ``NON_N_today``.
 were pruned as they were found to be useless (even in the previous iteration of the model).
 It makes sense that these features are not useful: The number of detections or non detections today
 is just a subset of the total number of detections or non detections.
-As for the median magnitude of the detections, it is unsurprising that it is less informative than the maximum mag.
-On the whole this makes sense.
 
 .. note::
    Technically taking the median of a magnitude is not the proper way to bin
@@ -309,7 +308,7 @@ you retrain the model and see how much worse the predictions are.
 
 Real ScoreModel - day1 Features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-.. figure:: _static/perm_imp_real.png
+.. figure:: _static/permpimp_day1Real_light.png
    :width: 700
    :align: center
 
@@ -335,7 +334,7 @@ but they will be for the galactic model which is why they're included.
 Galactic Score Model - day1 Features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. figure:: _static/perm_imp_gal.png
+.. figure:: _static/permpimp_day1Gal_light.png
    :width: 700
    :align: center
 

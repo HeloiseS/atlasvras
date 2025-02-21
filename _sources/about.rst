@@ -82,7 +82,7 @@ and they are trained separately.
 They each score the alerts **from 0 to 1**, such that we can place our alerts in a plot
 we call the score space:
 
-.. figure:: _static/score_space.png
+.. figure:: _static/ss_val_day1.png
     :width: 650
     :align: center
 
@@ -99,11 +99,11 @@ use additional features (see the Data section). But the ranking logic remains th
 
 Ranking
 -----------------------------------
-To rank our alerts we now use the *pythagoras theorem*.
+To rank our alerts we now use a geometric distance (with a few extra shenanigans).
 The bottom right hand corner of the plot is the "most" Real and Extra-galactic.
 Hypothetically that is the alert we care about the most.
 To calculate the ranks we therefore **calculate the distance to that (1,0) point**.
-Now... there are a couple extra steps.
+Then:
 
 - I scale the galactic axis by 0.4 to separate the garbage from the real alerts more effectively.
    It also ensures our eyeballing policy (see below) encompasses the real=1, galactic=1 corner.
@@ -133,8 +133,10 @@ Eyeballing
 ~~~~~~~~~~~
 
 The current eyeballing policy is to ask human experts to check everything
-with a ``rank >4``. As we can see in the figure below, this encompasses
-nearly all the extra-galactic alerts (blue) and a large fraction of the galactic alerts (yellow).
+with a ``rank >7.5`` (as an extra-galactic transient candidate)  and everything that
+falls within a distance of 0.45 of the coordinate (1,1) as a galactic candidate.
+You can see below where these strategies fall in score space with respect the
+the distribution of our alerts in our training and validation set.
 
 .. figure:: _static/ss_byalert_wranks.png
     :width: 800
@@ -144,7 +146,6 @@ nearly all the extra-galactic alerts (blue) and a large fraction of the galactic
 
 .. warning::
    Due the the distribution of the galactic alerts extending quite far down the Real axis, this policy means that a non negligible fraction of galactic transients will be missed. See the discussion at the bottom of this page for more info.
-
 
 Garbaging
 ~~~~~~~~~~~~~
@@ -163,42 +164,7 @@ These are now being handled by ``el01z``  (see the Monitoring section) which has
 alerts that are left in purgatory after they have fallen out of ``st3ph3n`` 's training window.
 There are few of those and they are sent to the slack for eyeballing.
 
-
-Discussion
-~~~~~~~~~~~~~
-Testing the effect of the policies on static data is tricky as we do not have
-an eyeball list refilling every day.
-What we can do thought is assess the effect of the eyeballing and garbaging policies on our
-validation set to see what fraction of our ``good``, ``galactic`` and ``garbage`` + ``pm``
-alerts will get eyeballed and auto-garbaged.
-The plot below shows this for the current generation of models.
-
-.. figure:: _static/policy_results.png
-    :width: 650
-    :align: center
-
-    Fraction of alerts eyeballed Vs auto-garbaged for the different alert types given our current policies.
-
-As we can see we eliminate 86% of the garbage and recover all the good ones save fore one event.
-However we do end up "sacrificing" 27% of the galactic alerts.
-
-At present this is an acceptable loss since our science case is focused on extra galactic transients.
-This could be remedied in the futures either by:
-
-1. Having a separate policy and eyeball list focused on galactic alerts. This would require a dedicated team of galactic eyeballers (likely people connected to those science  cases)
-2. Changing the ranking policy to a more complex function which better captures the shape of galactic event distribution.
-
-The former option is not viable right now since we do not have enough team
-members to add this extra layer of operations.
-The second option is disfavoured because the simplicity of the ranking function
-makes it very understandable for the people who use it in our current team.
-
-.. caution::
-   The fact that we are auto-garbaging galactic alerts means the garbage list will now have more contamination of real low SNR galactic events. We will have to be careful when creating future training sets to not introduce confusion to future models.
-
-.. note::
-   We have not cleaned the training set by giving it another round of eyeballing. Of the 30% of "lost" galactic objects, a signification fraction may actually be garbage.
-
-
-
+The Paper
+---------------------------------------
+**for more info see the paper [update when out]**
 

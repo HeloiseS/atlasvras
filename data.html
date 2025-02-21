@@ -353,7 +353,7 @@ document.write(`
   <section id="the-data">
 <h1>The Data<a class="headerlink" href="#the-data" title="Link to this heading">#</a></h1>
 <p>The current family of models is called <code class="docutils literal notranslate"><span class="pre">Duck</span></code> and encompasses
-data gathered between <code class="docutils literal notranslate"><span class="pre">2024-03-27</span></code> and <code class="docutils literal notranslate"><span class="pre">2024-01-02</span></code>.
+data gathered between <code class="docutils literal notranslate"><span class="pre">2024-03-27</span></code> and <code class="docutils literal notranslate"><span class="pre">2024-01-22</span></code>.
 It is a super-set of the <code class="docutils literal notranslate"><span class="pre">Crabby</span></code> data gathered between  <code class="docutils literal notranslate"><span class="pre">2024-03-27</span></code> and <code class="docutils literal notranslate"><span class="pre">2024-08-13</span></code>,
 with an additional few months of data gathered between <code class="docutils literal notranslate"><span class="pre">2024-08-18</span></code> and <code class="docutils literal notranslate"><span class="pre">2025-01-22</span></code>.</p>
 <div class="admonition note">
@@ -424,31 +424,36 @@ b. <code class="docutils literal notranslate"><span class="pre">p_real&lt;0.2</s
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
 <p>The new iteration of the VRA works really well despite some of the grabage and PM being labelled by the previous model.
-At this point re-eyeballing the data is not a priority but we can talk about it.</p>
+I am considering trying to use auto-garbage just as a preal == 0 label and not try to use PM and garbage to train the galactic classifier.</p>
 </div>
 </section>
 <section id="training-and-validation-sets">
 <h2>Training and Validation sets<a class="headerlink" href="#training-and-validation-sets" title="Link to this heading">#</a></h2>
-<p>[UPDATE]
-As you can see in the <a class="reference external" href="about.html">pie chart</a> in the general description,
-the data eyeballed over the period covered by <code class="docutils literal notranslate"><span class="pre">crabby</span></code> includes over
+<p>The data eyeballed over the period covered by <code class="docutils literal notranslate"><span class="pre">crabby</span></code> includes over
 40,000 alerts, 88% of which were either Garbage or Proper Motion stars.
 Roughly 5.5% were classified as <code class="docutils literal notranslate"><span class="pre">good</span></code> and 6.5% as <code class="docutils literal notranslate"><span class="pre">galactic</span></code> (i.e. put
 in the attic).</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/pie_chart.png"><img alt="_images/pie_chart.png" src="_images/pie_chart.png" style="width: 500px;" />
+</a>
+</figure>
+<p>In the additional data set included in <code class="docutils literal notranslate"><span class="pre">Duck</span></code> we have over 34k new alerts
+but a significant fraction that were auto-garbaged - handled automatically by the VRA.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/pie_chart_duck.png"><img alt="_images/pie_chart_duck.png" src="_images/pie_chart_duck.png" style="width: 500px;" />
+</a>
+</figure>
 <p>With these data we create a (somewhat) <strong>balanced</strong> training set and an <strong>unbalanced</strong>
 validation set that we will use to check that our models generalise decently and
 to tune some hyperparameters.
 We do this by randomly sampling 15% of our alerts <em>before</em> balancing
-to be our validation set.
-We then balance what’s left to make our training set.
+to be our validation set.</p>
+<p>We then balance what’s left to make our training set.
 We use <strong>undersampling</strong> of the larger categories (<code class="docutils literal notranslate"><span class="pre">pm</span></code> and <code class="docutils literal notranslate"><span class="pre">garbage</span></code>)
 rather than oversampling of the smaller categories.
 I started with that because I didn’t want to duplicate data and the models
 were working decently with just a few thousand samples, but oversampling
-has not actually been tested and compared.
-I think it will be more beneficial to focus on expanding the data set with more
-recent data (especially since, as you’ll see below, RA and DEC are such important
-features).</p>
+has not actually been tested and compared.</p>
 <p>When making the <code class="docutils literal notranslate"><span class="pre">Duck</span></code> validation set I do not re-sample the whole dataset from
 March 2024. Instead I take the same validation set as in <code class="docutils literal notranslate"><span class="pre">Crabby</span></code> and sample
 from 15% of the extra data from August 2025 onwards.</p>
@@ -470,51 +475,6 @@ That’s because I wanted to keep as large a training set as possible
 so I balanced based on the number of <code class="docutils literal notranslate"><span class="pre">galactic</span></code> alerts. The slight imbalance
 did not affect the model’s performance in early tests (but we did
 try training on the unbalanced training set and it was a disaster).</p>
-<div class="pst-scrollable-table-container"><table class="table" id="id2">
-<caption><span class="caption-text">Numbers</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
-<colgroup>
-<col style="width: 21.7%" />
-<col style="width: 26.1%" />
-<col style="width: 26.1%" />
-<col style="width: 26.1%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Label</p></th>
-<th class="head"><p>Training</p></th>
-<th class="head"><p>Validation</p></th>
-<th class="head"><p>Whole</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Auto-Garbage</p></td>
-<td><p>N/A</p></td>
-<td><p>3,590</p></td>
-<td><p>23,752</p></td>
-</tr>
-<tr class="row-odd"><td><p>Garbage</p></td>
-<td><p>4,447</p></td>
-<td><p>5,545</p></td>
-<td><p>36,622</p></td>
-</tr>
-<tr class="row-even"><td><p>PM</p></td>
-<td><p>3,464</p></td>
-<td><p>894</p></td>
-<td><p>5,843</p></td>
-</tr>
-<tr class="row-odd"><td><p>Galactic</p></td>
-<td><p>2,887</p></td>
-<td><p>467</p></td>
-<td><p>4,185</p></td>
-</tr>
-<tr class="row-even"><td><p>Good</p></td>
-<td><p>4,234</p></td>
-<td><p>759</p></td>
-<td><p>4,751</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p><strong>[why are there too many good objects??]</strong></p>
 <p>The training set is not fully balanced because I didn’t want to downsample <code class="docutils literal notranslate"><span class="pre">Good</span></code> objects
 in the additional data available in <code class="docutils literal notranslate"><span class="pre">Duck</span></code>.
 Also note the training and validation data sets include some guess labels but the
@@ -528,8 +488,8 @@ reported numbers for the whole data set do not.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">day1</span></code> models are those that calculate the initial real and galactic
 scores when an alert first enters the eyeball list.
 They currently use the following features:</p>
-<div class="pst-scrollable-table-container"><table class="table" id="id3">
-<caption><span class="caption-text">Features</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id2">
+<caption><span class="caption-text">Features</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 33.3%" />
 <col style="width: 16.7%" />
@@ -624,8 +584,8 @@ of the lightcurve.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">dayN</span></code> features are calculated from -5 days to +15 days w.r.t
 the alert date.</p>
 </div>
-<div class="pst-scrollable-table-container"><table class="table" id="id4">
-<caption><span class="caption-text">Additional features for the <code class="docutils literal notranslate"><span class="pre">dayN</span></code> models.</span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id3">
+<caption><span class="caption-text">Additional features for the <code class="docutils literal notranslate"><span class="pre">dayN</span></code> models.</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 33.3%" />
 <col style="width: 66.7%" />
@@ -639,27 +599,28 @@ the alert date.</p>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DET_N_total</span></code></p></td>
 <td><p>Number of detections since phase -5 d</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NON_mag_median</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DET_mag_median</span></code></p></td>
+<td><p>Median magnitude of the detections since phase -5 d</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NON_mag_median</span></code></p></td>
 <td><p>Median magnitude of the non detections since phase -5 d</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NON_N_total</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NON_N_total</span></code></p></td>
 <td><p>Number of non detections since phase -5 d</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">max_mag</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_mag</span></code></p></td>
 <td><p>Maximum (median) magnitude seen since phase -5 d</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_mag_day</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">max_mag_day</span></code></p></td>
 <td><p>Day of the maximum magnitude</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>The features <code class="docutils literal notranslate"><span class="pre">DET_N_today</span></code>, <code class="docutils literal notranslate"><span class="pre">NON_N_today</span></code>, <code class="docutils literal notranslate"><span class="pre">DET_mag_median</span></code>
+<p>The features <code class="docutils literal notranslate"><span class="pre">DET_N_today</span></code>, <code class="docutils literal notranslate"><span class="pre">NON_N_today</span></code>.
 were pruned as they were found to be useless (even in the previous iteration of the model).
 It makes sense that these features are not useful: The number of detections or non detections today
-is just a subset of the total number of detections or non detections.
-As for the median magnitude of the detections, it is unsurprising that it is less informative than the maximum mag.
-On the whole this makes sense.</p>
+is just a subset of the total number of detections or non detections.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Technically taking the median of a magnitude is not the proper way to bin
@@ -694,11 +655,11 @@ you retrain the model and see how much worse the predictions are.
 <strong>The worse you do when you scramble a feature, the more important that feature is.</strong></p>
 <section id="real-scoremodel-day1-features">
 <h2>Real ScoreModel - day1 Features<a class="headerlink" href="#real-scoremodel-day1-features" title="Link to this heading">#</a></h2>
-<figure class="align-center" id="id5">
-<a class="reference internal image-reference" href="_images/perm_imp_real.png"><img alt="_images/perm_imp_real.png" src="_images/perm_imp_real.png" style="width: 700px;" />
+<figure class="align-center" id="id4">
+<a class="reference internal image-reference" href="_images/permpimp_day1Real_light.png"><img alt="_images/permpimp_day1Real_light.png" src="_images/permpimp_day1Real_light.png" style="width: 700px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">Permutation importance of the day 1 features for the real scoring model</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
+<p><span class="caption-text">Permutation importance of the day 1 features for the real scoring model</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p><code class="docutils literal notranslate"><span class="pre">rb_pix</span></code> being the most important feature is not surprising.
@@ -717,11 +678,11 @@ but they will be for the galactic model which is why they’re included.</p>
 </section>
 <section id="galactic-score-model-day1-features">
 <h2>Galactic Score Model - day1 Features<a class="headerlink" href="#galactic-score-model-day1-features" title="Link to this heading">#</a></h2>
-<figure class="align-center" id="id6">
-<a class="reference internal image-reference" href="_images/perm_imp_gal.png"><img alt="_images/perm_imp_gal.png" src="_images/perm_imp_gal.png" style="width: 700px;" />
+<figure class="align-center" id="id5">
+<a class="reference internal image-reference" href="_images/permpimp_day1Gal_light.png"><img alt="_images/permpimp_day1Gal_light.png" src="_images/permpimp_day1Gal_light.png" style="width: 700px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">Permutation importance of the day 1 features for the gal scoring model</span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
+<p><span class="caption-text">Permutation importance of the day 1 features for the gal scoring model</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>For the galactic scores, the most important feature is <code class="docutils literal notranslate"><span class="pre">ebv_sfd</span></code>, as

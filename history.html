@@ -327,10 +327,14 @@ document.write(`
 <p>Note these changes related to eyeballing strategy rather than focusing on the GH cide since
 the history of the latter is recorded in the commit history.</p>
 <dl class="simple">
+<dt>VRA 1.1 - Upcoming</dt><dd><ul class="simple">
+<li><p>day N feature <code class="docutils literal notranslate"><span class="pre">DET_mag_median</span></code> added back in. Marginal gains but also consistent with keeping <code class="docutils literal notranslate"><span class="pre">NON_mag_median</span></code> and removing both is worse.</p></li>
+</ul>
+</dd>
 <dt>VRA 1.0 - 2025-02-03</dt><dd><ul class="simple">
 <li><p>VRA real and galactic models trained on the Duck data-set. Ranges from 27-03-2024 to 22-01-2025</p></li>
-<li><p>The following day1 features were pruned: ‘SN’, ‘UNCLEAR’, ‘ORPHAN’, ‘NT’</p></li>
-<li><p>The following dayN features were pruned: ‘SN’, ‘ORPHAN’, ‘NT’, ‘UNCLEAR’, ‘DET_N_today’, ‘NON_N_today’, ‘DET_mag_median’</p></li>
+<li><p>The following day1 features were pruned: <cite>SN`</cite>, <code class="docutils literal notranslate"><span class="pre">ORPHAN</span></code>, <code class="docutils literal notranslate"><span class="pre">NT</span></code>, <code class="docutils literal notranslate"><span class="pre">UNCLEAR</span></code></p></li>
+<li><p>The following dayN features were pruned: <code class="docutils literal notranslate"><span class="pre">SN</span></code>, <code class="docutils literal notranslate"><span class="pre">ORPHAN</span></code>, <code class="docutils literal notranslate"><span class="pre">NT</span></code>, <code class="docutils literal notranslate"><span class="pre">UNCLEAR</span></code>, <code class="docutils literal notranslate"><span class="pre">DET_N_today</span></code>, <code class="docutils literal notranslate"><span class="pre">NON_N_today</span></code>, <code class="docutils literal notranslate"><span class="pre">DET_mag_median</span></code></p></li>
 <li><p>Eyeballing now split into extragalactic and galactic</p></li>
 <li><p>Eyeball list now named extragalactic candidate list (although purgatory objects still linger at the bottom of that list)</p></li>
 <li><p>Extra galactic candidates defined as rank &gt; 7.5 (instead of 4)</p></li>

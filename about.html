@@ -327,9 +327,9 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#policies">Policies</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eyeballing">Eyeballing</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#garbaging">Garbaging</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discussion">Discussion</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-paper">The Paper</a></li>
 </ul>
             </nav>
         </div>
@@ -414,7 +414,7 @@ and they are trained separately.</p>
 <p>They each score the alerts <strong>from 0 to 1</strong>, such that we can place our alerts in a plot
 we call the score space:</p>
 <figure class="align-center" id="id3">
-<a class="reference internal image-reference" href="_images/score_space.png"><img alt="_images/score_space.png" src="_images/score_space.png" style="width: 650px;" />
+<a class="reference internal image-reference" href="_images/ss_val_day1.png"><img alt="_images/ss_val_day1.png" src="_images/ss_val_day1.png" style="width: 650px;" />
 </a>
 <figcaption>
 <p><span class="caption-text">Score space showing the balanced training data for the Crabby models</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
@@ -430,11 +430,11 @@ use additional features (see the Data section). But the ranking logic remains th
 </section>
 <section id="ranking">
 <h2>Ranking<a class="headerlink" href="#ranking" title="Link to this heading">#</a></h2>
-<p>To rank our alerts we now use the <em>pythagoras theorem</em>.
+<p>To rank our alerts we now use a geometric distance (with a few extra shenanigans).
 The bottom right hand corner of the plot is the “most” Real and Extra-galactic.
 Hypothetically that is the alert we care about the most.
 To calculate the ranks we therefore <strong>calculate the distance to that (1,0) point</strong>.
-Now… there are a couple extra steps.</p>
+Then:</p>
 <ul class="simple">
 <li><dl class="simple">
 <dt>I scale the galactic axis by 0.4 to separate the garbage from the real alerts more effectively.</dt><dd><p>It also ensures our eyeballing policy (see below) encompasses the real=1, galactic=1 corner.</p>
@@ -471,8 +471,10 @@ A <strong>rank = 10</strong> is a special case were a TNS crossmatch has been fo
 <section id="eyeballing">
 <h3>Eyeballing<a class="headerlink" href="#eyeballing" title="Link to this heading">#</a></h3>
 <p>The current eyeballing policy is to ask human experts to check everything
-with a <code class="docutils literal notranslate"><span class="pre">rank</span> <span class="pre">&gt;4</span></code>. As we can see in the figure below, this encompasses
-nearly all the extra-galactic alerts (blue) and a large fraction of the galactic alerts (yellow).</p>
+with a <code class="docutils literal notranslate"><span class="pre">rank</span> <span class="pre">&gt;7.5</span></code> (as an extra-galactic transient candidate)  and everything that
+falls within a distance of 0.45 of the coordinate (1,1) as a galactic candidate.
+You can see below where these strategies fall in score space with respect the
+the distribution of our alerts in our training and validation set.</p>
 <figure class="align-center" id="id4">
 <a class="reference internal image-reference" href="_images/ss_byalert_wranks.png"><img alt="_images/ss_byalert_wranks.png" src="_images/ss_byalert_wranks.png" style="width: 800px;" />
 </a>
@@ -499,42 +501,10 @@ These are now being handled by <code class="docutils literal notranslate"><span 
 alerts that are left in purgatory after they have fallen out of <code class="docutils literal notranslate"><span class="pre">st3ph3n</span></code> ‘s training window.
 There are few of those and they are sent to the slack for eyeballing.</p>
 </section>
-<section id="discussion">
-<h3>Discussion<a class="headerlink" href="#discussion" title="Link to this heading">#</a></h3>
-<p>Testing the effect of the policies on static data is tricky as we do not have
-an eyeball list refilling every day.
-What we can do thought is assess the effect of the eyeballing and garbaging policies on our
-validation set to see what fraction of our <code class="docutils literal notranslate"><span class="pre">good</span></code>, <code class="docutils literal notranslate"><span class="pre">galactic</span></code> and <code class="docutils literal notranslate"><span class="pre">garbage</span></code> + <code class="docutils literal notranslate"><span class="pre">pm</span></code>
-alerts will get eyeballed and auto-garbaged.
-The plot below shows this for the current generation of models.</p>
-<figure class="align-center" id="id5">
-<a class="reference internal image-reference" href="_images/policy_results.png"><img alt="_images/policy_results.png" src="_images/policy_results.png" style="width: 650px;" />
-</a>
-<figcaption>
-<p><span class="caption-text">Fraction of alerts eyeballed Vs auto-garbaged for the different alert types given our current policies.</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
-<p>As we can see we eliminate 86% of the garbage and recover all the good ones save fore one event.
-However we do end up “sacrificing” 27% of the galactic alerts.</p>
-<p>At present this is an acceptable loss since our science case is focused on extra galactic transients.
-This could be remedied in the futures either by:</p>
-<ol class="arabic simple">
-<li><p>Having a separate policy and eyeball list focused on galactic alerts. This would require a dedicated team of galactic eyeballers (likely people connected to those science  cases)</p></li>
-<li><p>Changing the ranking policy to a more complex function which better captures the shape of galactic event distribution.</p></li>
-</ol>
-<p>The former option is not viable right now since we do not have enough team
-members to add this extra layer of operations.
-The second option is disfavoured because the simplicity of the ranking function
-makes it very understandable for the people who use it in our current team.</p>
-<div class="admonition caution">
-<p class="admonition-title">Caution</p>
-<p>The fact that we are auto-garbaging galactic alerts means the garbage list will now have more contamination of real low SNR galactic events. We will have to be careful when creating future training sets to not introduce confusion to future models.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>We have not cleaned the training set by giving it another round of eyeballing. Of the 30% of “lost” galactic objects, a signification fraction may actually be garbage.</p>
-</div>
 </section>
+<section id="the-paper">
+<h2>The Paper<a class="headerlink" href="#the-paper" title="Link to this heading">#</a></h2>
+<p><strong>for more info see the paper [update when out]</strong></p>
 </section>
 </section>
 
@@ -590,9 +560,9 @@ makes it very understandable for the people who use it in our current team.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#policies">Policies</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eyeballing">Eyeballing</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#garbaging">Garbaging</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discussion">Discussion</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-paper">The Paper</a></li>
 </ul>
   </nav></div>
 
