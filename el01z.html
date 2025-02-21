@@ -16,28 +16,25 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
   
-  <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="_static/documentation_options.js?v=4e48d009"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -47,11 +44,10 @@
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="ATLAS VRAs Manual" href="manual.html" />
+    <link rel="next" title="Change History" href="history.html" />
     <link rel="prev" title="The Models" href="training.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -67,8 +63,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -76,6 +83,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -83,8 +91,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -100,8 +108,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -131,17 +138,21 @@
     
     
     <img src="_static/logo.png" class="logo__image only-light" alt="ATLAS VRAs unknown documentation - Home"/>
-    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="ATLAS VRAs unknown documentation - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="ATLAS VRAs unknown documentation - Home"/>`);</script>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">TL;DR</span></p>
@@ -159,6 +170,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">For Devs</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="manual.html">Manual</a></li>
 </ul>
 
@@ -168,14 +180,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -272,16 +279,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -307,7 +322,7 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weekly-reports">Weekly Reports</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-purgatory">Monitoring Purgatory</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-old-and-new-models">Comparing Old and New Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tns-cross-match-to-garbage">TNS Cross-match to Garbage</a></li>
 </ul>
             </nav>
         </div>
@@ -327,11 +342,8 @@ that have slightly different purposes</p>
 <ol class="arabic simple">
 <li><p><strong>Weekly reports</strong></p></li>
 <li><p><strong>Monitoring purgatory</strong></p></li>
-<li><p><strong>Comparing old and new models</strong></p></li>
+<li><p><strong>TNS crossmatch to garbage</strong></p></li>
 </ol>
-<p>The first bot is a permanent fixture although the body of the reports
-may evolve (and have already).
-The other two are 100% dev helpers that will be turned off eventually.</p>
 <section id="weekly-reports">
 <h2>Weekly Reports<a class="headerlink" href="#weekly-reports" title="Link to this heading">#</a></h2>
 <p>Every Friday before the data wrangling meeting, <code class="docutils literal notranslate"><span class="pre">el01z</span></code> will generate a report
@@ -373,48 +385,13 @@ for objects that fall outside of its training window (in fact it’d be reckless
 <p>If alerts are still in purgatory after that 15 day window they must be looked at.
 Once a week, just before the weekly report, <code class="docutils literal notranslate"><span class="pre">el01z</span></code> will generate a list of
 objects in purgatory that are past that 15 day “best-by” date
-and send it to the <code class="docutils literal notranslate"><span class="pre">#vra-dev</span></code> channel so I can eyeball them.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Eventually I <em>will</em> add a new garbage collecting policy to get rid of the
-purgatory concept. The reason it exists is that I was panicked at the idea
-of garbaging an alert that was actually real and I made garbaging policies
-that were conservative.</p>
-</div>
+and send it to the <code class="docutils literal notranslate"><span class="pre">#vra-forum</span></code> channel so this week’s eyeballer cna eyeball them.</p>
 </section>
-<section id="comparing-old-and-new-models">
-<h2>Comparing Old and New Models<a class="headerlink" href="#comparing-old-and-new-models" title="Link to this heading">#</a></h2>
-<p>We added the new <code class="docutils literal notranslate"><span class="pre">Crabby</span></code> models in production on <code class="docutils literal notranslate"><span class="pre">2024-12-06</span></code>.
-We want to compare to previous models to:</p>
-<ol class="arabic simple">
-<li><p>See how much more awesome they are</p></li>
-<li><p>Avoid binning something interesting if I messed up.</p></li>
-</ol>
-<p>The compare-bot runs once a day currently and sends to the
-<code class="docutils literal notranslate"><span class="pre">#vra-dev</span></code> channel two lists:</p>
-<ol class="arabic simple">
-<li><p>The <em>would-not-have-been-garbaged</em> alerts. That is those which
-would not have met the auto-garbaging policies in the old model.
-I eyeball each of these to see if there is any reason to doubt.</p></li>
-<li><p>The <em>danger-zone</em> alerts: Those that would have been eyeballed
-under the old scheme but are not being eyeballed now. I eyeball them
-to see if we might have missed something.</p></li>
-</ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><em>“What about the alerts that would NOT have been eyeballed in the old model?”</em>
-Well those are being eyeballed by the other eyeballers. After a few weeks I
-will take a look and see if we are sending too many extra alerts for eyeballing and
-can cut back further.</p>
-</div>
-<p>The compare-bot also saves a few things to a  file to allow me to do some
-comparison plots in a few weeks:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">rank_NEW</span></code>: the rank given by the new model</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">rank_OLD</span></code>: the rank given by the old model</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">garbage_flag</span></code>: whether the object was garbaged (rank = -1)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">timestamp_bot</span></code>: the timestamp of the bot run</p></li>
-</ul>
+<section id="tns-cross-match-to-garbage">
+<h2>TNS Cross-match to Garbage<a class="headerlink" href="#tns-cross-match-to-garbage" title="Link to this heading">#</a></h2>
+<p>New with <code class="docutils literal notranslate"><span class="pre">Duck</span></code> we have a cron-job checking the <code class="docutils literal notranslate"><span class="pre">garbage</span></code> with <code class="docutils literal notranslate"><span class="pre">rb_pix&gt;0.2</span></code>
+and [CURRENT YEAR] cross-matches. If runs every friday and checks the last 7 days.
+The links to the cross-matches are sent to the <code class="docutils literal notranslate"><span class="pre">#vra-dev</span></code> channel.</p>
 </section>
 </section>
 
@@ -439,11 +416,11 @@ comparison plots in a few weeks:</p>
       </div>
     </a>
     <a class="right-next"
-       href="manual.html"
+       href="history.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">ATLAS VRAs Manual</p>
+        <p class="prev-next-title">Change History</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -454,8 +431,7 @@ comparison plots in a few weeks:</p>
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -466,7 +442,7 @@ comparison plots in a few weeks:</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weekly-reports">Weekly Reports</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring-purgatory">Monitoring Purgatory</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-old-and-new-models">Comparing Old and New Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tns-cross-match-to-garbage">TNS Cross-match to Garbage</a></li>
 </ul>
   </nav></div>
 
@@ -515,8 +491,8 @@ By Heloise Stevance
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

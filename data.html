@@ -16,28 +16,25 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
   
-  <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="_static/documentation_options.js?v=4e48d009"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -51,7 +48,6 @@
     <link rel="prev" title="The Virtual Research Assistant" href="about.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -67,8 +63,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -76,6 +83,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -83,8 +91,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -100,8 +108,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -131,17 +138,21 @@
     
     
     <img src="_static/logo.png" class="logo__image only-light" alt="ATLAS VRAs unknown documentation - Home"/>
-    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="ATLAS VRAs unknown documentation - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="ATLAS VRAs unknown documentation - Home"/>`);</script>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">TL;DR</span></p>
@@ -159,6 +170,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">For Devs</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="manual.html">Manual</a></li>
 </ul>
 
@@ -168,14 +180,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -272,16 +279,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -306,6 +321,7 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">The Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-windows-explained">Time windows explained</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-caveats">Some Caveats</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-and-validation-sets">Training and Validation sets</a></li>
 </ul>
@@ -336,30 +352,30 @@
                   
   <section id="the-data">
 <h1>The Data<a class="headerlink" href="#the-data" title="Link to this heading">#</a></h1>
-<p>The current family of models is called <code class="docutils literal notranslate"><span class="pre">Crabby</span></code> and encompasses
-data gathered between <code class="docutils literal notranslate"><span class="pre">2024-03-27</span></code> and <code class="docutils literal notranslate"><span class="pre">2024-08-13</span></code>.</p>
+<p>The current family of models is called <code class="docutils literal notranslate"><span class="pre">Duck</span></code> and encompasses
+data gathered between <code class="docutils literal notranslate"><span class="pre">2024-03-27</span></code> and <code class="docutils literal notranslate"><span class="pre">2024-01-02</span></code>.
+It is a super-set of the <code class="docutils literal notranslate"><span class="pre">Crabby</span></code> data gathered between  <code class="docutils literal notranslate"><span class="pre">2024-03-27</span></code> and <code class="docutils literal notranslate"><span class="pre">2024-08-13</span></code>,
+with an additional few months of data gathered between <code class="docutils literal notranslate"><span class="pre">2024-08-18</span></code> and <code class="docutils literal notranslate"><span class="pre">2025-01-22</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The naming convention is as follows: new names are chosen for new
 data sets(not new features), with their names starting with incremented
-letters of the alphabet. The Crabby models are the third iteration of VRA
-models (the first two being unpublished prototypes)</p>
+letters of the alphabet. The Duck data-set is the fourth iteration of the VRA
+training set.</p>
 </div>
-<p>The cut-off dates were determined by technical reasons; the former
-corresponds to our implementation of the systems that record human
-decisions as they are being made whilst the latter corresponds to
-when we changed the eyeballing strategy to include the VRA ranks.
+<section id="time-windows-explained">
+<h2>Time windows explained<a class="headerlink" href="#time-windows-explained" title="Link to this heading">#</a></h2>
+<p>The start date corresponds to our implementation of the systems that record human
+decisions as they are being made.
 We chose to only train on alerts whose data could be recorded
 as the human decisions were being made so that we have a truthful
 record of what they looked like at the time.</p>
-<p><strong>[DOUBLE CHECK THIS PARAGRAPH WITH KEN]</strong>
-Because of updates in e.g. the <code class="docutils literal notranslate"><span class="pre">Sherlock</span></code> cross-matching in some
+<p>Because of updates in e.g. the <code class="docutils literal notranslate"><span class="pre">Sherlock</span></code> cross-matching in some
 older data in the database, recreating the conditions under which each alert
 was eyeballed is non trivial and since we get a constant influx of new data,
 we opted for the thrifty option of using data we could control fully.
 The August cut off is chosen such that these data are not affected
-by any human-machine interaction considerations. <strong>Future data cleaning
-and gathering will have to take that into account.</strong></p>
+by any human-machine interaction considerations.</p>
 <p>The data downloaded is what is returned by the <a class="reference external" href="https://heloises.github.io/atlasapiclient/users.html">ATLAS API</a>, for the schema
 you can check the <a class="reference external" href="https://psweb.mp.qub.ac.uk/misc/api/atlas/">json schema</a>. It is cleaned up into a few csv files:</p>
 <ul class="simple">
@@ -372,13 +388,13 @@ you can check the <a class="reference external" href="https://psweb.mp.qub.ac.uk
 <p class="admonition-title">See also</p>
 <p>You can get the data and the codes used to clean it up <strong>[HERE ADD ZENODO]</strong></p>
 </div>
+</section>
 <section id="some-caveats">
 <h2>Some Caveats<a class="headerlink" href="#some-caveats" title="Link to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p><strong>Only one eyeballer</strong> handled each alert (apart from a few exceptions
-posted on slack). Ideally for a well curated data set we would want
-two to three opinions especially for borderline cases. Here are a few
-ways this will affect the current data:</p>
+<ol class="arabic">
+<li><p>Most human-labelled alerts were handled by <strong>only one eyeballer</strong> (apart from a few exceptions
+posted on slack and the 2000 or so I re-eyeballed). Ideally for a well curated data set we would want
+two to three opinions especially for borderline cases. Here are a few ways this will affect the current data:</p>
 <ol class="loweralpha simple">
 <li><p>Not all eyeballers use the Proper Motion star list. They will just
 put proper motion alerts in the garbage. This will lead to some confusion
@@ -388,31 +404,38 @@ has mistakenly added those to the TNS. This will lead to some confusion
 between the <code class="docutils literal notranslate"><span class="pre">galactic</span></code> and <code class="docutils literal notranslate"><span class="pre">good</span></code> alerts.</p></li>
 </ol>
 </li>
-<li><dl class="simple">
-<dt>The  <code class="docutils literal notranslate"><span class="pre">galactic</span></code> tag is actually an <code class="docutils literal notranslate"><span class="pre">attic</span></code> list tag. But the attic list also contains:</dt><dd><ol class="loweralpha simple">
-<li><p>Duplicate supernovae</p></li>
+<li><p>The  <code class="docutils literal notranslate"><span class="pre">galactic</span></code> tag is actually an <code class="docutils literal notranslate"><span class="pre">attic</span></code> list tag. But the attic list also used to contains the following
+which will lead to further confusion between the <code class="docutils literal notranslate"><span class="pre">galactic</span></code> and <code class="docutils literal notranslate"><span class="pre">good</span></code> alerts:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>Duplicate supernovae (As of 2025-01-30 we have a duplicate list so they will no longer be in the attic; this will not affect future datasets bu it affects all of Duck)</p></li>
 <li><p>Suspected AGN activity</p></li>
 </ol>
-</dd>
-</dl>
+</div></blockquote>
 </li>
+<li><p>In the additional data brought by the <code class="docutils literal notranslate"><span class="pre">Duck</span></code> data set (from the 13th August 2025 onwards)
+the VRA was active and auto-garbaging data. This means that a very large fraction of the data recorded
+from that data didn’t receive human eyeballing and was not split into <code class="docutils literal notranslate"><span class="pre">PM</span></code> or <code class="docutils literal notranslate"><span class="pre">garbage</span></code>.
+To avoid mass re-eyeballing I used the <code class="docutils literal notranslate"><span class="pre">Crabby</span></code>-trained VRA to predict <code class="docutils literal notranslate"><span class="pre">p_real</span></code> and <code class="docutils literal notranslate"><span class="pre">p_gal</span></code> for the new data
+and I assumed the following labels:
+a.  <code class="docutils literal notranslate"><span class="pre">p_real&lt;0.2</span></code>, <code class="docutils literal notranslate"><span class="pre">p_gal&lt;0.1</span></code> = <code class="docutils literal notranslate"><span class="pre">Garbage</span></code>
+b. <code class="docutils literal notranslate"><span class="pre">p_real&lt;0.2</span></code>, <code class="docutils literal notranslate"><span class="pre">p_gal&gt;0.9</span></code> = <code class="docutils literal notranslate"><span class="pre">PM</span></code></p></li>
 </ol>
-<p>This will lead to further confusion between the <code class="docutils literal notranslate"><span class="pre">galactic</span></code> and <code class="docutils literal notranslate"><span class="pre">good</span></code> alerts.</p>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
-<p>In the future we <strong>will</strong> re-eyeball the training data, which will solve all these issues.
-It will  be necessary anyway in future iterations because the auto-garbaged
-alerts will contain some galactic events.</p>
+<p>The new iteration of the VRA works really well despite some of the grabage and PM being labelled by the previous model.
+At this point re-eyeballing the data is not a priority but we can talk about it.</p>
 </div>
 </section>
 <section id="training-and-validation-sets">
 <h2>Training and Validation sets<a class="headerlink" href="#training-and-validation-sets" title="Link to this heading">#</a></h2>
-<p>As you can see in the <a class="reference external" href="about.html">pie chart</a> in the general description,
+<p>[UPDATE]
+As you can see in the <a class="reference external" href="about.html">pie chart</a> in the general description,
 the data eyeballed over the period covered by <code class="docutils literal notranslate"><span class="pre">crabby</span></code> includes over
 40,000 alerts, 88% of which were either Garbage or Proper Motion stars.
 Roughly 5.5% were classified as <code class="docutils literal notranslate"><span class="pre">good</span></code> and 6.5% as <code class="docutils literal notranslate"><span class="pre">galactic</span></code> (i.e. put
 in the attic).</p>
-<p>With these data we create a <strong>balanced</strong> training set and an <strong>unbalanced</strong>
+<p>With these data we create a (somewhat) <strong>balanced</strong> training set and an <strong>unbalanced</strong>
 validation set that we will use to check that our models generalise decently and
 to tune some hyperparameters.
 We do this by randomly sampling 15% of our alerts <em>before</em> balancing
@@ -426,6 +449,9 @@ has not actually been tested and compared.
 I think it will be more beneficial to focus on expanding the data set with more
 recent data (especially since, as you’ll see below, RA and DEC are such important
 features).</p>
+<p>When making the <code class="docutils literal notranslate"><span class="pre">Duck</span></code> validation set I do not re-sample the whole dataset from
+March 2024. Instead I take the same validation set as in <code class="docutils literal notranslate"><span class="pre">Crabby</span></code> and sample
+from 15% of the extra data from August 2025 onwards.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>We do not call it a <strong>test set</strong> because it isn’t : we use it to check our models
@@ -447,36 +473,52 @@ try training on the unbalanced training set and it was a disaster).</p>
 <div class="pst-scrollable-table-container"><table class="table" id="id2">
 <caption><span class="caption-text">Numbers</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
 <colgroup>
-<col style="width: 29.4%" />
-<col style="width: 35.3%" />
-<col style="width: 35.3%" />
+<col style="width: 21.7%" />
+<col style="width: 26.1%" />
+<col style="width: 26.1%" />
+<col style="width: 26.1%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Label</p></th>
 <th class="head"><p>Training</p></th>
 <th class="head"><p>Validation</p></th>
+<th class="head"><p>Whole</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>Garbage</p></td>
-<td><p>2200</p></td>
-<td><p>4619</p></td>
+<tr class="row-even"><td><p>Auto-Garbage</p></td>
+<td><p>N/A</p></td>
+<td><p>3,590</p></td>
+<td><p>23,752</p></td>
 </tr>
-<tr class="row-odd"><td><p>PM</p></td>
-<td><p>2200</p></td>
-<td><p>797</p></td>
+<tr class="row-odd"><td><p>Garbage</p></td>
+<td><p>4,447</p></td>
+<td><p>5,545</p></td>
+<td><p>36,622</p></td>
 </tr>
-<tr class="row-even"><td><p>Galactic</p></td>
-<td><p>2210</p></td>
-<td><p>357</p></td>
+<tr class="row-even"><td><p>PM</p></td>
+<td><p>3,464</p></td>
+<td><p>894</p></td>
+<td><p>5,843</p></td>
 </tr>
-<tr class="row-odd"><td><p>Good</p></td>
-<td><p>1908</p></td>
-<td><p>348</p></td>
+<tr class="row-odd"><td><p>Galactic</p></td>
+<td><p>2,887</p></td>
+<td><p>467</p></td>
+<td><p>4,185</p></td>
+</tr>
+<tr class="row-even"><td><p>Good</p></td>
+<td><p>4,234</p></td>
+<td><p>759</p></td>
+<td><p>4,751</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<p><strong>[why are there too many good objects??]</strong></p>
+<p>The training set is not fully balanced because I didn’t want to downsample <code class="docutils literal notranslate"><span class="pre">Good</span></code> objects
+in the additional data available in <code class="docutils literal notranslate"><span class="pre">Duck</span></code>.
+Also note the training and validation data sets include some guess labels but the
+reported numbers for the whole data set do not.</p>
 </section>
 </section>
 <section id="the-features">
@@ -485,7 +527,7 @@ try training on the unbalanced training set and it was a disaster).</p>
 <h2>Day 1 models<a class="headerlink" href="#day-1-models" title="Link to this heading">#</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">day1</span></code> models are those that calculate the initial real and galactic
 scores when an alert first enters the eyeball list.
-They currently use <strong>19 features</strong>, which are summarised in the table below.</p>
+They currently use the following features:</p>
 <div class="pst-scrollable-table-container"><table class="table" id="id3">
 <caption><span class="caption-text">Features</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
 <colgroup>
@@ -556,29 +598,17 @@ They currently use <strong>19 features</strong>, which are summarised in the tab
 <td><p><code class="docutils literal notranslate"><span class="pre">log10_sep_arcsec</span></code></p></td>
 <td><p>Log10 of the separation in arcsec from a nearby source</p></td>
 </tr>
-<tr class="row-even"><td><p>Boolean flags for the following sherlock features</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">SN</span></code></p></td>
-<td><p>Supernova (<code class="docutils literal notranslate"><span class="pre">Sherlock</span></code> has associated with an extended source but not at its center)</p></td>
-</tr>
-<tr class="row-odd"><td></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">NT</span></code></p></td>
-<td><p>Nuclear Transient (<code class="docutils literal notranslate"><span class="pre">Sherlock</span></code> has associated with an extended source at its center)</p></td>
-</tr>
-<tr class="row-even"><td></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">ORPHAN</span></code></p></td>
-<td><p>No associated source (point or extended)</p></td>
-</tr>
-<tr class="row-odd"><td></td>
+<tr class="row-even"><td><p>Boolean flags for the following sherlock feature:</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">CV</span></code></p></td>
 <td><p>Known Cataclysmic Variable</p></td>
-</tr>
-<tr class="row-even"><td></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">UNCLEAR</span></code></p></td>
-<td><p>Not sure</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<p>The Sherlock features <code class="docutils literal notranslate"><span class="pre">SN</span></code>, <code class="docutils literal notranslate"><span class="pre">ORPHAN</span></code>, <code class="docutils literal notranslate"><span class="pre">NT</span></code>, <code class="docutils literal notranslate"><span class="pre">UNCLEAR</span></code>, as they are not found to
+be informative. It’s unsurprising as we are providing information used by sherlock to create those tags
+(such as the separation from the nearby source or the redshift) so it uses those and not the boolean flags.
+<code class="docutils literal notranslate"><span class="pre">CV</span></code> is useful to an extent because it’s a direct classification (but often the VRA can guess it’s galactic).</p>
 </section>
 <section id="day-n-features">
 <h2>Day N features<a class="headerlink" href="#day-n-features" title="Link to this heading">#</a></h2>
@@ -606,33 +636,30 @@ the alert date.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DET_mag_median</span></code></p></td>
-<td><p>Median magnitude of the detections since phase -5 d</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DET_N_today</span></code></p></td>
-<td><p>Number of detections seen today</p></td>
-</tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DET_N_total</span></code></p></td>
 <td><p>Number of detections since phase -5 d</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NON_mag_median</span></code></p></td>
 <td><p>Median magnitude of the non detections since phase -5 d</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NON_N_today</span></code></p></td>
-<td><p>Number of non detections seen today</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">NON_N_total</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NON_N_total</span></code></p></td>
 <td><p>Number of non detections since phase -5 d</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_mag</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">max_mag</span></code></p></td>
 <td><p>Maximum (median) magnitude seen since phase -5 d</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">max_mag_day</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">max_mag_day</span></code></p></td>
 <td><p>Day of the maximum magnitude</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<p>The features <code class="docutils literal notranslate"><span class="pre">DET_N_today</span></code>, <code class="docutils literal notranslate"><span class="pre">NON_N_today</span></code>, <code class="docutils literal notranslate"><span class="pre">DET_mag_median</span></code>
+were pruned as they were found to be useless (even in the previous iteration of the model).
+It makes sense that these features are not useful: The number of detections or non detections today
+is just a subset of the total number of detections or non detections.
+As for the median magnitude of the detections, it is unsurprising that it is less informative than the maximum mag.
+On the whole this makes sense.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Technically taking the median of a magnitude is not the proper way to bin
@@ -778,8 +805,7 @@ probably beating a dead horse. It was worth a go.</p>
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -789,6 +815,7 @@ probably beating a dead horse. It was worth a go.</p>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">The Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#time-windows-explained">Time windows explained</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-caveats">Some Caveats</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-and-validation-sets">Training and Validation sets</a></li>
 </ul>
@@ -854,8 +881,8 @@ By Heloise Stevance
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

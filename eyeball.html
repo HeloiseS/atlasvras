@@ -16,28 +16,25 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
   
-  <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="_static/documentation_options.js?v=4e48d009"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -51,7 +48,6 @@
     <link rel="prev" title="ATLAS Virtual Research Assistants" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -67,8 +63,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -76,6 +83,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -83,8 +91,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -100,8 +108,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -131,17 +138,21 @@
     
     
     <img src="_static/logo.png" class="logo__image only-light" alt="ATLAS VRAs unknown documentation - Home"/>
-    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="ATLAS VRAs unknown documentation - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="ATLAS VRAs unknown documentation - Home"/>`);</script>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">TL;DR</span></p>
@@ -159,6 +170,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">For Devs</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="history.html">History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="manual.html">Manual</a></li>
 </ul>
 
@@ -168,14 +180,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -272,16 +279,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -308,7 +323,6 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#first-eyeballer">First Eyeballer</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#second-eyeballer">Second Eyeballer</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xmas-eyeballing">Xmas Eyeballing</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#st3ph3n-bot">st3ph3n-bot</a></li>
@@ -342,31 +356,24 @@ you read Michael’s <a class="reference external" href="https://www.overleaf.co
 </div>
 <section id="first-eyeballer">
 <h3>First Eyeballer<a class="headerlink" href="#first-eyeballer" title="Link to this heading">#</a></h3>
-<blockquote>
-<div><ul class="simple">
-<li><p><strong>Eyeball ASAP</strong> when messages come through. ZTF (and its brokers), Pan-STARRS, Gaia, GOTO, ASASSN see the sky too ;)</p></li>
-<li><p><strong>Fast Track list</strong>: eyeball all ranks</p></li>
-<li><p><strong>Standard list</strong>: eyeball ranks &gt;4</p></li>
-<li><p>If you’re not sure: <strong>snooze</strong> the alert by putting in <strong>Possible list</strong>. It’ll come back to eyeball when the telescopes have looked at that part of the sky again.</p></li>
+<dl class="simple">
+<dt>Follow the links sent by st3ph3n - here is the list of priorities:</dt><dd><ul class="simple">
+<li><p><strong>Fast Track list</strong>: <strong>Eyeball Now</strong></p></li>
+<li><p><strong>Extragalactic candidates</strong>: <strong>Eyeball ASAP (within 1h)</strong></p></li>
+<li><p>Galactic candidates: Eyeball within 24 to 48h</p></li>
+<li><p>Eyeball the purgatory list sent by el01z on Fridays</p></li>
 </ul>
-</div></blockquote>
+</dd>
+</dl>
+<p>Obviously these times apply for when you’re awake - don’t be setting alarms during the night.</p>
+<p>If you’re not sure: <strong>snooze</strong> the alert by putting in <strong>Possible list</strong>.
+It’ll come back to eyeball when the telescopes have looked at that part of the sky again.</p>
 </section>
 <section id="second-eyeballer">
 <h3>Second Eyeballer<a class="headerlink" href="#second-eyeballer" title="Link to this heading">#</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li><p>Check the <strong>good</strong> list for anything interesting to put in <strong>follow-up (particularly check the last week of objects).</strong>  Alert the relevant people if rapid follow-up needed, or keep the source in your own list for later discussion.</p></li>
-</ul>
-</div></blockquote>
-</section>
-<section id="xmas-eyeballing">
-<h3>Xmas Eyeballing<a class="headerlink" href="#xmas-eyeballing" title="Link to this heading">#</a></h3>
-<blockquote>
-<div><ul class="simple">
-<li><p>You can check the Xmas <a class="reference internal" href="#rota">rota</a> and add your day to your calendar.</p></li>
-<li><p>When it is your day <strong>you are both eyeballer 1 and eyeballer 2</strong></p></li>
-<li><p>At the end of your shift <strong>get in touch with the next eyeballer</strong> to make sure
-they know they are taking over.</p></li>
 </ul>
 </div></blockquote>
 </section>
@@ -383,15 +390,7 @@ It also automatically garbages alerts with low scores (for more detail see
 promising alerts.</p>
 <p>The slackbot triggers at the end of each ATLAS ingest and sends a
 message the <code class="docutils literal notranslate"><span class="pre">#vra</span></code> channel on the QUB slack. In each <cite>st3ph3n</cite>
-alert you will see two lines:</p>
-<ol class="arabic simple">
-<li><p>How many Fast Track (&lt;100 Mpc) objects have rank &gt;4 and how many other (low rank) alerts there are.You should <strong>eyeball ALL ranks in the Fast Track list</strong> (there will not be many).</p></li>
-<li><p>How many alerts in the standard eyeball list with ranks &gt;4.</p></li>
-</ol>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The number of alerts to be eyeballed is <strong>usually over estimated</strong>. It’s a bug we have to fix.</p>
-</div>
+alert you will see the links to the available eyeballing tasks</p>
 </section>
 <section id="tips-for-eyeballer-1">
 <h2>Tips for eyeballer 1<a class="headerlink" href="#tips-for-eyeballer-1" title="Link to this heading">#</a></h2>
@@ -400,13 +399,9 @@ alert you will see two lines:</p>
 <li><p>Go back to slack and <strong>click on the eyeball link</strong> provided by <code class="docutils literal notranslate"><span class="pre">st3ph3n</span></code>. This will take you to the curated eyeball list (ordered and cropped down to rank 4).</p></li>
 <li><p>Scroll down to the first alerts that or <strong>not</strong> rank 10 and eyeball these. They are the most promising which haven’t yet been pinched by another team.</p></li>
 <li><p>Finally clean up the rank 10 alerts.</p></li>
-<li><p>Typically the ATLAS data ingest cycle happens every few hours, so keep checking throughout the day or set the <code class="docutils literal notranslate"><span class="pre">#vra</span></code> channel push notifications for the week you’re on.
-10-20 objects per ingest to look at is fairly normal, per ingest cycle.</p></li>
 </ol>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>A rank of <strong>10</strong> means that the alert has been <strong>cross-matched to TNS</strong>. It does <strong>not necessarily mean it is real</strong>.</p>
-</div>
+<p>5. The ATLAS ingest cycle is faster than it used to be so you may get alerts every 30 minutes when there is not a lot of data being ingested.
+<strong>If you do not snooze the data</strong> you will keep getting poked by <code class="docutils literal notranslate"><span class="pre">st3ph3n</span></code> even if nothing has changed.</p>
 <section id="rota">
 <h3>Rota<a class="headerlink" href="#rota" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="table" id="id1">
@@ -423,38 +418,6 @@ alert you will see two lines:</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>09/12/2024</p></td>
-<td><p>Aysha</p></td>
-<td><p>Ken</p></td>
-</tr>
-<tr class="row-odd"><td><p>16/12/2024</p></td>
-<td><p>Paige</p></td>
-<td><p>Aysha</p></td>
-</tr>
-<tr class="row-even"><td><p>23/12/2024</p></td>
-<td><p>Everyone</p></td>
-<td><p>Everyone</p></td>
-</tr>
-<tr class="row-odd"><td><p>30/12/2024</p></td>
-<td><p>Everyone</p></td>
-<td><p>Everyone</p></td>
-</tr>
-<tr class="row-even"><td><p>06/01/2024</p></td>
-<td><p>Josh</p></td>
-<td><p>Paige</p></td>
-</tr>
-<tr class="row-odd"><td><p>13/01/2024</p></td>
-<td><p>Michael</p></td>
-<td><p>Josh</p></td>
-</tr>
-<tr class="row-even"><td><p>20/01/2024</p></td>
-<td><p>Lauren</p></td>
-<td><p>Michael</p></td>
-</tr>
-<tr class="row-odd"><td><p>27/01/2024</p></td>
-<td><p>Charlotte</p></td>
-<td><p>Lauren</p></td>
-</tr>
 <tr class="row-even"><td><p>03/02/2024</p></td>
 <td><p>Dave</p></td>
 <td><p>Charlotte</p></td>
@@ -482,79 +445,6 @@ alert you will see two lines:</p>
 <tr class="row-even"><td><p>17/03/2024</p></td>
 <td><p>Fiore</p></td>
 <td><p>Shubham</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="pst-scrollable-table-container"><table class="table" id="id2">
-<caption><span class="caption-text">Xmas Rota</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
-<colgroup>
-<col style="width: 33.3%" />
-<col style="width: 33.3%" />
-<col style="width: 33.3%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Date</p></th>
-<th class="head"></th>
-<th class="head"><p>Eyeballer</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>23/12/2024</p></td>
-<td></td>
-<td><p>Stephen</p></td>
-</tr>
-<tr class="row-odd"><td><p>24/12/2024</p></td>
-<td><p>Xmas Eve</p></td>
-<td><p>Charlotte</p></td>
-</tr>
-<tr class="row-even"><td><p>25/12/2024</p></td>
-<td><p>Xmas Day</p></td>
-<td><p>Ken</p></td>
-</tr>
-<tr class="row-odd"><td><p>26/12/2024</p></td>
-<td><p>Boxing Day</p></td>
-<td><p>Heloise</p></td>
-</tr>
-<tr class="row-even"><td><p>27/12/2024</p></td>
-<td></td>
-<td><p>Fiore</p></td>
-</tr>
-<tr class="row-odd"><td><p>28/12/2024</p></td>
-<td></td>
-<td><p>Aysha</p></td>
-</tr>
-<tr class="row-even"><td><p>29/12/2024</p></td>
-<td></td>
-<td><p>Shubham</p></td>
-</tr>
-<tr class="row-odd"><td><p>30/12/2024</p></td>
-<td></td>
-<td><p>Heloise</p></td>
-</tr>
-<tr class="row-even"><td><p>31/12/2024</p></td>
-<td><p>New Year’s Eve</p></td>
-<td><p>Stephen</p></td>
-</tr>
-<tr class="row-odd"><td><p>1/1/2025</p></td>
-<td><p>New Year’s Day</p></td>
-<td><p>Ken</p></td>
-</tr>
-<tr class="row-even"><td><p>2/1/2025</p></td>
-<td></td>
-<td><p>Daryll</p></td>
-</tr>
-<tr class="row-odd"><td><p>3/1/2025</p></td>
-<td></td>
-<td><p>Shubham</p></td>
-</tr>
-<tr class="row-even"><td><p>4/1/2025</p></td>
-<td></td>
-<td><p>Matt</p></td>
-</tr>
-<tr class="row-odd"><td><p>5/1/2025</p></td>
-<td></td>
-<td><p>Dave</p></td>
 </tr>
 </tbody>
 </table>
@@ -599,8 +489,7 @@ alert you will see two lines:</p>
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -612,7 +501,6 @@ alert you will see two lines:</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#first-eyeballer">First Eyeballer</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#second-eyeballer">Second Eyeballer</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xmas-eyeballing">Xmas Eyeballing</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#st3ph3n-bot">st3ph3n-bot</a></li>
@@ -668,8 +556,8 @@ By Heloise Stevance
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
