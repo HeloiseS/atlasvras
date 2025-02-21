@@ -152,6 +152,7 @@ Garbaging
 .. _garbaging:
 
 There are currently three "garbage collection" policies in place:
+
 * On **entering the eyeball list** with ``rank<1.0``
 * On a **second visit**, ``max(rank)<2.0``.
 * On the **third and subsequent visits**, ``mean(rank)<3``.
@@ -166,5 +167,5 @@ There are few of those and they are sent to the slack for eyeballing.
 
 The Paper
 ---------------------------------------
-**for more info see the paper [update when out]**
+**for more info see the paper [out soon]**
 

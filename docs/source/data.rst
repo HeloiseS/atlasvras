@@ -11,8 +11,6 @@ with an additional few months of data gathered between ``2024-08-18`` and ``2025
    letters of the alphabet. The Duck data-set is the fourth iteration of the VRA
    training set.
 
-Time windows explained
-~~~~~~~~~~~~~~~~~~~~~~
 
 The start date corresponds to our implementation of the systems that record human
 decisions as they are being made.
@@ -376,8 +374,7 @@ The plots are big and bulky so I'm not adding them here, but you will be
 able to find them in the paper or in the data release.
 Here is the general gist.
 
-For the real and galactic models the features that have the most impact are
- ``max_mag``  and ``max_mag_day``.
+For the real and galactic models the features that have the most impact are ``max_mag``  and ``max_mag_day``.
 For the real scorer ``DET_N_TOTAL`` (the total number of detections) so far
 is also important. **Everything else has little to no impact**.
 To be fair human eyeballers really rely on the forced photometry in this regime
