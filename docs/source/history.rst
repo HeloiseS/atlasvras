@@ -3,10 +3,13 @@ Change History
 Note these changes related to eyeballing strategy rather than focusing on the GH cide since
 the history of the latter is recorded in the commit history.
 
+VRA 1.1 - Upcoming
+   - day N feature ``DET_mag_median`` added back in. Marginal gains but also consistent with keeping ``NON_mag_median`` and removing both is worse.
+
 VRA 1.0 - 2025-02-03
    - VRA real and galactic models trained on the Duck data-set. Ranges from 27-03-2024 to 22-01-2025
-   - The following day1 features were pruned: 'SN', 'UNCLEAR', 'ORPHAN', 'NT'
-   - The following dayN features were pruned: 'SN', 'ORPHAN', 'NT', 'UNCLEAR', 'DET_N_today', 'NON_N_today', 'DET_mag_median'
+   - The following day1 features were pruned: `SN``, ``ORPHAN``, ``NT``, ``UNCLEAR``
+   - The following dayN features were pruned: ``SN``, ``ORPHAN``, ``NT``, ``UNCLEAR``, ``DET_N_today``, ``NON_N_today``, ``DET_mag_median``
    - Eyeballing now split into extragalactic and galactic
    - Eyeball list now named extragalactic candidate list (although purgatory objects still linger at the bottom of that list)
    - Extra galactic candidates defined as rank > 7.5 (instead of 4)
