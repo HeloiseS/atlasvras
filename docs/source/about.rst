@@ -151,19 +151,18 @@ Garbaging
 .. _garbaging:
 
 There are currently three "garbage collection" policies in place:
-* On **entering the eyeball list** with ``rank<1.5``
-* On a **second visit**, ``max(rank)<3``.
+* On **entering the eyeball list** with ``rank<1.0``
+* On a **second visit**, ``max(rank)<2.0``.
 * On the **third and subsequent visits**, ``mean(rank)<3``.
 
 Because the cadence is often 2 to 3 days, after the 3rd or 4th visit we will
 get close to +15 days after initial alert, which falls out of the training window.
-Because we eyeball everything with rank >4, these garbaging policies will leave some alerts in
-what is called the "purgratory".
+Because we eyeball everything with rank >7.5 these garbaging policies will leave some alerts in
+what is called the "purgatory".
 These are now being handled by ``el01z``  (see the Monitoring section) which has a sentinel looking out for
-alerts that are left in purgatory after they have fallen out of ``st3ph3n``'s training window.
+alerts that are left in purgatory after they have fallen out of ``st3ph3n`` 's training window.
+There are few of those and they are sent to the slack for eyeballing.
 
-.. caution::
-   We will need to add a garbage collection policy to automate purgatory collection.
 
 Discussion
 ~~~~~~~~~~~~~

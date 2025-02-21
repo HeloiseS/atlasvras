@@ -1,31 +1,36 @@
 The Data
 -------------
 
-The current family of models is called ``Crabby`` and encompasses
-data gathered between ``2024-03-27`` and ``2024-08-13``.
+
+
+The current family of models is called ``Duck`` and encompasses
+data gathered between ``2024-03-27`` and ``2024-01-02``.
+It is a super-set of the ``Crabby`` data gathered between  ``2024-03-27`` and ``2024-08-13``,
+with an additional few months of data gathered between ``2024-08-18`` and ``2025-01-22``.
 
 .. note::
    The naming convention is as follows: new names are chosen for new
    data sets(not new features), with their names starting with incremented
-   letters of the alphabet. The Crabby models are the third iteration of VRA
-   models (the first two being unpublished prototypes)
+   letters of the alphabet. The Duck data-set is the fourth iteration of the VRA
+   training set.
 
-The cut-off dates were determined by technical reasons; the former
-corresponds to our implementation of the systems that record human
-decisions as they are being made whilst the latter corresponds to
-when we changed the eyeballing strategy to include the VRA ranks.
+Time windows explained
+~~~~~~~~~~~~~~~~~~~~~~
+
+The start date corresponds to our implementation of the systems that record human
+decisions as they are being made.
 We chose to only train on alerts whose data could be recorded
 as the human decisions were being made so that we have a truthful
 record of what they looked like at the time.
 
-**[DOUBLE CHECK THIS PARAGRAPH WITH KEN]**
 Because of updates in e.g. the ``Sherlock`` cross-matching in some
 older data in the database, recreating the conditions under which each alert
 was eyeballed is non trivial and since we get a constant influx of new data,
 we opted for the thrifty option of using data we could control fully.
 The August cut off is chosen such that these data are not affected
-by any human-machine interaction considerations. **Future data cleaning
-and gathering will have to take that into account.**
+by any human-machine interaction considerations.
+
+
 
 The data downloaded is what is returned by the `ATLAS API`_, for the schema
 you can check the `json schema`_. It is cleaned up into a few csv files:
@@ -44,10 +49,9 @@ you can check the `json schema`_. It is cleaned up into a few csv files:
 Some Caveats
 ~~~~~~~~~~~~~~~~~~~~
 
-1. **Only one eyeballer** handled each alert (apart from a few exceptions
-   posted on slack). Ideally for a well curated data set we would want
-   two to three opinions especially for borderline cases. Here are a few
-   ways this will affect the current data:
+1. Most human-labelled alerts were handled by **only one eyeballer** (apart from a few exceptions
+   posted on slack and the 2000 or so I re-eyeballed). Ideally for a well curated data set we would want
+   two to three opinions especially for borderline cases. Here are a few ways this will affect the current data:
 
    a. Not all eyeballers use the Proper Motion star list. They will just
       put proper motion alerts in the garbage. This will lead to some confusion
@@ -58,26 +62,34 @@ Some Caveats
       between the ``galactic`` and ``good`` alerts.
 
 
-2. The  ``galactic`` tag is actually an ``attic`` list tag. But the attic list also contains:
-    a. Duplicate supernovae
+2. The  ``galactic`` tag is actually an ``attic`` list tag. But the attic list also used to contains the following
+   which will lead to further confusion between the ``galactic`` and ``good`` alerts:
+    a. Duplicate supernovae (As of 2025-01-30 we have a duplicate list so they will no longer be in the attic; this will not affect future datasets bu it affects all of Duck)
     b. Suspected AGN activity
 
-This will lead to further confusion between the ``galactic`` and ``good`` alerts.
+3. In the additional data brought by the ``Duck`` data set (from the 13th August 2025 onwards)
+   the VRA was active and auto-garbaging data. This means that a very large fraction of the data recorded
+   from that data didn't receive human eyeballing and was not split into ``PM`` or ``garbage``.
+   To avoid mass re-eyeballing I used the ``Crabby``-trained VRA to predict ``p_real`` and ``p_gal`` for the new data
+   and I assumed the following labels:
+   a.  ``p_real<0.2``, ``p_gal<0.1`` = ``Garbage``
+   b. ``p_real<0.2``, ``p_gal>0.9`` = ``PM``
 
 .. attention::
-   In the future we **will** re-eyeball the training data, which will solve all these issues.
-   It will  be necessary anyway in future iterations because the auto-garbaged
-   alerts will contain some galactic events.
+   The new iteration of the VRA works really well despite some of the grabage and PM being labelled by the previous model.
+   At this point re-eyeballing the data is not a priority but we can talk about it.
+
 
 Training and Validation sets
 ~~~~~~~~~~~~~~~~~~~~~~~~
+[UPDATE]
 As you can see in the `pie chart <about.html>`_ in the general description,
 the data eyeballed over the period covered by ``crabby`` includes over
 40,000 alerts, 88% of which were either Garbage or Proper Motion stars.
 Roughly 5.5% were classified as ``good`` and 6.5% as ``galactic`` (i.e. put
 in the attic).
 
-With these data we create a **balanced** training set and an **unbalanced**
+With these data we create a (somewhat) **balanced** training set and an **unbalanced**
 validation set that we will use to check that our models generalise decently and
 to tune some hyperparameters.
 We do this by randomly sampling 15% of our alerts *before* balancing
@@ -91,6 +103,11 @@ has not actually been tested and compared.
 I think it will be more beneficial to focus on expanding the data set with more
 recent data (especially since, as you'll see below, RA and DEC are such important
 features).
+
+When making the ``Duck`` validation set I do not re-sample the whole dataset from
+March 2024. Instead I take the same validation set as in ``Crabby`` and sample
+from 15% of the extra data from August 2025 onwards.
+
 
 .. note::
    We do not call it a **test set** because it isn't : we use it to check our models
@@ -111,26 +128,42 @@ so I balanced based on the number of ``galactic`` alerts. The slight imbalance
 did not affect the model's performance in early tests (but we did
 try training on the unbalanced training set and it was a disaster).
 
+
 .. list-table:: Numbers
-   :widths: 25 30 30
+   :widths: 25 30 30 30
    :header-rows: 1
 
    * - Label
      - Training
      - Validation
+     - Whole
+   * - Auto-Garbage
+     - N/A
+     - 3,590
+     - 23,752
    * - Garbage
-     - 2200
-     - 4619
+     - 4,447
+     - 5,545
+     - 36,622
    * - PM
-     - 2200
-     - 797
+     - 3,464
+     - 894
+     - 5,843
    * - Galactic
-     - 2210
-     - 357
+     - 2,887
+     - 467
+     - 4,185
    * - Good
-     - 1908
-     - 348
+     - 4,234
+     - 759
+     - 4,751
 
+**[why are there too many good objects??]**
+
+The training set is not fully balanced because I didn't want to downsample ``Good`` objects
+in the additional data available in ``Duck``.
+Also note the training and validation data sets include some guess labels but the
+reported numbers for the whole data set do not.
 
 The Features
 ------------------
@@ -139,7 +172,7 @@ Day 1 models
 ~~~~~~~~~~~~~~~~~~
 The ``day1`` models are those that calculate the initial real and galactic
 scores when an alert first enters the eyeball list.
-They currently use **19 features**, which are summarised in the table below.
+They currently use the following features:
 
 
 .. list-table:: Features
@@ -192,22 +225,14 @@ They currently use **19 features**, which are summarised in the table below.
      - ``log10_sep_arcsec``
      - Log10 of the separation in arcsec from a nearby source
 
-   * - Boolean flags for the following sherlock features
-     - ``SN``
-     - Supernova (``Sherlock`` has associated with an extended source but not at its center)
-   * -
-     - ``NT``
-     - Nuclear Transient (``Sherlock`` has associated with an extended source at its center)
-   * -
-     - ``ORPHAN``
-     - No associated source (point or extended)
-   * -
+   * - Boolean flags for the following sherlock feature:
      - ``CV``
      - Known Cataclysmic Variable
-   * -
-     - ``UNCLEAR``
-     - Not sure
 
+The Sherlock features ``SN``, ``ORPHAN``, ``NT``, ``UNCLEAR``, as they are not found to
+be informative. It's unsurprising as we are providing information used by sherlock to create those tags
+(such as the separation from the nearby source or the redshift) so it uses those and not the boolean flags.
+``CV`` is useful to an extent because it's a direct classification (but often the VRA can guess it's galactic).
 
 Day N features
 ~~~~~~~~~~~~~~~
@@ -230,22 +255,23 @@ of the lightcurve.
 
    * - Feature
      - Description
-   * - ``DET_mag_median``
-     - Median magnitude of the detections since phase -5 d
-   * - ``DET_N_today``
-     - Number of detections seen today
    * - ``DET_N_total``
      - Number of detections since phase -5 d
    * - ``NON_mag_median``
      - Median magnitude of the non detections since phase -5 d
-   * - ``NON_N_today``
-     - Number of non detections seen today
    * - ``NON_N_total``
      - Number of non detections since phase -5 d
    * - ``max_mag``
      - Maximum (median) magnitude seen since phase -5 d
    * - ``max_mag_day``
      - Day of the maximum magnitude
+
+The features ``DET_N_today``, ``NON_N_today``, ``DET_mag_median``
+were pruned as they were found to be useless (even in the previous iteration of the model).
+It makes sense that these features are not useful: The number of detections or non detections today
+is just a subset of the total number of detections or non detections.
+As for the median magnitude of the detections, it is unsurprising that it is less informative than the maximum mag.
+On the whole this makes sense.
 
 .. note::
    Technically taking the median of a magnitude is not the proper way to bin

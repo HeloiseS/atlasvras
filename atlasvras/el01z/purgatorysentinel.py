@@ -1,5 +1,7 @@
 from atlasapiclient import client as atlasapiclient
 from atlasapiclient.utils import API_CONFIG_FILE
+
+from atlasvras.st3ph3n.slackbot import get_ids_from_galcand
 from atlasvras.utils.misc import fetch_vra_dataframe
 from slack_sdk import WebClient
 import os
@@ -51,6 +53,13 @@ get_ids_from_eyeball = atlasapiclient.RequestATLASIDsFromWebServerList(api_confi
                                          get_response=True
                                          )
 
+get_ids_from_galcand = atlasapiclient.RequestATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,
+                                            list_name='galcand',
+                                            get_response=True
+                                            )
+
+ids_to_check = get_ids_from_eyeball.atlas_id_list_int + get_ids_from_galcand.atlas_id_list_int
+
 # Use oldest data in ToDo list to set the datethreshold
 todo_list = atlasapiclient.RequestVRAToDoList(api_config_file=API_CONFIG_FILE)
 todo_list.get_response()
@@ -66,7 +75,7 @@ vra_df = fetch_vra_dataframe(datethreshold=DATETHRESHOLD)
 vra_df.set_index('transient_object_id', inplace=True)
 
 # Crop df so only objects in eyeball list are left
-vra_df=vra_df.loc[list(set(get_ids_from_eyeball.atlas_id_list_int).intersection(set(vra_df.index)))]
+vra_df=vra_df.loc[list(set(ids_to_check).intersection(set(vra_df.index)))]
 logging.info("Got the VRA dataframe")
 
 # add a column recording the first timestamp for each object
@@ -110,7 +119,7 @@ logging.info("Sending the report to slack")
 
 client = WebClient(token=SLACK_TOKEN)
 client.chat_postMessage(
-  channel="#vra-dev",
+  channel="#vra-forum",
   text=TEXT_REPORT,
 )#"C0842K2QZS8",
 

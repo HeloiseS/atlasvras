@@ -69,8 +69,8 @@ set_hi_vra_rank_ids = set(vra_df[vra_df['rank'] >= EYEBALL_THRESHOLD].transient_
 set_fasttrack_hi_rank_ids = set_fasttrack_ids.intersection(set_hi_vra_rank_ids)
 
 # set_eyeball_hi_rank = intersection set eyeball and set hi vra rank
-set_eyeball_hi_rank_ids = set_eyeball_ids.intersection(set_hi_vra_rank_ids)
-
+#set_eyeball_hi_rank_ids = set_eyeball_ids.intersection(set_hi_vra_rank_ids)
+set_eyeball_hi_rank_ids = set_hi_vra_rank_ids.intersection(set_eyeball_ids)
 
 # Counting the number of events in the Galactic candidate list
 get_ids_from_galcand = atlasapiclient.RequestATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,
@@ -97,7 +97,7 @@ if len(set_eyeball_hi_rank_ids)>0:
                )
 
 if n_gal_candidates> 0:
-    bot_message += (f":stars: {n_gal_candidates} objects. "
+    bot_message += (f":stars:  {n_gal_candidates} objects. "
                 f":link:"
                 f"<{URL_BASE}followup_quickview/12/| Galactic Candidates>\n\n")
 

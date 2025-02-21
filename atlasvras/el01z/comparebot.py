@@ -127,7 +127,7 @@ comparison_df['timestamp_bot'] = TODAY
 # SAVE TO FILE
 ##############
 # Append this to the file where we save the comparison (in the logs folder)
-comparison_df.to_csv(f'{LOG_PATH}/comparebot_BMOCRABBY.csv',
+comparison_df.to_csv(f'{LOG_PATH}/comparebot_CRABBYDUCK.csv',
                      header=False, mode='a', index=True)
 
 

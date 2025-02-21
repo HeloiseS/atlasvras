@@ -28,6 +28,7 @@ ATLAS Virtual Research Assistants
    :maxdepth: 1
    :caption: For Devs
 
+   History <history>
    Manual <manual>
 
 

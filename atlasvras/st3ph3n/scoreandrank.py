@@ -37,12 +37,6 @@ class ScoreAndRank(object):
         if isinstance(features, list):
             raise VRASaysNo('Features must be a 2D array where axis 0 is the samples and axis 1 is the features')
 
-        # probably want to check the number of columns too
-        if self.model_type == 'day1':
-            assert features.shape[1] == len(day1_lc_feature_columns+context_feature_columns), 'Features for day1 model has wrong length'
-        if self.model_type == 'dayN':
-            assert features.shape[1] == len(dayN_lc_feature_columns+ day1_lc_feature_columns+context_feature_columns), 'Features for dayN model has wrong length'
-
         self.features = features
         self.gal_model = load(gal_model)
         self.real_model = load(real_model)
