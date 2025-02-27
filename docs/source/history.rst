@@ -13,7 +13,6 @@ VRA 1.1 - Upcoming
    -  When ranking the scalar (or fudge factor) has been changed back to 0.5.
    -  Extra galactic eyeballing threshold is now **7** instead of 7.5
    - The Galactic flag is calculated using a scalar of 0.9 instead of 1 and a distance of 0.4 instead of 0.45.
-   - The auto-garbage strategy has been modified again. On day 1 we are back to ``max_rank`` < 1.5. The rest is same is v1.0 (day2: max_rank < 2, day3+ : mean_rank <3).
    - Fix the purgatory bot
 
 VRA 1.0 - 2025-02-03
