@@ -44,7 +44,7 @@
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="The Models" href="training.html" />
+    <link rel="next" title="Models and Metrics" href="training.html" />
     <link rel="prev" title="The Virtual Research Assistant" href="about.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -394,7 +394,8 @@ two to three opinions especially for borderline cases. Here are a few ways this 
 <ol class="loweralpha simple">
 <li><p>Not all eyeballers use the Proper Motion star list. They will just
 put proper motion alerts in the garbage. This will lead to some confusion
-between the <code class="docutils literal notranslate"><span class="pre">garbage</span></code> and <code class="docutils literal notranslate"><span class="pre">pm</span></code> alerts.</p></li>
+between the <code class="docutils literal notranslate"><span class="pre">garbage</span></code> and <code class="docutils literal notranslate"><span class="pre">pm</span></code> alerts. This is not a big deal since <code class="docutils literal notranslate"><span class="pre">garbage</span></code> is
+not longer used as a “NOT GALACTIC” label and is ommited from the galactic classifier training set.</p></li>
 <li><p>Most eyeballers will put galactic events in the <code class="docutils literal notranslate"><span class="pre">good</span></code> list if another team
 has mistakenly added those to the TNS. This will lead to some confusion
 between the <code class="docutils literal notranslate"><span class="pre">galactic</span></code> and <code class="docutils literal notranslate"><span class="pre">good</span></code> alerts.</p></li>
@@ -409,19 +410,7 @@ which will lead to further confusion between the <code class="docutils literal n
 </ol>
 </div></blockquote>
 </li>
-<li><p>In the additional data brought by the <code class="docutils literal notranslate"><span class="pre">Duck</span></code> data set (from the 13th August 2025 onwards)
-the VRA was active and auto-garbaging data. This means that a very large fraction of the data recorded
-from that data didn’t receive human eyeballing and was not split into <code class="docutils literal notranslate"><span class="pre">PM</span></code> or <code class="docutils literal notranslate"><span class="pre">garbage</span></code>.
-To avoid mass re-eyeballing I used the <code class="docutils literal notranslate"><span class="pre">Crabby</span></code>-trained VRA to predict <code class="docutils literal notranslate"><span class="pre">p_real</span></code> and <code class="docutils literal notranslate"><span class="pre">p_gal</span></code> for the new data
-and I assumed the following labels:
-a.  <code class="docutils literal notranslate"><span class="pre">p_real&lt;0.2</span></code>, <code class="docutils literal notranslate"><span class="pre">p_gal&lt;0.1</span></code> = <code class="docutils literal notranslate"><span class="pre">Garbage</span></code>
-b. <code class="docutils literal notranslate"><span class="pre">p_real&lt;0.2</span></code>, <code class="docutils literal notranslate"><span class="pre">p_gal&gt;0.9</span></code> = <code class="docutils literal notranslate"><span class="pre">PM</span></code></p></li>
 </ol>
-<div class="admonition attention">
-<p class="admonition-title">Attention</p>
-<p>The new iteration of the VRA works really well despite some of the grabage and PM being labelled by the previous model.
-I am considering trying to use auto-garbage just as a preal == 0 label and not try to use PM and garbage to train the galactic classifier.</p>
-</div>
 </section>
 <section id="training-and-validation-sets">
 <h2>Training and Validation sets<a class="headerlink" href="#training-and-validation-sets" title="Link to this heading">#</a></h2>
@@ -472,9 +461,7 @@ so I balanced based on the number of <code class="docutils literal notranslate">
 did not affect the model’s performance in early tests (but we did
 try training on the unbalanced training set and it was a disaster).</p>
 <p>The training set is not fully balanced because I didn’t want to downsample <code class="docutils literal notranslate"><span class="pre">Good</span></code> objects
-in the additional data available in <code class="docutils literal notranslate"><span class="pre">Duck</span></code>.
-Also note the training and validation data sets include some guess labels but the
-reported numbers for the whole data set do not.</p>
+in the additional data available in <code class="docutils literal notranslate"><span class="pre">Duck</span></code>.</p>
 </section>
 </section>
 <section id="the-features">
@@ -518,43 +505,47 @@ They currently use the following features:</p>
 <td><p><code class="docutils literal notranslate"><span class="pre">NON_Nsince_min5d</span></code></p></td>
 <td><p>Number of non detections</p></td>
 </tr>
-<tr class="row-odd"><td><p>Positional scatter recent history (last 5 days)</p></td>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DET_mag_median_min5d</span></code></p></td>
+<td><p>Median magnitude of the detections between phase -5 d and day 1</p></td>
+</tr>
+<tr class="row-even"><td><p>Positional scatter recent history (last 5 days)</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">log10_std_ra_min5d</span></code></p></td>
 <td><p>Log10 of the standard deviation of the RA</p></td>
 </tr>
-<tr class="row-even"><td></td>
+<tr class="row-odd"><td></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">log10_std_dec_min5d</span></code></p></td>
 <td><p>Log10 of the standard deviation of the Dec</p></td>
 </tr>
-<tr class="row-odd"><td><p>Contextual Information</p></td>
+<tr class="row-even"><td><p>Contextual Information</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">ra</span></code></p></td>
 <td><p>Right Ascension</p></td>
 </tr>
-<tr class="row-even"><td></td>
+<tr class="row-odd"><td></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">dec</span></code></p></td>
 <td><p>Declination</p></td>
 </tr>
-<tr class="row-odd"><td></td>
+<tr class="row-even"><td></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">rb_pix</span></code></p></td>
 <td><p>Real/bogus score from the CNN</p></td>
 </tr>
-<tr class="row-even"><td></td>
+<tr class="row-odd"><td></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">z</span></code></p></td>
 <td><p>Spectroscopic redshift</p></td>
 </tr>
-<tr class="row-odd"><td></td>
+<tr class="row-even"><td></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">photoz</span></code></p></td>
 <td><p>Photometric redshift</p></td>
 </tr>
-<tr class="row-even"><td></td>
+<tr class="row-odd"><td></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">ebv_sfd</span></code></p></td>
 <td><p>E(B-V) (extinction in magnitudes)</p></td>
 </tr>
-<tr class="row-odd"><td></td>
+<tr class="row-even"><td></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">log10_sep_arcsec</span></code></p></td>
 <td><p>Log10 of the separation in arcsec from a nearby source</p></td>
 </tr>
-<tr class="row-even"><td><p>Boolean flags for the following sherlock feature:</p></td>
+<tr class="row-odd"><td><p>Boolean flags for the following sherlock feature:</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">CV</span></code></p></td>
 <td><p>Known Cataclysmic Variable</p></td>
 </tr>
@@ -633,10 +624,9 @@ photometry to get more useful features.
 The relation between detections and non detections changes with weather and
 the phase of the moon. I tried to capture that by having features that count
 both and measure both. But this is a loosing battle.</p>
-<p><strong>We need forced photometry</strong> to do a decent job of the lightcurve
+<p>We need forced photometry to do a decent job of the lightcurve
 features. The challenge is that forced photometry is expensive to calculate
-so we don’t want to do that on everything in the stream.
-<strong>[NOTE: in Lasair we have FP for ZTF, will we get that for LSST?]</strong></p>
+so we don’t want to do that on everything in the stream.</p>
 </section>
 </section>
 <section id="feature-importance">
@@ -699,14 +689,6 @@ directly allows it to infer whether the source is likely to be a SN (they’re u
 offset, whereas stars and NT aren’t).</p>
 <p>Finally note that <code class="docutils literal notranslate"><span class="pre">z</span></code> and <code class="docutils literal notranslate"><span class="pre">photoz</span></code> are now showing some importance,
 as we expected.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p><em>“Why don’t you get rid of unimportant features or use different features for the</em>
-<em>galactic and real models?”</em> Because the models we use are robust to “useless”
-features and it’s easier in prod to calculate all the features at once and then parse
-them to the two models. Eventually we might prune the features that are useless
-for both.</p>
-</div>
 </section>
 <section id="id1">
 <h2>day N features<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
@@ -748,7 +730,7 @@ probably beating a dead horse. It was worth a go.</p>
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">The Models</p>
+        <p class="prev-next-title">Models and Metrics</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

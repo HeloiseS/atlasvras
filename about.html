@@ -329,7 +329,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#garbaging">Garbaging</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-paper">The Paper</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources">Resources</a></li>
 </ul>
             </nav>
         </div>
@@ -343,8 +343,6 @@ document.write(`
                   
   <section id="the-virtual-research-assistant">
 <h1>The Virtual Research Assistant<a class="headerlink" href="#the-virtual-research-assistant" title="Link to this heading">#</a></h1>
-<p><em>This page is a high level overview the ATLAS VRA: why it exists and what it does</em>
-<em>For more details on the data used to train it and the types of models used you can the Data and Models pages</em></p>
 <section id="data-journey-from-telescope-to-transient-name-server">
 <h2>Data Journey: From Telescope to Transient Name Server<a class="headerlink" href="#data-journey-from-telescope-to-transient-name-server" title="Link to this heading">#</a></h2>
 <div class="admonition seealso">
@@ -437,7 +435,7 @@ To calculate the ranks we therefore <strong>calculate the distance to that (1,0)
 Then:</p>
 <ul class="simple">
 <li><dl class="simple">
-<dt>I scale the galactic axis by 0.4 to separate the garbage from the real alerts more effectively.</dt><dd><p>It also ensures our eyeballing policy (see below) encompasses the real=1, galactic=1 corner.</p>
+<dt>I scale the galactic axis by 0.5 to separate the garbage from the real alerts more effectively.</dt><dd><p>It also ensures our eyeballing policy (see below) encompasses the real=1, galactic=1 corner.</p>
 </dd>
 </dl>
 </li>
@@ -451,10 +449,6 @@ Then:</p>
 <p class="admonition-title">Important</p>
 <p><strong>TL;DR</strong>: The closer to the Real-ExtraGalactic corner (1,0) - the higher the rank.
 A <strong>rank = 10</strong> is a special case were a TNS crossmatch has been found.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>In the previous version of the VRA the scaling factor was 0.5. This means the new models will give you a few more alerts to eyeball with more contamination down in the rank 4-6. But we’re also less likely to miss real galactic alerts.</p>
 </div>
 </section>
 <section id="policies">
@@ -471,8 +465,8 @@ A <strong>rank = 10</strong> is a special case were a TNS crossmatch has been fo
 <section id="eyeballing">
 <h3>Eyeballing<a class="headerlink" href="#eyeballing" title="Link to this heading">#</a></h3>
 <p>The current eyeballing policy is to ask human experts to check everything
-with a <code class="docutils literal notranslate"><span class="pre">rank</span> <span class="pre">&gt;7.5</span></code> (as an extra-galactic transient candidate)  and everything that
-falls within a distance of 0.45 of the coordinate (1,1) as a galactic candidate.
+with a <code class="docutils literal notranslate"><span class="pre">rank</span> <span class="pre">&gt;7</span></code> (as an extra-galactic transient candidate)  and everything that
+falls within a distance of 0.40 (galactic axis scaled by 0.9) of the coordinate (1,1) as a galactic candidate.
 You can see below where these strategies fall in score space with respect the
 the distribution of our alerts in our training and validation set.</p>
 <figure class="align-center" id="id4">
@@ -491,7 +485,7 @@ the distribution of our alerts in our training and validation set.</p>
 <h3>Garbaging<a class="headerlink" href="#garbaging" title="Link to this heading">#</a></h3>
 <p id="id1">There are currently three “garbage collection” policies in place:</p>
 <ul class="simple">
-<li><p>On <strong>entering the eyeball list</strong> with <code class="docutils literal notranslate"><span class="pre">rank&lt;1.0</span></code></p></li>
+<li><p>On <strong>entering the eyeball list</strong> with <code class="docutils literal notranslate"><span class="pre">rank&lt;1.5</span></code></p></li>
 <li><p>On a <strong>second visit</strong>, <code class="docutils literal notranslate"><span class="pre">max(rank)&lt;2.0</span></code>.</p></li>
 <li><p>On the <strong>third and subsequent visits</strong>, <code class="docutils literal notranslate"><span class="pre">mean(rank)&lt;3</span></code>.</p></li>
 </ul>
@@ -504,9 +498,13 @@ alerts that are left in purgatory after they have fallen out of <code class="doc
 There are few of those and they are sent to the slack for eyeballing.</p>
 </section>
 </section>
-<section id="the-paper">
-<h2>The Paper<a class="headerlink" href="#the-paper" title="Link to this heading">#</a></h2>
-<p><strong>for more info see the paper [out soon]</strong></p>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://zenodo.org/records/14944209">VRA Technical Manual</a></p></li>
+<li><p>Data Release [Upcoming]</p></li>
+<li><p>Paper [Upcoming]</p></li>
+</ul>
 </section>
 </section>
 
@@ -564,7 +562,7 @@ There are few of those and they are sent to the slack for eyeballing.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#garbaging">Garbaging</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-paper">The Paper</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources">Resources</a></li>
 </ul>
   </nav></div>
 

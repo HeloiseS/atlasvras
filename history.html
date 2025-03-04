@@ -324,14 +324,23 @@ document.write(`
                   
   <section id="change-history">
 <h1>Change History<a class="headerlink" href="#change-history" title="Link to this heading">#</a></h1>
-<p>Note these changes related to eyeballing strategy rather than focusing on the GH cide since
+<p>Note these changes related to eyeballing strategy rather than focusing on the GH site since
 the history of the latter is recorded in the commit history.</p>
 <dl class="simple">
-<dt>VRA 1.1 - Upcoming</dt><dd><ul class="simple">
+<dt>VRA 1.1 - 2025-03-06 - Duck</dt><dd><ul class="simple">
 <li><p>day N feature <code class="docutils literal notranslate"><span class="pre">DET_mag_median</span></code> added back in. Marginal gains but also consistent with keeping <code class="docutils literal notranslate"><span class="pre">NON_mag_median</span></code> and removing both is worse.</p></li>
+<li><p>day 1 and day N feature <code class="docutils literal notranslate"><span class="pre">DET_mag_median_min5d</span></code> added in.</p></li>
+<li><p>Although the clean data we use is the same, the training and validation sets have changed from Duck (Crabby data set is unchanged all changes below apply to the additional data gathered between august and january).</p></li>
+<li><p>The training set no longer includes “guessed” labels.</p></li>
+<li><p>The training set is balanced with 1500 auto-garbage and 500 garbage examples (for a total of 2k additional bogus examples). That subdivision reflects the fraction of auto-garbage and garbage in our additional data.</p></li>
+<li><p>When training the galactic classifier, the garbage and auto-garbage are no longer used during training. Instead only the PM, Galactic and Good alerts are used.</p></li>
+<li><p>When ranking the scalar (or fudge factor) has been changed back to 0.5.</p></li>
+<li><p>Extra galactic eyeballing threshold is now <strong>7</strong> instead of 7.5</p></li>
+<li><p>The Galactic flag is calculated using a scalar of 0.9 instead of 1 and a distance of 0.4 instead of 0.45.</p></li>
+<li><p>Fix the purgatory bot</p></li>
 </ul>
 </dd>
-<dt>VRA 1.0 - 2025-02-03</dt><dd><ul class="simple">
+<dt>VRA 1.0 - 2025-02-03 - Duck</dt><dd><ul class="simple">
 <li><p>VRA real and galactic models trained on the Duck data-set. Ranges from 27-03-2024 to 22-01-2025</p></li>
 <li><p>The following day1 features were pruned: <cite>SN`</cite>, <code class="docutils literal notranslate"><span class="pre">ORPHAN</span></code>, <code class="docutils literal notranslate"><span class="pre">NT</span></code>, <code class="docutils literal notranslate"><span class="pre">UNCLEAR</span></code></p></li>
 <li><p>The following dayN features were pruned: <code class="docutils literal notranslate"><span class="pre">SN</span></code>, <code class="docutils literal notranslate"><span class="pre">ORPHAN</span></code>, <code class="docutils literal notranslate"><span class="pre">NT</span></code>, <code class="docutils literal notranslate"><span class="pre">UNCLEAR</span></code>, <code class="docutils literal notranslate"><span class="pre">DET_N_today</span></code>, <code class="docutils literal notranslate"><span class="pre">NON_N_today</span></code>, <code class="docutils literal notranslate"><span class="pre">DET_mag_median</span></code></p></li>
@@ -346,9 +355,14 @@ the history of the latter is recorded in the commit history.</p>
 <li><p>TNS cross-matching to garbage list done weekly on Friday mornings</p></li>
 </ul>
 </dd>
-<dt>VRA beta0.1  - 2024-12-06</dt><dd><ul class="simple">
+<dt>VRA beta0.1  - 2024-12-06 - Crabby</dt><dd><ul class="simple">
 <li><p>VRA real and galactic models trained on the Crabby data-set. Ranges from 27-03-2024 to 13-08-2024</p></li>
 <li><p>Fudge-factor changed to 0.4 (from 0.5)</p></li>
+<li><p>added new sherlock features: z, photoz, log10 sep arsec, ebv sfd</p></li>
+</ul>
+</dd>
+<dt>VRA alpha0.1 - 2024-13-08 - BMO</dt><dd><ul class="simple">
+<li><p>First VRA in production</p></li>
 </ul>
 </dd>
 </dl>
