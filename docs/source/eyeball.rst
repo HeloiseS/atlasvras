@@ -61,7 +61,7 @@ Tips for eyeballer 1
 ----------------------
 
 1. **Start with the Fast Track list**. Also note that you need to eyeball **all** ranks (even the lower ones) in the Fast Track list.
-2. Go back to slack and **click on the eyeball link** provided by ``st3ph3n``. This will take you to the curated eyeball list (ordered and cropped down to rank 4).
+2. Go back to slack and **click on the eyeball link** provided by ``st3ph3n``. This will take you to the curated eyeball list (ordered and cropped down to the eyeballing threshold).
 3. Scroll down to the first alerts that or **not** rank 10 and eyeball these. They are the most promising which haven't yet been pinched by another team.
 4. Finally clean up the rank 10 alerts.
 5. The ATLAS ingest cycle is faster than it used to be so you may get alerts every 30 minutes when there is not a lot of data being ingested.
@@ -78,9 +78,6 @@ Rota
    * - Date
      - Eyeballer 1
      - Eyeballer 2
-   * - 24/02/2024
-     - Alex C
-     - Heloise
    * - 03/03/2024
      - Jack
      - Alex C

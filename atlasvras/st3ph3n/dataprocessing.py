@@ -31,7 +31,7 @@ context_feature_columns = ['ra',
                            'NT',
                            'ORPHAN',
                            'CV',
-                           'UNCLEAR'
+                           'UNCLEAR',
                            ]
 
 day1_lc_feature_columns = ['Nnondet_std',
@@ -40,7 +40,9 @@ day1_lc_feature_columns = ['Nnondet_std',
                                              'DET_Nsince_min5d',
                                              'NON_Nsince_min5d',
                                              'log10_std_ra_min5d',
-                                             'log10_std_dec_min5d']
+                                             'log10_std_dec_min5d',
+                                             'DET_mag_median_min5d',
+                           ]
 
 dayN_lc_feature_columns = ['dayN',
                                'DET_mag_median',
@@ -50,7 +52,7 @@ dayN_lc_feature_columns = ['dayN',
                                'NON_N_today',
                                'NON_N_total',
                              'max_mag',
-                             'max_mag_day'
+                             'max_mag_day',
                            ]
 
 # ##################################################### #
@@ -185,7 +187,8 @@ def make_day1_lcfeatures(lcpipes):
                                                                                                       lcpipes.history.dayN >= -5].det.sum(),
                         # N non dets since day -5 (take total count and subtract N dets)
                         np.log10(lcpipes.history[lcpipes.history.dayN >= -5].ra.std()),
-                        np.log10(lcpipes.history[lcpipes.history.dayN >= -5].dec.std())
+                        np.log10(lcpipes.history[lcpipes.history.dayN >= -5].dec.std()),
+                   lcpipes.history[(lcpipes.history.dayN >= -5) & (lcpipes.history.det == True)].mag.median(),
                         ]
     return lc_features
 

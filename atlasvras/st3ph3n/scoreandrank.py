@@ -10,7 +10,7 @@ MODELS_PATH = pkg_resources.resource_filename('atlasvras', 'st3ph3n/models')
 
 class ScoreAndRank(object):
 
-    def __init__(self, features, model_type, model_name='crabby'):
+    def __init__(self, features, model_type, model_name='duck'):
         """
         Pipes to calculate the scores and ranks (mostly used in production)
 
@@ -48,7 +48,7 @@ class ScoreAndRank(object):
         self.real_scores = self.real_model.predict_proba(self.features)
         self.gal_scores = self.gal_model.predict_proba(self.features)
 
-    def calculate_rank(self, fudge_factor=0.4, max_score=10):
+    def calculate_rank(self, fudge_factor=0.5, max_score=10):
         """
         Calculate the (OxQUB) rank from the real and galactic scores. This is currently just the distance
         to the (1,0) coordinate (Real and Not Galactic) in our Score Space.
@@ -63,7 +63,7 @@ class ScoreAndRank(object):
         self.ranks = (max_distance - raw_ranks) * max_score / max_distance
 
     @property
-    def is_gal_cand(self, fudge_factor=1, distance=0.45):
+    def is_gal_cand(self, fudge_factor=0.9, distance=0.4):
         # TODO: add a test
         """
         If distance to coordinate (1,1) is <= 0.45 then returns True

@@ -5,9 +5,7 @@ The Virtual Research Assistant
 .. _Sherlock: https://lasair.readthedocs.io/en/develop/core_functions/sherlock.html
 .. _Weston et al. 2024: https://ui.adsabs.harvard.edu/abs/2024RASTI...3..385W/abstract
 .. _scikit-learn docs: https://scikit-learn.org/stable/modules/ensemble.html#histogram-based-gradient-boosting
-
-*This page is a high level overview the ATLAS VRA: why it exists and what it does*
-*For more details on the data used to train it and the types of models used you can the Data and Models pages*
+.. _VRA Technical Manual: https://zenodo.org/records/14944209
 
 Data Journey: From Telescope to Transient Name Server
 ------------------------------------------------------------
@@ -105,7 +103,7 @@ Hypothetically that is the alert we care about the most.
 To calculate the ranks we therefore **calculate the distance to that (1,0) point**.
 Then:
 
-- I scale the galactic axis by 0.4 to separate the garbage from the real alerts more effectively.
+- I scale the galactic axis by 0.5 to separate the garbage from the real alerts more effectively.
    It also ensures our eyeballing policy (see below) encompasses the real=1, galactic=1 corner.
 - To get a score between 0 and 10 you also have to invert the distance (the smaller the distance the higher the score),
    normalise by the diagonal of the plot and multiply by 10.
@@ -114,9 +112,6 @@ Then:
 .. important::
    **TL;DR**: The closer to the Real-ExtraGalactic corner (1,0) - the higher the rank.
    A **rank = 10** is a special case were a TNS crossmatch has been found.
-
-.. warning::
-   In the previous version of the VRA the scaling factor was 0.5. This means the new models will give you a few more alerts to eyeball with more contamination down in the rank 4-6. But we're also less likely to miss real galactic alerts.
 
 
 Policies
@@ -133,8 +128,8 @@ Eyeballing
 ~~~~~~~~~~~
 
 The current eyeballing policy is to ask human experts to check everything
-with a ``rank >7.5`` (as an extra-galactic transient candidate)  and everything that
-falls within a distance of 0.45 of the coordinate (1,1) as a galactic candidate.
+with a ``rank >7`` (as an extra-galactic transient candidate)  and everything that
+falls within a distance of 0.40 (galactic axis scaled by 0.9) of the coordinate (1,1) as a galactic candidate.
 You can see below where these strategies fall in score space with respect the
 the distribution of our alerts in our training and validation set.
 
@@ -153,7 +148,7 @@ Garbaging
 
 There are currently three "garbage collection" policies in place:
 
-* On **entering the eyeball list** with ``rank<1.0``
+* On **entering the eyeball list** with ``rank<1.5``
 * On a **second visit**, ``max(rank)<2.0``.
 * On the **third and subsequent visits**, ``mean(rank)<3``.
 
@@ -165,7 +160,8 @@ These are now being handled by ``el01z``  (see the Monitoring section) which has
 alerts that are left in purgatory after they have fallen out of ``st3ph3n`` 's training window.
 There are few of those and they are sent to the slack for eyeballing.
 
-The Paper
+Resources
 ---------------------------------------
-**for more info see the paper [out soon]**
-
+* `VRA Technical Manual`_
+* Data Release [Upcoming]
+* Paper [Upcoming]
