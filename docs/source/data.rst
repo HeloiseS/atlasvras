@@ -48,7 +48,8 @@ Some Caveats
 
    a. Not all eyeballers use the Proper Motion star list. They will just
       put proper motion alerts in the garbage. This will lead to some confusion
-      between the ``garbage`` and ``pm`` alerts.
+      between the ``garbage`` and ``pm`` alerts. This is not a big deal since ``garbage`` is
+      not longer used as a "NOT GALACTIC" label and is ommited from the galactic classifier training set.
 
    b. Most eyeballers will put galactic events in the ``good`` list if another team
       has mistakenly added those to the TNS. This will lead to some confusion
@@ -59,18 +60,6 @@ Some Caveats
    which will lead to further confusion between the ``galactic`` and ``good`` alerts:
     a. Duplicate supernovae (As of 2025-01-30 we have a duplicate list so they will no longer be in the attic; this will not affect future datasets bu it affects all of Duck)
     b. Suspected AGN activity
-
-3. In the additional data brought by the ``Duck`` data set (from the 13th August 2025 onwards)
-   the VRA was active and auto-garbaging data. This means that a very large fraction of the data recorded
-   from that data didn't receive human eyeballing and was not split into ``PM`` or ``garbage``.
-   To avoid mass re-eyeballing I used the ``Crabby``-trained VRA to predict ``p_real`` and ``p_gal`` for the new data
-   and I assumed the following labels:
-   a.  ``p_real<0.2``, ``p_gal<0.1`` = ``Garbage``
-   b. ``p_real<0.2``, ``p_gal>0.9`` = ``PM``
-
-.. attention::
-   The new iteration of the VRA works really well despite some of the grabage and PM being labelled by the previous model.
-   I am considering trying to use auto-garbage just as a preal == 0 label and not try to use PM and garbage to train the galactic classifier.
 
 Training and Validation sets
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -130,7 +119,6 @@ try training on the unbalanced training set and it was a disaster).
 
 
 
-
 .. list-table:: Numbers
    :widths: 25 30 30 30
    :header-rows: 1
@@ -139,28 +127,26 @@ try training on the unbalanced training set and it was a disaster).
      - Training
      - Validation
    * - Auto-Garbage
-     - N/A
-     - 3,590
+     - 1,600
+     - 3,571
    * - Garbage
-     - 4,447
-     - 5,545
+     - 2,921
+     - 5,380
    * - PM
-     - 3,464
-     - 894
+     - 2,736
+     -  905
    * - Galactic
-     - 2,887
-     - 467
+     - 2,899
+     - 457
    * - Good
-     - 4,234
-     - 759
+     - 4,249
+     - 745
    * - **Total**
-     - **15,032**
-     - **11,255**
+     - **14,405**
+     - **11,058**
 
 The training set is not fully balanced because I didn't want to downsample ``Good`` objects
 in the additional data available in ``Duck``.
-Also note the training and validation data sets include some guess labels but the
-reported numbers for the whole data set do not.
 
 The Features
 ------------------
@@ -194,6 +180,9 @@ They currently use the following features:
    * -
      - ``NON_Nsince_min5d``
      - Number of non detections
+   * -
+     - ``DET_mag_median_min5d``
+     - Median magnitude of the detections between phase -5 d and day 1
    * - Positional scatter recent history (last 5 days)
      - ``log10_std_ra_min5d``
      - Log10 of the standard deviation of the RA
@@ -285,10 +274,9 @@ The relation between detections and non detections changes with weather and
 the phase of the moon. I tried to capture that by having features that count
 both and measure both. But this is a loosing battle.
 
-**We need forced photometry** to do a decent job of the lightcurve
+We need forced photometry to do a decent job of the lightcurve
 features. The challenge is that forced photometry is expensive to calculate
 so we don't want to do that on everything in the stream.
-**[NOTE: in Lasair we have FP for ZTF, will we get that for LSST?]**
 
 Feature Importance
 ---------------------------
@@ -358,13 +346,6 @@ offset, whereas stars and NT aren't).
 
 Finally note that ``z`` and ``photoz`` are now showing some importance,
 as we expected.
-
-.. important::
-   *"Why don't you get rid of unimportant features or use different features for the*
-   *galactic and real models?"* Because the models we use are robust to "useless"
-   features and it's easier in prod to calculate all the features at once and then parse
-   them to the two models. Eventually we might prune the features that are useless
-   for both.
 
 
 day N features
