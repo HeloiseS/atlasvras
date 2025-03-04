@@ -3,7 +3,7 @@ Change History
 Note these changes related to eyeballing strategy rather than focusing on the GH site since
 the history of the latter is recorded in the commit history.
 
-VRA 1.1 - Upcoming - Duck
+VRA 1.1 - 2025-03-06 - Duck
    - day N feature ``DET_mag_median`` added back in. Marginal gains but also consistent with keeping ``NON_mag_median`` and removing both is worse.
    - day 1 and day N feature ``DET_mag_median_min5d`` added in.
    - Although the clean data we use is the same, the training and validation sets have changed from Duck (Crabby data set is unchanged all changes below apply to the additional data gathered between august and january).
