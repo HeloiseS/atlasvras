@@ -1,5 +1,6 @@
-
-<img src="./docs/source/_static/logo.png?raw=true" width="120px" class="center"/>
+<p align="center">
+<img src="./docs/source/_static/logo.png?raw=true" width="120px" />
+</p>
 
 # ATLAS Virtual Research Assistant (VRAs)
 [![DOI](https://zenodo.org/badge/888466484.svg)](https://doi.org/10.5281/zenodo.14363396)
