@@ -1,3 +1,4 @@
+![alt text](https://github.com/heloises/atlasvras/blob/main/docs/source/_static/logo.png?raw=true)
 # ATLAS Virtual Research Assistants (VRAs)
 [![DOI](https://zenodo.org/badge/888466484.svg)](https://doi.org/10.5281/zenodo.14363396)
 
