@@ -328,7 +328,12 @@ def make_dayN_lcfeatures(lcpipes):
 
     """
     assert lcpipes.phase_bounds[0] == -5, 'The lower phase bound must be -5 in these models'
-    assert lcpipes.phase_bounds[1] == 15, 'The upper phase bound must be 15 in these models'
+    # needed to change assert statement to a warning but now I'm getting a weird error
+    # executing.executing.NotOneValueFound: Expected one value, found 0
+    # leaving it out for now. Do we actually need this check??
+    #if lcpipes.phase_bounds[1] != 15:
+    #   raise VRAWarning('The upper phase is usually 15 - ARE YOU SURE YOU KNOW WHAT YOU ARE DOING')
+    #assert lcpipes.phase_bounds[1] == 15, 'The upper phase bound must be 15 in these models'
     assert 'dayN' in lcpipes.detections.columns, 'The detections dataframe must have a dayN column. Run .add_dayN_column()'
 
     ## Median mag dataframes
@@ -560,9 +565,9 @@ class FeaturesSingleSource(object):
         self.contextual_features = make_contextual_features(self.json_data)
         self.day1_features = self.day1_lcfeatures + self.contextual_features
 
-    def make_dayN_features(self):
+    def make_dayN_features(self, phase_bounds=(-5, 15)):
         self.make_day1_features()
-        self.lightcurve_pipes_dayN = LightCurvePipes(self.json_data, phase_bounds=(-5, 15))
+        self.lightcurve_pipes_dayN = LightCurvePipes(self.json_data, phase_bounds=phase_bounds)
         self.lightcurve_pipes_dayN.add_dayN_column()
         self.dayN_lcfeatures = make_dayN_lcfeatures(self.lightcurve_pipes_dayN)
         self.dayN_features = self.dayN_lcfeatures + self.day1_features
