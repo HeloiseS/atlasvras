@@ -1,7 +1,7 @@
 
-<img src="./docs/source/_static/logo.png?raw=true" width="100px" />
+<img src="./docs/source/_static/logo.png?raw=true" width="120px" class="center"/>
 
-# ATLAS Virtual Research Assistants (VRAs)
+# ATLAS Virtual Research Assistant (VRAs)
 [![DOI](https://zenodo.org/badge/888466484.svg)](https://doi.org/10.5281/zenodo.14363396)
 
 This repository contains data processing and models that are used by 
@@ -19,11 +19,13 @@ remove the alerts most likely to be bogus.
 For some quick information you can check the [VRA website](https://heloises.github.io/atlasvras/about.html).
 A paper is coming soon and will be linked here. 
 
-### If you want the gnarly details
+## If you want the gnarly details
 
 **Technical Manual** 
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14983098.svg)](https://doi.org/10.5281/zenodo.14983098)
 
 **Code and Data Release for VRA v1**
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14906192.svg)](https://doi.org/10.5281/zenodo.14906192)
 
