@@ -78,12 +78,54 @@ Rota
    * - Date
      - Eyeballer 1
      - Eyeballer 2
-   * - 03/03/2024
+   * - 24/03/2025
+     - Thomas
+     - Fiore
+   * - 31/03/2025
+     - Julian
+     - Thomas
+   * - 07/04/2025
+     - Dylan
+     - Julian
+   * - 14/04/2025
+     - Ken
+     - Dylan
+   * - 21/04/2025
+     - Aysha
+     - Ken
+   * - 28/04/2025
+     - Paige
+     - Aysha
+   * - 05/05/2025
+     - Josh
+     - Paige
+   * - 12/05/2025
+     - Michael
+     - Josh
+   * - 19/05/2025
+     - Lauren
+     - Michael
+   * - 26/05/2025
+     - Dave
+     - Lauren
+   * - 02/06/2025
+     - Charlotte
+     - Dave
+   * - 09/06/2025
+     - Xinyue
+     - Charlotte
+   * - 16/06/2025
+     - Heloise
+     - Xinyue
+   * - 23/06/2025
+     - Alex C
+     - Heloise
+   * - 30/06/2025
      - Jack
      - Alex C
-   * - 10/03/2024
+   * - 07/07/2025
      - Shubham
      - Jack
-   * - 17/03/2024
+   * - 14/07/2025
      - Fiore
      - Shubham
