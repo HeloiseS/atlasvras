@@ -18,3 +18,8 @@ class VRAWarning(Warning):
     """
     Generic VRAWarning
     """
+
+class LightcurveTimeoutError(Exception):
+    def __init__(self, data_url):
+        super().__init__(f"Data not available after timeout. Check manually at: {data_url}")
+        self.data_url = data_url
