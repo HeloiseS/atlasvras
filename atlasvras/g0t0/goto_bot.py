@@ -142,7 +142,11 @@ def handle_mention(event, say):
     channel = event["channel"]
 
     if "help" in text.lower():
-        say(HELP_MESSAGE)
+        app.client.chat_postEphemeral(
+            channel=event["channel"],
+            user=event["user"],
+            text=HELP_MESSAGE
+        )
         return
 
     try:
