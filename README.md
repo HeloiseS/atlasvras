@@ -20,6 +20,32 @@ remove the alerts most likely to be bogus.
 For some quick information you can check the [VRA website](https://heloises.github.io/atlasvras/about.html).
 A paper is coming soon and will be linked here. 
 
+## G0T0 Slack Bot
+
+A Slack-integrated interface to query the GOTO telescope lightcurve archive. Built for transient astrophysics workflows.
+
+---
+
+### 🚀 Features
+
+- Query GOTO forced photometry lightcurve data using Slack messages or slash commands
+- Retrieve results as a CSV file, optionally with a lightcurve plot
+- Works in public channels, private groups, and direct messages with the bot
+- Validates input and handles asynchronous data availability via polling
+
+---
+
+### 💬 Usage
+(if in doubt, summon the bot and type help in the message)
+#### Directly in the @G0T0 app in slack
+`target SN2025abc RA=123.45 Dec=-45.6 date_from=2025-01-01 plot=true`
+
+#### `@G0T0` Mention (in a channel)
+`@G0T0 target SN2025abc RA=123.45 Dec=-45.6 date_from=2025-01-01 plot=true`
+
+#### `/goto` From anywhere including DMs
+`/goto target=SN2025abc RA=123.45 Dec=-45.6 date_from=2025-01-01 plot=true`
+
 ## If you want the gnarly details
 
 **Technical Manual** 

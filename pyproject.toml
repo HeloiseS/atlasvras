@@ -16,20 +16,25 @@ keywords = ["astronomy", "ATLAS VRAs"]
 license = {text = "BSD-3-Clause"}
 dependencies = [
     "numpy",
-    "pytest",
-    "requests",
-    "tqdm",
-    "pyyaml",
-    "joblib",
-    "astropy",
-    "matplotlib",
-    "atlasapiclient",
     "pandas",
-    "dustmaps",
-    "slack_sdk",
+    "matplotlib",
+    "astropy",
+    "requests",
+    "pyyaml",
     "tqdm",
+    "joblib",
     "scikit-learn",
-    'importlib-metadata; python_version>="3.8"',
+    "dustmaps",
+    "atlasapiclient",
+
+    # Slack bot
+    "slack_sdk",
+    "slack_bolt",
+
+    # Testing
+    "pytest",
+    "pytest-cov",
+    'importlib-metadata; python_version>="3.8"'
 ]
 
 # See some of the stuff I have in the hoki .toml file 
