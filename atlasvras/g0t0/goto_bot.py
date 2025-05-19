@@ -18,6 +18,8 @@ import tempfile
 import time
 from atlasvras.utils.exceptions import LightcurveTimeoutError
 from atlasvras.g0t0.parser import  parse_target_command
+import matplotlib
+matplotlib.use("Agg")
 
 # LOAD CONFIG
 BOT_CONFIG_FILE = pkg_resources.resource_filename('atlasvras', 'data/bot_config_MINE.yaml')
