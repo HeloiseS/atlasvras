@@ -1,6 +1,9 @@
 import pytest
 from unittest.mock import patch, MagicMock
 from atlasvras.g0t0 import goto_bot
+from atlasvras.g0t0.goto_bot import make_lightcurve_plot
+import os
+import pandas as pd
 
 @patch("atlasvras.g0t0.goto_bot.fetch_lightcurve_data")
 @patch("atlasvras.g0t0.goto_bot.make_lightcurve_plot")
@@ -34,7 +37,8 @@ def test_handle_mention_success(mock_upload, mock_plot, mock_fetch):
 
 
 
-def test_handle_help_message():
+@patch("atlasvras.g0t0.goto_bot.app.client.chat_postEphemeral")
+def test_handle_help_message(mock_ephemeral):
     fake_say = MagicMock()
     event = {
         "text": "@G0T0 help",
@@ -44,5 +48,29 @@ def test_handle_help_message():
 
     goto_bot.handle_mention(event, say=fake_say)
 
-    fake_say.assert_called_once()
-    assert "GOTO Bot Help" in fake_say.call_args[0][0]
+    # Check that the ephemeral message was sent
+    mock_ephemeral.assert_called_once()
+    args = mock_ephemeral.call_args.kwargs
+    assert args["channel"] == "C456XYZ"
+    assert args["user"] == "U123ABC"
+    assert "GOTO Bot Help" in args["text"]
+
+
+
+def test_make_lightcurve_plot_creates_file(tmp_path):
+    # Dummy lightcurve data
+    data = {
+        "mjd": [60000.0, 60001.0, 60002.0],
+        "forced_uJy": [100.0, 120.0, 90.0],
+        "forced_uJy_uncert": [5.0, 6.0, 4.0],
+        "forced_uJy_sigma_limit": [30.0, 30.0, 30.0],
+        "filter": ["L", "L", "R"]
+    }
+    df = pd.DataFrame(data)
+
+    path = make_lightcurve_plot(df)
+    assert os.path.exists(path)
+    assert path.endswith(".png")
+    assert os.path.getsize(path) > 0
+
+    os.remove(path)

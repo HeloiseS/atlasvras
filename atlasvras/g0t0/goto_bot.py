@@ -117,18 +117,30 @@ def fetch_lightcurve_data(params, auth, base_url="https://goto-observatory.warwi
 #######################
 
 
-def make_lightcurve_plot(df):
+def make_lightcurve_plot(df, target_name="lightcurve"):
+    safe_name = re.sub(r"[^\w\-\.]", "_", target_name)  # replaces unsafe chars with _
+    tmpfile = tempfile.NamedTemporaryFile(
+        delete=False,
+        suffix=".png",
+        prefix=f"{safe_name}_"
+    )
+
     plt.figure()
     colours = ['grey' if f == 'L' else 'k' for f in df['filter']]
-    plt.scatter(df['mjd'], df['forced_mag'], c=colours)
-    plt.gca().invert_yaxis()
+    plt.scatter(df.mjd, df.forced_uJy,
+                c=colours, label='data')
+    plt.errorbar(df.mjd, df.forced_uJy, yerr=df.forced_uJy_uncert, c='grey', alpha=0.5, ls=' ')
+    plt.scatter(df.mjd, df.forced_uJy_sigma_limit, marker='v', alpha=0.2, color='r', label='5sig limit')
+    plt.legend()
+    #plt.scatter(df['mjd'], df['forced_mag'], c=colours)
+    #plt.gca().invert_yaxis()
     plt.xlabel("MJD")
-    plt.ylabel("Forced Mag")
-    plt.title("GOTO Lightcurve")
+    plt.ylabel("Forced Flux (uJy)")
+    plt.legend()
+    #plt.title("GOTO Lightcurve")
 
-    tmpfile = tempfile.NamedTemporaryFile(delete=False, suffix=".png")
-    plt.savefig(tmpfile.name)
-    plt.close()
+    plt.savefig(tmpfile)
+    #plt.close()
     return tmpfile.name  # return path to file
 
 ##############################
@@ -159,7 +171,7 @@ def handle_mention(event, say):
         say(f"<@{user}> I couldn't understand your request. Try: `target SN2024cld RA=123.45 Dec=-12.3`. If you need help ask me for help! (@G0T0 help)")
         return
 
-    say(f"<@{user}> Fetching data for `{params['target_name']}`...")
+    say(f"<@{user}> Fetching data for your command: `{text}`")
 
     try:
         auth = (config['goto_username'], config['goto_password'])
@@ -217,7 +229,7 @@ def handle_slash_command(ack, respond, command):
         respond(f"<@{user}> I couldn't understand your command. Try `/goto target=SN123 RA=... Dec=...`")
         return
 
-    respond(f"<@{user}> Processing your request for `{params['target_name']}`...")
+    respond(f"<@{user}> Processing your request: `{text}`")
 
     try:
         auth = (config['goto_username'], config['goto_password'])
