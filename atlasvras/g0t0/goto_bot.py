@@ -178,17 +178,17 @@ def handle_mention(event, say):
         df, data_url = fetch_lightcurve_data(params, auth)
 
         # Save CSV
-        tmp_csv = tempfile.NamedTemporaryFile(delete=False, suffix=".csv")
-        df.to_csv(tmp_csv.name, index=False)
+        tmp_csv = f"{params['target_name']}_lightcurve.csv"
+        df.to_csv(tmp_csv, index=False)
 
         # Upload CSV
         app.client.files_upload_v2(
             channel=channel,
             initial_comment="...",
-            file=tmp_csv.name,
-            title=f"{params['target_name']}_lightcurve.csv",
+            file=tmp_csv,
+            title=tmp_csv,
         )
-        os.remove(tmp_csv.name)
+        os.remove(tmp_csv)
 
         # Optional plot?
         if params.get("plot"):

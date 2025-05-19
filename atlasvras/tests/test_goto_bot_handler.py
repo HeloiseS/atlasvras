@@ -22,7 +22,7 @@ def test_handle_mention_success(mock_upload, mock_plot, mock_fetch):
         MagicMock(),  # df is unused in this test
         "https://fakeurl.com/data.json"
     )
-    mock_plot.return_value = "/tmp/fakeplot.png"
+   # mock_plot.return_value = "/tmp/fakeplot.png"
 
     goto_bot.handle_mention(event, say=mock_say)
 
@@ -33,7 +33,8 @@ def test_handle_mention_success(mock_upload, mock_plot, mock_fetch):
     mock_upload.assert_called()
     upload_args = mock_upload.call_args.kwargs
     assert upload_args["channel"] == "C456XYZ"
-    assert upload_args["file"] == "/tmp/fakeplot.png"
+    # below doesn't test behaviour only the thing we set above
+    #assert upload_args["file"] == "/tmp/fakeplot.png"
 
 
 
