@@ -104,3 +104,8 @@ Since we have the labels we do not have to rely on uncertainty sampling, instead
 
 where ``y`` is the **true label** and ``p`` is the **predicted probability**.
 
+.. warning::
+   One thing I am worried about is that by selecting only the most confused samples we may select weirdos 
+   that lead us to overfitting. Not sure yet how to handle this, maybe by selecting randomly amongst a pool
+   of the most confused. 
+
