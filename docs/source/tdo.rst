@@ -23,16 +23,18 @@ Overall, TDO contributes as many elerts to the eyeball list (after quality cuts,
 
 How TDO impacts the VRA
 -------------------------
+Over the past few months the purgatory has been larger than usual so we know that TDO is affecting the VRA; here we look a little closer at what is happening.
+
 Below we have the distribution of alert labels before TDO (**2025-05-01 to 2025-06-22**) and after TDO (**2025-06-23 to 2025-09-25**).
 As we can see the main effect is to increase the fraction of **Garbage** alerts, meaning that there is more 
 contmination in the extra-galactic and galactic eyeball lists by bogus alerts. 
 
 .. figure:: _static/pie_chart_beforeTDO.png
-   :width: 300
+   :width: 450
    :align: center
 
 .. figure:: _static/pie_chart_afterTDO.png
-   :width: 300
+   :width: 450
    :align: center
 
 Either the VRA is worse at classifying alerts since TDO, or the increase in garbage alerts is sufficient to increase contamination.
@@ -50,17 +52,22 @@ The primary effect is to **displace very low scores towards middling scores** an
 The peak around VRA score 5 remains but it is there mostly by construction  (Galactic list).
 
 .. figure:: _static/scores_beforeTDO.png
-   :width: 400
+   :width: 450
    :align: center
 
 .. figure:: _static/scores_afterTDO.png
-   :width: 400
+   :width: 450
    :align: center
 
-.. note::
+.. conclusion::
    I suspect that the "flattening" of the distribution is due to data drift. 
    TDO does add more garbage alerts to the eyeball list overall (otherwise it would not DOUBLE its size)
    and sice the VRA was not trained on TDO data it would not perform as well, but in addition 
    we may expect the **distribution of some of the lightcurve features** to be different for the 
    alerts in the Northern Hemisphere, since we count for example the number of detections and non detections. 
 
+Strategy to handle TDO
+-------------------------
+* **Create bespoke wallpapers to reduce bogus alert production**: The bottleneck is the vetting of the images to put in the wallpaper stacks.
+  and the people who would do this are essentially members of the Oxford and Belfast group who are currently otherwise occupied (LSST, SoXS).
+  **For human resource reasons this is not feasible in the short term**.
