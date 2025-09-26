@@ -8,4 +8,8 @@ the VRA retraining strategy in the short term.
 
 How TDO impacts the eyeball list
 ----------------------------------
-sd
+
+
+.. figure:: _static/n_alerts2025.png
+   :width: 500
+   :align: center
