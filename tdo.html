@@ -369,7 +369,7 @@ contmination in the extra-galactic and galactic eyeball lists by bogus alerts.</
 </a>
 </figure>
 <figure class="align-center">
-<a class="reference internal image-reference" href="_static/pie_chart_afterTDO.png"><img alt="_static/pie_chart_afterTDO.png" src="_static/pie_chart_afterTDO.png" style="width: 450px;" />
+<a class="reference internal image-reference" href="_images/pie_chart_afterTDO.png"><img alt="_images/pie_chart_afterTDO.png" src="_images/pie_chart_afterTDO.png" style="width: 450px;" />
 </a>
 </figure>
 <p>Either the VRA is worse at classifying alerts since TDO, or the increase in garbage alerts is sufficient to increase contamination.
@@ -393,19 +393,33 @@ The peak around VRA score 5 remains but it is there mostly by construction  (Gal
 <a class="reference internal image-reference" href="_images/scores_afterTDO.png"><img alt="_images/scores_afterTDO.png" src="_images/scores_afterTDO.png" style="width: 450px;" />
 </a>
 </figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>I suspect that the “flattening” of the distribution is due to data drift.
+TDO does add more garbage alerts to the eyeball list overall (otherwise it would not DOUBLE its size)
+and sice the VRA was not trained on TDO data it would not perform as well, but in addition
+we may expect the <strong>distribution of some of the lightcurve features</strong> to be different for the
+alerts in the Northern Hemisphere, since we count for example the number of detections and non detections.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>TODO</strong>: Calculate the features for ALL alerts since TDO and compare to features (ideally with statistical tests) to see
+which are most affected.
+Compare to what we know about feature importance to estimate impact.</p>
+</div>
 </section>
 <section id="strategy-to-handle-tdo">
 <h2>Strategy to handle TDO<a class="headerlink" href="#strategy-to-handle-tdo" title="Link to this heading">#</a></h2>
 <section id="options">
 <h3>Options<a class="headerlink" href="#options" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p><strong>[NOT YET] Create bespoke wallpapers to reduce bogus alert production</strong>: The bottleneck is the vetting of the images to put in the wallpaper stacks.
+<li><p><a href="#id1"><span class="problematic" id="id2">|:x:|</span></a> <strong>Create bespoke wallpapers to reduce bogus alert production</strong>: The bottleneck is the vetting of the images to put in the wallpaper stacks.
 and the people who would do this are essentially members of the Oxford and Belfast group who are currently otherwise occupied (LSST, SoXS).
 <strong>For human resource reasons this is not feasible in the short term</strong>.</p></li>
-<li><p><strong>[NOT YET]Retrain CNNs</strong>: This will need doing anyway as each ATLAS unit has its own CNN. But it is not within my power, also
+<li><p><a href="#id3"><span class="problematic" id="id4">|:x:|</span></a> <strong>Retrain CNNs</strong>: This will need doing anyway as each ATLAS unit has its own CNN. But it is not within my power, also
 requires a lot of human vetting and therefore probably only be done once, after the wallpapers are done.</p></li>
-<li><p><a href="#id1"><span class="problematic" id="id2">|:white_check_mark:|</span></a> <strong>Retrain the VRA</strong>: This is something I can do - hopefully relatively “cheaply” (human effort and compute).</p></li>
-<li><p><a href="#id3"><span class="problematic" id="id4">|:white_check_mark:|</span></a> <strong>[YES] Set new thresholds for garbaging to remove more of the purgatory</strong>: Also a cheap solution, which will be explored after retraining.</p></li>
+<li><p><a href="#id5"><span class="problematic" id="id6">|:white_check_mark:|</span></a> <strong>Retrain the VRA</strong>: This is something I can do - hopefully relatively “cheaply” (human effort and compute).</p></li>
+<li><p><a href="#id7"><span class="problematic" id="id8">|:white_check_mark:|</span></a> <strong>[YES] Set new thresholds for garbaging to remove more of the purgatory</strong>: Also a cheap solution, which will be explored after retraining.</p></li>
 </ul>
 </section>
 <section id="active-learning">
