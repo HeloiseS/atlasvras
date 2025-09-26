@@ -433,6 +433,12 @@ allow me to verify the label for each sample.</p>
 <div class="math notranslate nohighlight">
 \[H(X) = -y \ln{p} - (1-y) \times \ln (1-p)\]</div>
 <p>where <code class="docutils literal notranslate"><span class="pre">y</span></code> is the <strong>true label</strong> and <code class="docutils literal notranslate"><span class="pre">p</span></code> is the <strong>predicted probability</strong>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>One thing I am worried about is that by selecting only the most confused samples we may select weirdos
+that lead us to overfitting. Not sure yet how to handle this, maybe by selecting randomly amongst a pool
+of the most confused.</p>
+</div>
 </section>
 </section>
 </section>
