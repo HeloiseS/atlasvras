@@ -322,6 +322,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-tdo-impacts-the-eyeball-list">How TDO impacts the eyeball list</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-tdo-impacts-the-vra">How TDO impacts the VRA</a></li>
 </ul>
             </nav>
         </div>
@@ -341,10 +342,58 @@ In these notes I roughly assess the effect of the addition of TDO to our data-st
 the VRA retraining strategy in the short term.</p>
 <section id="how-tdo-impacts-the-eyeball-list">
 <h2>How TDO impacts the eyeball list<a class="headerlink" href="#how-tdo-impacts-the-eyeball-list" title="Link to this heading">#</a></h2>
+<p>Overall, the number of weekly alerts has increased by a factor of at least 2 since TDO came online.
+The spikes in the figure below are due to some catastrophic failures (trailing or other acute incidents), and the other
+smoother variations are due to the lunar cycle.</p>
 <figure class="align-center">
-<a class="reference internal image-reference" href="_static/n_alerts2025.png"><img alt="_static/n_alerts2025.png" src="_static/n_alerts2025.png" style="width: 500px;" />
+<a class="reference internal image-reference" href="_images/n_alerts2025.png"><img alt="_images/n_alerts2025.png" src="_images/n_alerts2025.png" style="width: 500px;" />
 </a>
 </figure>
+<p>Overall, TDO contributes as many elerts to the eyeball list (after quality cuts, sherlock and CNNs) as the 4 other units.</p>
+<p><strong>Either TDO contributes more alerts overall, or its garbage alerts are not being filtered as effectively by quality cuts and the CNN</strong>.</p>
+</section>
+<section id="how-tdo-impacts-the-vra">
+<h2>How TDO impacts the VRA<a class="headerlink" href="#how-tdo-impacts-the-vra" title="Link to this heading">#</a></h2>
+<p>Below we have the distribution of alert labels before TDO (<strong>2025-05-01 to 2025-06-22</strong>) and after TDO (<strong>2025-06-23 to 2025-09-25</strong>).
+As we can see the main effect is to increase the fraction of <strong>Garbage</strong> alerts, meaning that there is more
+contmination in the extra-galactic and galactic eyeball lists by bogus alerts.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/pie_chart_beforeTDO.png"><img alt="_images/pie_chart_beforeTDO.png" src="_images/pie_chart_beforeTDO.png" style="width: 300px;" />
+</a>
+</figure>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_static/pie_chart_afterTDO.png"><img alt="_static/pie_chart_afterTDO.png" src="_static/pie_chart_afterTDO.png" style="width: 300px;" />
+</a>
+</figure>
+<p>Either the VRA is worse at classifying alerts since TDO, or the increase in garbage alerts is sufficient to increase contamination.
+We can test this by looking at the VRA score distribution before and After TDO.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>There was a catastrophic failure on 19th August leading to around 40,000 bogus alerts entering the eyeball
+list and receiving high VRA scores. These dates are excluded entierly from the data set and analysis below.
+They do not affect the pie charts above as they were not removed manually from the eyeball list and therefore
+did not get a human label of “garbage”.</p>
+</div>
+<p>As we can see below, the <strong>VRA score distribution IS affected</strong>.
+The primary effect is to <strong>displace very low scores towards middling scores</strong> and the
+<strong>peak at high scores is diminished</strong>.
+The peak around VRA score 5 remains but it is there mostly by construction  (Galactic list).</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/scores_beforeTDO.png"><img alt="_images/scores_beforeTDO.png" src="_images/scores_beforeTDO.png" style="width: 400px;" />
+</a>
+</figure>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/scores_afterTDO.png"><img alt="_images/scores_afterTDO.png" src="_images/scores_afterTDO.png" style="width: 400px;" />
+</a>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>I suspect that the “flattening” of the distribution is due to data drift.
+TDO does add more garbage alerts to the eyeball list overall (otherwise it would not DOUBLE its size)
+and sice the VRA was not trained on TDO data it would not perform as well, but in addition
+we may expect the <strong>distribution of some of the lightcurve features</strong> to be different for the
+alerts in the Northern Hemisphere, since we count for example the number of detections and non detections.</p>
+</div>
 </section>
 </section>
 
@@ -394,6 +443,7 @@ the VRA retraining strategy in the short term.</p>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-tdo-impacts-the-eyeball-list">How TDO impacts the eyeball list</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-tdo-impacts-the-vra">How TDO impacts the VRA</a></li>
 </ul>
   </nav></div>
 
