@@ -40,6 +40,7 @@
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'tdo';</script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
@@ -323,7 +324,11 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-tdo-impacts-the-eyeball-list">How TDO impacts the eyeball list</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-tdo-impacts-the-vra">How TDO impacts the VRA</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strategy-to-handle-tdo">Strategy to handle TDO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strategy-to-handle-tdo">Strategy to handle TDO</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options">Options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#active-learning">Active Learning</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -391,11 +396,30 @@ The peak around VRA score 5 remains but it is there mostly by construction  (Gal
 </section>
 <section id="strategy-to-handle-tdo">
 <h2>Strategy to handle TDO<a class="headerlink" href="#strategy-to-handle-tdo" title="Link to this heading">#</a></h2>
+<section id="options">
+<h3>Options<a class="headerlink" href="#options" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p><strong>Create bespoke wallpapers to reduce bogus alert production</strong>: The bottleneck is the vetting of the images to put in the wallpaper stacks.
+<li><p><strong>[NOT YET] Create bespoke wallpapers to reduce bogus alert production</strong>: The bottleneck is the vetting of the images to put in the wallpaper stacks.
 and the people who would do this are essentially members of the Oxford and Belfast group who are currently otherwise occupied (LSST, SoXS).
 <strong>For human resource reasons this is not feasible in the short term</strong>.</p></li>
+<li><p><strong>[NOT YET]Retrain CNNs</strong>: This will need doing anyway as each ATLAS unit has its own CNN. But it is not within my power, also
+requires a lot of human vetting and therefore probably only be done once, after the wallpapers are done.</p></li>
+<li><p><strong>[YES] Retrain the VRA</strong>: This is something I can do - hopefully relatively “cheaply” (human effort and compute).</p></li>
+<li><p><strong>[YES] Set new thresholds for garbaging to remove more of the purgatory</strong>: Also a cheap solution, which will be explored after retraining.</p></li>
 </ul>
+</section>
+<section id="active-learning">
+<h3>Active Learning<a class="headerlink" href="#active-learning" title="Link to this heading">#</a></h3>
+<p>Not entierly necessary but interesting to explore, the idea to leverage Active Learning techniques to select
+samples <strong>before</strong> downloading thousands and thousands of alerts.
+In this case <strong>I do have the labels</strong> so it’s not so much about minimising eyeballing, although it will
+allow me to verify the label for each sample.</p>
+<p>Since we have the labels we do not have to rely on uncertainty sampling, instead we can use the
+<strong>Binary cross-entropy</strong> to <strong>measure the confusion</strong> of the VRA.</p>
+<div class="math notranslate nohighlight">
+\[H(X) = -y \ln{p} - (1-y) \times \ln (1-p)\]</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">y</span></code> is the <strong>true label</strong> and <code class="docutils literal notranslate"><span class="pre">p</span></code> is the <strong>predicted probability</strong>.</p>
+</section>
 </section>
 </section>
 
@@ -446,7 +470,11 @@ and the people who would do this are essentially members of the Oxford and Belfa
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-tdo-impacts-the-eyeball-list">How TDO impacts the eyeball list</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-tdo-impacts-the-vra">How TDO impacts the VRA</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strategy-to-handle-tdo">Strategy to handle TDO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strategy-to-handle-tdo">Strategy to handle TDO</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#options">Options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#active-learning">Active Learning</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

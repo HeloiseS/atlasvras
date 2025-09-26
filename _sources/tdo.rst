@@ -66,8 +66,40 @@ The peak around VRA score 5 remains but it is there mostly by construction  (Gal
    we may expect the **distribution of some of the lightcurve features** to be different for the 
    alerts in the Northern Hemisphere, since we count for example the number of detections and non detections. 
 
+.. todo::
+   Calculate the features for ALL alerts since TDO and compare to features (ideally with statistical tests) to see 
+   which are most affected. 
+   Compare to what we know about feature importance to estimate impact. 
+
 Strategy to handle TDO
 -------------------------
-* **Create bespoke wallpapers to reduce bogus alert production**: The bottleneck is the vetting of the images to put in the wallpaper stacks.
+
+Options
+++++++++
+* **[NOT YET] Create bespoke wallpapers to reduce bogus alert production**: The bottleneck is the vetting of the images to put in the wallpaper stacks.
   and the people who would do this are essentially members of the Oxford and Belfast group who are currently otherwise occupied (LSST, SoXS).
   **For human resource reasons this is not feasible in the short term**.
+
+* **[NOT YET]Retrain CNNs**: This will need doing anyway as each ATLAS unit has its own CNN. But it is not within my power, also
+  requires a lot of human vetting and therefore probably only be done once, after the wallpapers are done.
+
+* **[YES] Retrain the VRA**: This is something I can do - hopefully relatively "cheaply" (human effort and compute).
+
+* **[YES] Set new thresholds for garbaging to remove more of the purgatory**: Also a cheap solution, which will be explored after retraining. 
+
+Active Learning
+++++++++++++++++++
+Not entierly necessary but interesting to explore, the idea to leverage Active Learning techniques to select 
+samples **before** downloading thousands and thousands of alerts. 
+In this case **I do have the labels** so it's not so much about minimising eyeballing, although it will 
+allow me to verify the label for each sample. 
+
+Since we have the labels we do not have to rely on uncertainty sampling, instead we can use the 
+**Binary cross-entropy** to **measure the confusion** of the VRA. 
+
+.. math::
+
+   H(X) = -y \ln{p} - (1-y) \times \ln (1-p)
+
+where ``y`` is the **true label** and ``p`` is the **predicted probability**.
+
