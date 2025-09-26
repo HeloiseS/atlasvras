@@ -1,10 +1,13 @@
 # Github action to build docs and, if on main, deploy to the gh-pages branch
 name: docs
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
 jobs:
   sphinx:
     runs-on: ubuntu-latest
-    # The permissions are required to deploy to the gh-pages branch by the
+    # The permissions are required to deploy to the gh-pages branch by the 
     # gh-actions official action, might not be necssary for our use-case
     permissions:
       contents: write
@@ -12,10 +15,18 @@ jobs:
       # Checkout and build the docs with sphinx
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install sphinx theme
-        run: pip install sphinx sphinx_rtd_theme
+
+      - name: Install Sphinx
+        run: pip install sphinx
+
+      - name: Install my theme
+        run: pip install sphinx_wagtail_theme
+
       - name: Install emojis
         run: pip install sphinxemoji
+        
+      - name: Generate API docs
+        run: sphinx-apidoc -o docs/ finkvra
 
       - name: Build HTML directly
         run: sphinx-build -b html docs/ docs/_build/html
@@ -29,7 +40,7 @@ jobs:
         # gh-pages then takes over serving the html
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
-        if: github.ref == 'refs/heads/main'
+        #if: github.ref == 'refs/heads/main'
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
-            publish_dir: docs/build/html
+            publish_dir: docs/_build/html
