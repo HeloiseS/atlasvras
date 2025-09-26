@@ -68,7 +68,12 @@ app = App(token=BOT_TOKEN)
 ### GOTO API
 ######################
 
-def fetch_lightcurve_data(params, auth, base_url="https://goto-observatory.warwick.ac.uk", poll_interval=2, timeout=15):
+def fetch_lightcurve_data(params,
+                          auth,
+                          base_url="https://goto-observatory.warwick.ac.uk",
+                          poll_interval=2,
+                          timeout=15):
+    # TODO: Increase time out to 30 or 60 seconds?
     submit_url = f"{base_url}/lightcurve/api-v1/submit/"
     data_base_url = f"{base_url}/lightcurve/api-v1/data/"
 

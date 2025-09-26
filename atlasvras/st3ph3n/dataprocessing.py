@@ -540,10 +540,13 @@ class FeaturesSingleSource(object):
     feature_names_day1 = day1_lc_feature_columns + context_feature_columns
     feature_names_dayN = dayN_lc_feature_columns +  feature_names_day1
 
-    def __init__(self, atlas_id, api_config_file):
+    def __init__(self, atlas_id, api_config_file=None):
         #TODO: add docstring (include showing how it's meant to be used
         self.atlas_id = atlas_id
-        self.json_data = JsonDataFromServer(atlas_id, api_config_file=api_config_file)
+        if api_config_file is not None:
+            self.json_data = JsonDataFromServer(atlas_id, api_config_file=api_config_file)
+        else:
+            self.json_data = JsonDataFromServer(atlas_id)
 
         ## Get the last visit MJD (only needed when doing updates but cheap to compute)
         try:
