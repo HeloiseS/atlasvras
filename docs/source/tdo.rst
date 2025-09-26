@@ -83,9 +83,9 @@ Options
 * **[NOT YET]Retrain CNNs**: This will need doing anyway as each ATLAS unit has its own CNN. But it is not within my power, also
   requires a lot of human vetting and therefore probably only be done once, after the wallpapers are done.
 
-* **[YES] Retrain the VRA**: This is something I can do - hopefully relatively "cheaply" (human effort and compute).
+* |:white_check_mark:| **Retrain the VRA**: This is something I can do - hopefully relatively "cheaply" (human effort and compute).
 
-* **[YES] Set new thresholds for garbaging to remove more of the purgatory**: Also a cheap solution, which will be explored after retraining. 
+* |:white_check_mark:| **[YES] Set new thresholds for garbaging to remove more of the purgatory**: Also a cheap solution, which will be explored after retraining. 
 
 Active Learning
 ++++++++++++++++++
