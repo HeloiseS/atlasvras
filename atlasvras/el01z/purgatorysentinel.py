@@ -1,3 +1,13 @@
+"""
+
+History
+--------
+[I23] Issue 23
+Description: Purgatory deleted, no longer sent to VRA forum
+Date Started: 2025-11-24
+Date Completed: TBD
+"""
+
 from atlasapiclient import client as atlasapiclient
 from atlasapiclient.utils import API_CONFIG_FILE
 
@@ -11,6 +21,21 @@ import logging
 import sys
 import pkg_resources
 import yaml
+
+
+# UPDATE 2025-11-24 [HFS | I23]
+# Code below copied from the VRAGarbageCollector.py 
+def insertVRAEntry(API_CONFIG_FILE, objectId, pReal, pGal, rank, debug = False):
+    payload = {'objectid': objectId, 'preal': pReal, 'pgal': pGal, 'rank': rank, 'debug': debug}
+    writeto_vra = atlasapiclient.WriteToVRAScores(api_config_file = API_CONFIG_FILE, payload=payload)
+    writeto_vra.get_response()
+
+# Code belwo from updateVRAScores.py
+def updateObjectDetectionList(API_CONFIG_FILE, objectId, objectList = 4):
+    payload = {'objectid': objectId, 'objectlist': objectList}
+    update_list = atlasapiclient.WriteObjectDetectionListNumber(api_config_file = API_CONFIG_FILE, payload=payload)
+    update_list.get_response()
+# ### END UPDATE 2025-11-24 ###
 
 BOT_CONFIG_FILE = pkg_resources.resource_filename('atlasvras', 'data/bot_config_MINE.yaml')
 
@@ -110,13 +135,26 @@ stuck_in_purgatory_df['timestamp']=TODAY
 stuck_in_purgatory_df.to_csv(f'{LOG_PATH}/stuck_in_purgatory.csv',
                                 header=False, mode='a', index=False)
 
-
-TEXT_REPORT = "*Stuck in Purgatory*\n"
+# UPDATE 2025-11-24 [HFS | I23]
 for atlas_id in stuck_in_purgatory:
-    TEXT_REPORT+=f"- <{URL_BASE}{atlas_id}|{atlas_id}>\n"
+    # AUTO-GARBAGE
+    updateObjectDetectionList(API_CONFIG_FILE, atlas_id, 0)
+
+    # UPDATE VRA SCORES TABLE
+    insertVRAEntry(API_CONFIG_FILE, atlas_id, None, None, -1)
+
+logging.info(f"Moved purgatory to garbage and added rows in VRA scores table")
+# ### END UPDATE 2025-11-24 ###
+
+
+# UPDATE 2025-11-24 [HFS | I23]
+TEXT_REPORT = f"Moved {len(stuck_in_purgatory)} objects from purgatory to garbage "
+#TEXT_REPORT = "*Stuck in Purgatory*\n"
+#for atlas_id in stuck_in_purgatory:
+#    TEXT_REPORT+=f"- <{URL_BASE}{atlas_id}|{atlas_id}>\n"
+#  ### END UPDATE 2025-11-24 ###
 
 logging.info("Sending the report to slack")
-
 client = WebClient(token=SLACK_TOKEN)
 client.chat_postMessage(
   channel="#vra-forum",
