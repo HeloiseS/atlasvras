@@ -45,6 +45,13 @@ class TestMakeNonDetectionTable():
 
 class TestMakeDay1LCFeatures():
     def test_make_day1_lcfeatures(self):
+        # KNOWN FAILURE (2026-07-13): make_day1_lcfeatures now returns 8 features
+        # (DET_mag_median_min5d was added) but this test still expects 7. Neither
+        # trained model matches the current 8-feature pipeline: 'crabby' expects the
+        # old 7, 'duck' expects 8 but with a reduced context_feature_columns set
+        # (missing SN/NT/ORPHAN/UNCLEAR). Needs a model/feature-pipeline reconciliation
+        # decision, not just a test tweak. See also test_day1/test_dayN in
+        # test_st3ph3n_scoreandrank.py which fail for the same underlying reason.
         atlas_json = JsonData(filename=filename_sn)
         lc_pipes = LightCurvePipes(atlas_json_data=atlas_json)
         lc_pipes.add_dayN_column()
@@ -140,6 +147,7 @@ class TestFeaturesSingleSource():
     def test_dayN_features(self):
         feature_maker = FeaturesSingleSource(atlas_id='1000005291314656200',
                                              api_config_file = API_CONFIG_FILE,
+                                             mjd_threshold=50000,
                                              )
 
         feature_maker.make_dayN_features()

@@ -55,6 +55,8 @@ dayN_lc_feature_columns = ['dayN',
                              'max_mag_day',
                            ]
 
+MJD_THRESHOLD = Time.now().mjd - 120
+
 # ##################################################### #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 # ~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~ #
@@ -540,13 +542,13 @@ class FeaturesSingleSource(object):
     feature_names_day1 = day1_lc_feature_columns + context_feature_columns
     feature_names_dayN = dayN_lc_feature_columns +  feature_names_day1
 
-    def __init__(self, atlas_id, api_config_file=None):
+    def __init__(self, atlas_id, api_config_file=None, mjd_threshold=MJD_THRESHOLD):
         #TODO: add docstring (include showing how it's meant to be used
         self.atlas_id = atlas_id
         if api_config_file is not None:
-            self.json_data = JsonDataFromServer(atlas_id, api_config_file=api_config_file)
+            self.json_data = JsonDataFromServer(atlas_id, mjd_threshold=mjd_threshold, api_config_file=api_config_file)
         else:
-            self.json_data = JsonDataFromServer(atlas_id)
+            self.json_data = JsonDataFromServer(atlas_id, mjd_threshold=mjd_threshold)
 
         ## Get the last visit MJD (only needed when doing updates but cheap to compute)
         try:

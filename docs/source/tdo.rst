@@ -77,35 +77,18 @@ Strategy to handle TDO
 
 Options
 ++++++++
-* |:x:| **Create bespoke wallpapers to reduce bogus alert production**: The bottleneck is the vetting of the images to put in the wallpaper stacks.
+*  **[NOT YET] Create bespoke wallpapers to reduce bogus alert production**: The bottleneck is the vetting of the images to put in the wallpaper stacks.
   and the people who would do this are essentially members of the Oxford and Belfast group who are currently otherwise occupied (LSST, SoXS).
   **For human resource reasons this is not feasible in the short term**.
 
-* |:x:| **Retrain CNNs**: This will need doing anyway as each ATLAS unit has its own CNN. But it is not within my power, also
+* **[NOT YET] Retrain CNNs**: This will need doing anyway as each ATLAS unit has its own CNN. But it is not within my power, also
   requires a lot of human vetting and therefore probably only be done once, after the wallpapers are done.
 
-* |:white_check_mark:| **Retrain the VRA**: This is something I can do - hopefully relatively "cheaply" (human effort and compute).
+* **[YES] Retrain the VRA**: This is something I can do - hopefully relatively "cheaply" (human effort and compute).
 
-* |:white_check_mark:| **[YES] Set new thresholds for garbaging to remove more of the purgatory**: Also a cheap solution, which will be explored after retraining. 
+*  **[YES] Set new thresholds for garbaging to remove more of the purgatory**: Also a cheap solution, which will be explored after retraining. 
 
-Active Learning
-++++++++++++++++++
-Not entierly necessary but interesting to explore, the idea to leverage Active Learning techniques to select 
-samples **before** downloading thousands and thousands of alerts. 
-In this case **I do have the labels** so it's not so much about minimising eyeballing, although it will 
-allow me to verify the label for each sample. 
 
-Since we have the labels we do not have to rely on uncertainty sampling, instead we can use the 
-**Binary cross-entropy** to **measure the confusion** of the VRA. 
-
-.. math::
-
-   H(X) = -y \ln{p} - (1-y) \times \ln (1-p)
-
-where ``y`` is the **true label** and ``p`` is the **predicted probability**.
-
-.. warning::
-   One thing I am worried about is that by selecting only the most confused samples we may select weirdos 
-   that lead us to overfitting. Not sure yet how to handle this, maybe by selecting randomly amongst a pool
-   of the most confused. 
+Retraining the VRA
++++++++++++++++++++++++++
 

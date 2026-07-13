@@ -18,6 +18,14 @@ filename_sn = os.path.join(data_path, test_file)
 
 class TestScoreAndRank():
 
+    # KNOWN FAILURE (2026-07-13): test_day1 and test_dayN below fail with
+    # "ValueError: X has N features, but ... is expecting M features". Root cause:
+    # make_day1_lcfeatures now produces 8 LC features (added DET_mag_median_min5d)
+    # but the 'crabby' model here was trained on the old 7. Switching to the 'duck'
+    # model (scoreandrank.py's actual default) doesn't fully fix it either -- duck
+    # expects 8 LC features but a reduced context_feature_columns set (only CV,
+    # missing SN/NT/ORPHAN/UNCLEAR). Needs a model/feature-pipeline reconciliation
+    # decision (retrain, or trim context_feature_columns, or pick+fix one model).
     def test_day1(self):
         atlas_json = JsonData(filename=filename_sn)
         lc_pipes = LightCurvePipes(atlas_json_data=atlas_json)
