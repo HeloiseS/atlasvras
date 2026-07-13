@@ -140,6 +140,7 @@ class TestFeaturesSingleSource():
     def test_dayN_features(self):
         feature_maker = FeaturesSingleSource(atlas_id='1000005291314656200',
                                              api_config_file = API_CONFIG_FILE,
+                                             mjd_threshold=50000,
                                              )
 
         feature_maker.make_dayN_features()
