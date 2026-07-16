@@ -7,7 +7,7 @@ and there are objects with rank > 4 in the eyeball and fast track lists.
 
 """
 from atlasapiclient import client as atlasapiclient
-from atlasapiclient.utils import API_CONFIG_FILE
+from atlasapiclient.utils import API_CONFIG_FILE, MJD_EPOCH_DATE
 from atlasvras.utils.misc import fetch_vra_dataframe
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
@@ -34,9 +34,11 @@ with open(BOT_CONFIG_FILE, 'r') as stream:
         print(exc)
 
 # Get ATLAS IDs from the eyeball list -> set eyeball
+# We want the full list regardless of when objects were added, not just recent ones
 get_ids_from_eyeball = atlasapiclient.RequestATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,
                                          list_name='eyeball',
-                                         get_response=True
+                                         get_response=True,
+                                         datethreshold=MJD_EPOCH_DATE
                                          )
 
 set_eyeball_ids = set(get_ids_from_eyeball.atlas_id_list_int)
@@ -44,7 +46,8 @@ set_eyeball_ids = set(get_ids_from_eyeball.atlas_id_list_int)
 # Get ATLAS IDS from the fast track eyeball list -> set fast track
 get_ids_from_fasttrack = atlasapiclient.RequestATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,
                                          list_name='fasttrack',
-                                         get_response=True
+                                         get_response=True,
+                                         datethreshold=MJD_EPOCH_DATE
                                          )
 set_fasttrack_ids = set(get_ids_from_fasttrack.atlas_id_list_int)
 
@@ -75,7 +78,8 @@ set_eyeball_hi_rank_ids = set_hi_vra_rank_ids.intersection(set_eyeball_ids)
 # Counting the number of events in the Galactic candidate list
 get_ids_from_galcand = atlasapiclient.RequestATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,
                                          list_name='galcand',
-                                         get_response=True
+                                         get_response=True,
+                                         datethreshold=MJD_EPOCH_DATE
                                          )
 n_gal_candidates = len(get_ids_from_galcand.response_data)
 
