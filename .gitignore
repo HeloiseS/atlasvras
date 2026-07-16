@@ -114,3 +114,6 @@ ipython_config.py
 #   in version control.
 #   https://pdm.fming.dev/#use-with-ide
 .pdm.toml
+
+# Accidentally-tracked old model files (2026-07-16)
+atlasvras/st3ph3n/models/duck_old/

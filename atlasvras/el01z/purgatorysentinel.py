@@ -9,7 +9,7 @@ Date Completed: TBD
 """
 
 from atlasapiclient import client as atlasapiclient
-from atlasapiclient.utils import API_CONFIG_FILE
+from atlasapiclient.utils import API_CONFIG_FILE, MJD_EPOCH_DATE
 
 from atlasvras.st3ph3n.slackbot import get_ids_from_galcand
 from atlasvras.utils.misc import fetch_vra_dataframe
@@ -75,12 +75,14 @@ logging.info("Starting the script - last run date: " + last_run_date)
 ### Get all objects in Eyeball List right now
 get_ids_from_eyeball = atlasapiclient.RequestATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,
                                          list_name='eyeball',
-                                         get_response=True
+                                         get_response=True,
+                                         datethreshold=MJD_EPOCH_DATE
                                          )
 
 get_ids_from_galcand = atlasapiclient.RequestATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,
                                             list_name='galcand',
-                                            get_response=True
+                                            get_response=True,
+                                            datethreshold=MJD_EPOCH_DATE
                                             )
 
 ids_to_check = get_ids_from_eyeball.atlas_id_list_int + get_ids_from_galcand.atlas_id_list_int
