@@ -145,6 +145,16 @@ df.plot(kind='pie', autopct="%.2f%%", textprops={'color': 'k'},
 plt.title(f'From {last_run_date} to {TODAY}')
 plt.savefig(f'{LOG_PATH}/figures/{TODAY}.png', bbox_inches='tight')
 
+# NEW - 2026-08-10
+#### PIE CHART EXCLUDING AUTO-GARBAGE - James G request
+df_no_autogarbage = df[df.index != 'auto-garbage']
+plt.figure()
+df_no_autogarbage.plot(kind='pie', autopct="%.2f%%", textprops={'color': 'k'},
+        colors=[label_to_color[label] for label in df_no_autogarbage.index.values], legend=True)
+
+plt.title(f'From {last_run_date} to {TODAY} (excl. auto-garbage)')
+plt.savefig(f'{LOG_PATH}/figures/{TODAY}_no_autogarbage.png', bbox_inches='tight')
+
 ##### NEW EVENTS AND POTENTIAL MISSES
 in_tns = vra_past_week[vra_past_week['rank'] == 10.0].index
 vra_past_week['type'] = labels_ALL
@@ -200,18 +210,30 @@ client = WebClient(token=SLACK_TOKEN)
 
 file_path = f'{LOG_PATH}/figures/{TODAY}.png'
 
+CHANNEL = "C07HZGBKHQX" #vra-forum
+#CHANNEL = "C0842K2QZS8"# #vra-dev to test
 file_response = client.files_upload_v2(
-    channel="C07HZGBKHQX", #vra-forum
-    #channel="C0842K2QZS8", # #vra-dev to test
+    channel=CHANNEL,
     initial_comment=f"Here are the label distributions for the week starting on {TODAY}",
     file=file_path,
 )
 file_url = file_response["file"]["permalink"]
 
+
+# OLD PIE CHART
 client.chat_postMessage(
-    channel="C07HZGBKHQX", # #vra-forum for real thing
-    #channel="C0842K2QZS8", # #vra-dev to test
+    channel=CHANNEL, 
     text=TEXT_REPORT,
+)
+
+
+# NEW PIE CHART (2026-08-10)
+file_path_no_autogarbage = f'{LOG_PATH}/figures/{TODAY}_no_autogarbage.png'
+
+file_response_no_autogarbage = client.files_upload_v2(
+    channel=CHANNEL, 
+    initial_comment="Label distribution excluding auto-garbage",
+    file=file_path_no_autogarbage,
 )
 
 
