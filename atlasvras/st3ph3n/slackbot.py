@@ -21,6 +21,7 @@ import os
 import pandas as pd
 import yaml
 import pkg_resources
+from time import sleep
 
 
 
@@ -62,17 +63,16 @@ while tries < 3:
                                          )
         break
     except ATLASAPIClientError:
+        sleep(15)
         tries += 1
-
+    
     if tries == 3:
         response = client.chat_postMessage(
             channel="#vra",
             text="RequestATLASIDsFromWebServerList - ATLASAPIClientError: Check Logs. Likely 500 error."
         )
         exit(1)
-
-
-
+    
 
 ###
 
@@ -102,6 +102,7 @@ while tries < 3:
         vra_df = fetch_vra_dataframe(datethreshold=DATETHRESHOLD)
         break
     except ATLASAPIClientError:
+        sleep(15)
         tries += 1
 
     if tries == 3:
