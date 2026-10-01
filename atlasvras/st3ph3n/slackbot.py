@@ -5,9 +5,15 @@ ST3PH3N SLACK BOT
 This is the eyeball notification bot that alerts when an ingest has finished
 and there are objects with rank > 4 in the eyeball and fast track lists.
 
+
+2026-10-01: added retyr logic and error message sending to 
+two steps that are likely to fall appart if server overloaded: 
+- RequestATLASIDsFromWebServerList (because it asks for all the eyeball list in a time period)
+- fetch_vra_dataframe (super large  period if loads of junk - WE KNOW THIS ONE FELL OVER)
 """
 from atlasapiclient import client as atlasapiclient
 from atlasapiclient.utils import API_CONFIG_FILE, MJD_EPOCH_DATE
+from atlasapiclient.exceptions import ATLASAPIClientError
 from atlasvras.utils.misc import fetch_vra_dataframe
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
@@ -15,6 +21,9 @@ import os
 import pandas as pd
 import yaml
 import pkg_resources
+from time import sleep
+
+
 
 #########################################
 # LOAD PATHS AND TOKENS FROM THE CONFIG FILE
@@ -33,13 +42,39 @@ with open(BOT_CONFIG_FILE, 'r') as stream:
     except yaml.YAMLError as exc:
         print(exc)
 
+
+# SUMMONING THE SLACK BOT
+client = WebClient(token=SLACK_TOKEN)
+
 # Get ATLAS IDs from the eyeball list -> set eyeball
 # We want the full list regardless of when objects were added, not just recent ones
-get_ids_from_eyeball = atlasapiclient.RequestATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,
+
+
+# 2026-10-01: Extra logic to avoid the bot crashing "silently" if the server is overloaded
+# Now if we fail to get the data from the server (500 error) we retry twice more 
+# if that fails we send a slack message. 
+tries = 0
+while tries < 3:
+    try: 
+        get_ids_from_eyeball = atlasapiclient.RequestATLASIDsFromWebServerList(api_config_file= API_CONFIG_FILE,
                                          list_name='eyeball',
                                          get_response=True,
                                          datethreshold=MJD_EPOCH_DATE
                                          )
+        break
+    except ATLASAPIClientError:
+        sleep(15)
+        tries += 1
+    
+    if tries == 3:
+        response = client.chat_postMessage(
+            channel="#vra",
+            text="RequestATLASIDsFromWebServerList - ATLASAPIClientError: Check Logs. Likely 500 error."
+        )
+        exit(1)
+    
+
+###
 
 set_eyeball_ids = set(get_ids_from_eyeball.atlas_id_list_int)
 
@@ -58,8 +93,25 @@ todo_list.get_response()
 todo_df = pd.DataFrame(todo_list.response_data).sort_values('timestamp')
 DATETHRESHOLD= todo_df.timestamp.iloc[0]
 
+# 2026-10-01: Extra logic to avoid the bot crashing "silently" if the server is overloaded
+# Now if we fail to get the data from the server (500 error) we retry twice more 
+# if that fails we send a slack message. 
+tries = 0
+while tries < 3:
+    try: 
+        vra_df = fetch_vra_dataframe(datethreshold=DATETHRESHOLD)
+        break
+    except ATLASAPIClientError:
+        sleep(15)
+        tries += 1
 
-vra_df = fetch_vra_dataframe(datethreshold=DATETHRESHOLD)
+    if tries == 3:
+        response = client.chat_postMessage(
+            channel="#vra",
+            text="fetch_vra_dataframe - ATLASAPIClientError: Check Logs. Likely 500 error."
+        )
+        exit(1)
+
 # NEED TO ENSURE WE ARE LOOKING AT THE LAST VRA SCORE GIVEN
 vra_df = vra_df[vra_df.apiusername=='vra'] # only looks at rows that the VRA dded
 vra_df = vra_df[vra_df.rank_alt1.isna()] # remove all the rows with alternate ranks, where rank == NaN
@@ -105,9 +157,7 @@ if n_gal_candidates> 0:
                 f":link:"
                 f"<{URL_BASE}followup_quickview/12/| Galactic Candidates>\n\n")
 
-# SUMMONING THE SLACK BOT
-client = WebClient(token=SLACK_TOKEN)
-
+# SENDING SLACK MESSAGE
 try:
     response = client.chat_postMessage(
         channel="#vra",
