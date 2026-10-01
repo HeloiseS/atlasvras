@@ -69,7 +69,7 @@ while tries < 3:
     if tries == 3:
         response = client.chat_postMessage(
             channel="#vra",
-            text="RequestATLASIDsFromWebServerList - ATLASAPIClientError: Check Logs. Likely 500 error."
+            text="RequestATLASIDsFromWebServerList - ATLASAPIClientError: Check Logs. Likely 500 error. ASK HELOISE OR KEN"
         )
         exit(1)
     
@@ -108,7 +108,7 @@ while tries < 3:
     if tries == 3:
         response = client.chat_postMessage(
             channel="#vra",
-            text="fetch_vra_dataframe - ATLASAPIClientError: Check Logs. Likely 500 error."
+            text="fetch_vra_dataframe - ATLASAPIClientError: Check Logs. Likely 500 error. ASK HELOISE OR KEN"
         )
         exit(1)
 
