@@ -11,7 +11,6 @@ Date Completed: TBD
 from atlasapiclient import client as atlasapiclient
 from atlasapiclient.utils import API_CONFIG_FILE, MJD_EPOCH_DATE
 
-from atlasvras.st3ph3n.slackbot import get_ids_from_galcand
 from slack_sdk import WebClient
 import os
 import pandas as pd
