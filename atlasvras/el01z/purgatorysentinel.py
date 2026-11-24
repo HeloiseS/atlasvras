@@ -98,6 +98,10 @@ DATETHRESHOLD= pd.DataFrame(todo_list.response_data).sort_values('timestamp').ti
 logging.info("Fetched the TODO List dataframe")
 
 # Claude wrote this for issue #38 (2026-11-24)
+# Oversight Level: HIGH
+# HFS Review: removed the fetch_dataframe dependency which 
+# did not allow a selection by transient object if, only one by date threshold
+# meanign we grabbed WAAAAY too much data. Now only get data we need
 vra_scores = atlasapiclient.RequestVRAScores(api_config_file=API_CONFIG_FILE,
                                              payload={'objects': ','.join(map(str, ids_to_check))},
                                              get_response=True)
