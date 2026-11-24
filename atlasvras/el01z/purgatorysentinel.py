@@ -12,7 +12,6 @@ from atlasapiclient import client as atlasapiclient
 from atlasapiclient.utils import API_CONFIG_FILE, MJD_EPOCH_DATE
 
 from atlasvras.st3ph3n.slackbot import get_ids_from_galcand
-from atlasvras.utils.misc import fetch_vra_dataframe
 from slack_sdk import WebClient
 import os
 import pandas as pd
@@ -98,7 +97,16 @@ if not todo_list.response_data:
 DATETHRESHOLD= pd.DataFrame(todo_list.response_data).sort_values('timestamp').timestamp.iloc[0]
 logging.info("Fetched the TODO List dataframe")
 
-vra_df = fetch_vra_dataframe(datethreshold=DATETHRESHOLD)
+# Claude wrote this for issue #38 (2026-11-24)
+# Oversight Level: HIGH
+# HFS Review: removed the fetch_dataframe dependency which 
+# did not allow a selection by transient object if, only one by date threshold
+# meanign we grabbed WAAAAY too much data. Now only get data we need
+vra_scores = atlasapiclient.RequestVRAScores(api_config_file=API_CONFIG_FILE,
+                                             payload={'objects': ','.join(map(str, ids_to_check))},
+                                             get_response=True)
+vra_df = pd.DataFrame(vra_scores.response_data)
+vra_df = vra_df[pd.to_datetime(vra_df.timestamp) >= pd.to_datetime(DATETHRESHOLD)]
 vra_df.set_index('transient_object_id', inplace=True)
 
 # Crop df so only objects in eyeball list are left
